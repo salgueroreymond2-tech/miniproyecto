@@ -1,0 +1,11 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "username": "emilys",
+      "password": "emilyspass",
+      "nombre": "Emily Johnson",
+      "rol": "Reclutadora"
+    }
+  ]
+}
