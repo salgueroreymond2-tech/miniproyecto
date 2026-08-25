@@ -626,13 +626,32 @@ filtrosContainer.addEventListener('click', (e) => {
   aplicarFiltro(boton.dataset.filtro);
 });
 
-// ─────────────────────────────────────────────
-// 10. INICIALIZACIÓN
-// ─────────────────────────────────────────────
+/**
+ * Sincroniza la información de la sesión activa desde localStorage
+ */
+function cargarDatosSesion() {
+  try {
+    const raw = localStorage.getItem('jobconnect_session');
+    if (!raw) return;
+    const session = JSON.parse(raw);
+    if (session && session.nombre) {
+      const avatar = document.getElementById('user-avatar');
+      if (avatar) {
+        const partes = session.nombre.trim().split(/\s+/);
+        const iniciales = partes.map((p) => p[0]).join('').toUpperCase().slice(0, 2);
+        avatar.textContent = iniciales || 'JC';
+        avatar.title = `${session.nombre} (${session.rol || 'Reclutadora'})`;
+      }
+    }
+  } catch (e) {
+    console.warn('[tareas.js] No se pudo leer la sesión:', e);
+  }
+}
 
 /**
- * Punto de entrada: carga las tareas al iniciar la página.
+ * Punto de entrada: carga las tareas y la sesión al iniciar la página.
  */
 document.addEventListener('DOMContentLoaded', () => {
+  cargarDatosSesion();
   cargarTareas();
 });
