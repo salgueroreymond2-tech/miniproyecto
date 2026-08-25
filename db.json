@@ -1,0 +1,25 @@
+{
+  "tareas": [
+    {
+      "id": "1",
+      "titulo": "Revisar CVs recibidos",
+      "descripcion": "Filtrar candidatos para puesto de Desarrollador Frontend",
+      "estado": "pendiente",
+      "fecha": "2026-08-25"
+    },
+    {
+      "id": "2",
+      "titulo": "Agendar entrevistas",
+      "descripcion": "Coordinar horarios con los candidatos preseleccionados",
+      "estado": "pendiente",
+      "fecha": "2026-08-26"
+    },
+    {
+      "id": "3",
+      "titulo": "Publicar vacante en portal",
+      "descripcion": "Redactar y publicar la oferta de empleo en el portal JobConnect",
+      "estado": "completada",
+      "fecha": "2026-08-20"
+    }
+  ]
+}

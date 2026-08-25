@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="JobConnect — Gestión de tareas del reclutador. Crea, edita y controla tus tareas de reclutamiento." />
+  <title>JobConnect — Gestión de Tareas</title>
+
+  <!-- Tailwind CSS v4 CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── Animaciones personalizadas ── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.5s ease-out both;
+    }
+    .animate-shimmer {
+      background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.08) 50%, transparent 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    /* ── Skeleton para carga ── */
+    .skeleton {
+      background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 0.5rem;
+    }
+
+    /* ── Scroll suave en tabla ── */
+    .tabla-scroll::-webkit-scrollbar { height: 6px; }
+    .tabla-scroll::-webkit-scrollbar-track { background: #0f172a; }
+    .tabla-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    .tabla-scroll::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    /* ── Tabla responsiva → Cards en mobile ── */
+    @media (max-width: 768px) {
+      .tabla-responsive thead { display: none; }
+      .tabla-responsive tbody tr {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #334155;
+        border-radius: 0.75rem;
+        margin-bottom: 0.75rem;
+        padding: 1rem;
+        background: #1e293b;
+      }
+      .tabla-responsive tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.4rem 0;
+        border: none !important;
+      }
+      .tabla-responsive tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #94a3b8;
+        margin-right: 1rem;
+      }
+      .tabla-responsive tbody td:last-child {
+        justify-content: flex-end;
+        padding-top: 0.75rem;
+        margin-top: 0.5rem;
+        border-top: 1px solid #334155 !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-slate-200 font-sans antialiased min-h-screen">
+
+  <!-- ═══════════════════════════════════════════
+       HEADER / NAVBAR
+       ═══════════════════════════════════════════ -->
+  <header class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/60">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group" id="nav-logo">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600
+                    flex items-center justify-center shadow-lg shadow-indigo-500/25
+                    group-hover:shadow-indigo-500/40 transition-shadow">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <span class="text-xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+          JobConnect
+        </span>
+      </a>
+
+      <!-- Nav links -->
+      <div class="hidden sm:flex items-center gap-1">
+        <a href="#" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/50 transition-colors">
+          Dashboard
+        </a>
+        <a href="#" class="px-3 py-2 text-sm font-medium text-white bg-slate-800/70 rounded-lg border border-slate-700/50" aria-current="page">
+          Tareas
+        </a>
+        <a href="#" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/50 transition-colors">
+          Candidatos
+        </a>
+      </div>
+
+      <!-- Avatar placeholder -->
+      <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 ring-2 ring-slate-800
+                  flex items-center justify-center text-xs font-bold text-white">
+        RC
+      </div>
+    </nav>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       CONTENIDO PRINCIPAL
+       ═══════════════════════════════════════════ -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- ── Encabezado de sección ── -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 animate-fade-in-up">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          Gestión de Tareas
+        </h1>
+        <p class="mt-1 text-sm text-slate-400">
+          Administra las tareas de reclutamiento de tu equipo
+        </p>
+      </div>
+
+      <!-- Botón Nueva Tarea -->
+      <button id="btn-nueva-tarea"
+              class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl
+                     bg-gradient-to-r from-indigo-600 to-indigo-500 text-white
+                     shadow-lg shadow-indigo-600/25
+                     hover:from-indigo-500 hover:to-indigo-400 hover:shadow-indigo-500/40
+                     active:scale-[0.98] transition-all duration-200
+                     focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-950">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        Nueva Tarea
+      </button>
+    </div>
+
+    <!-- ── Filtros rápidos ── -->
+    <div class="flex flex-wrap items-center gap-2 mb-6 animate-fade-in-up" style="animation-delay: 0.1s"
+         id="filtros-container" role="group" aria-label="Filtros de estado">
+      <button data-filtro="todas"
+              class="filtro-btn activo px-4 py-2 text-sm font-medium rounded-xl
+                     bg-indigo-600/20 text-indigo-300 border border-indigo-500/30
+                     hover:bg-indigo-600/30 transition-all duration-200
+                     focus:outline-none focus:ring-2 focus:ring-indigo-400">
+        Todas
+      </button>
+      <button data-filtro="pendiente"
+              class="filtro-btn px-4 py-2 text-sm font-medium rounded-xl
+                     bg-slate-800/50 text-slate-400 border border-slate-700/50
+                     hover:bg-slate-700/50 hover:text-slate-300 transition-all duration-200
+                     focus:outline-none focus:ring-2 focus:ring-slate-500">
+        Pendientes
+      </button>
+      <button data-filtro="completada"
+              class="filtro-btn px-4 py-2 text-sm font-medium rounded-xl
+                     bg-slate-800/50 text-slate-400 border border-slate-700/50
+                     hover:bg-slate-700/50 hover:text-slate-300 transition-all duration-200
+                     focus:outline-none focus:ring-2 focus:ring-slate-500">
+        Completadas
+      </button>
+
+      <!-- Contador de resultados -->
+      <span id="contador-tareas" class="ml-auto text-xs text-slate-500 font-medium">
+        <!-- Se llena dinámicamente -->
+      </span>
+    </div>
+
+    <!-- ── Tabla de Tareas ── -->
+    <div class="bg-slate-900/50 border border-slate-800/60 rounded-2xl overflow-hidden
+                shadow-xl shadow-black/10 animate-fade-in-up" style="animation-delay: 0.2s">
+      <div class="overflow-x-auto tabla-scroll">
+        <table class="w-full tabla-responsive" id="tabla-tareas">
+          <thead>
+            <tr class="border-b border-slate-800/80">
+              <th class="text-left px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Título
+              </th>
+              <th class="text-left px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider hidden md:table-cell">
+                Descripción
+              </th>
+              <th class="text-left px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Estado
+              </th>
+              <th class="text-left px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider hidden sm:table-cell">
+                Fecha
+              </th>
+              <th class="text-right px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo-tabla" class="divide-y divide-slate-800/50">
+            <!-- Las filas se renderizan dinámicamente desde tareas.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Estado vacío -->
+      <div id="estado-vacio" class="hidden py-16 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-800/50 flex items-center justify-center">
+          <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-slate-400 mb-1">No hay tareas</h3>
+        <p class="text-sm text-slate-500">Haz clic en "Nueva Tarea" para crear la primera.</p>
+      </div>
+
+      <!-- Skeleton de carga -->
+      <div id="skeleton-carga" class="p-6 space-y-4">
+        <div class="flex gap-4 items-center">
+          <div class="skeleton h-5 w-1/4"></div>
+          <div class="skeleton h-5 w-1/3 hidden md:block"></div>
+          <div class="skeleton h-6 w-20"></div>
+          <div class="skeleton h-5 w-24 hidden sm:block"></div>
+          <div class="skeleton h-8 w-28 ml-auto"></div>
+        </div>
+        <div class="flex gap-4 items-center">
+          <div class="skeleton h-5 w-1/3"></div>
+          <div class="skeleton h-5 w-1/4 hidden md:block"></div>
+          <div class="skeleton h-6 w-24"></div>
+          <div class="skeleton h-5 w-20 hidden sm:block"></div>
+          <div class="skeleton h-8 w-28 ml-auto"></div>
+        </div>
+        <div class="flex gap-4 items-center">
+          <div class="skeleton h-5 w-1/5"></div>
+          <div class="skeleton h-5 w-2/5 hidden md:block"></div>
+          <div class="skeleton h-6 w-20"></div>
+          <div class="skeleton h-5 w-24 hidden sm:block"></div>
+          <div class="skeleton h-8 w-28 ml-auto"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       MODAL CREAR / EDITAR TAREA
+       ═══════════════════════════════════════════ -->
+  <div id="modal-tarea"
+       class="hidden fixed inset-0 z-[9000] flex items-center justify-center
+              bg-black/60 backdrop-blur-sm transition-opacity duration-300"
+       role="dialog"
+       aria-modal="true"
+       aria-hidden="true"
+       aria-labelledby="modal-titulo">
+
+    <div class="bg-slate-800 border border-slate-700/50 rounded-2xl w-full max-w-lg mx-4
+                shadow-2xl shadow-black/40 transform transition-all duration-300">
+
+      <!-- Header del modal -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700/50">
+        <h2 id="modal-titulo" class="text-lg font-semibold text-white">
+          Nueva Tarea
+        </h2>
+        <button id="btn-cerrar-modal"
+                class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-700/50
+                       transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500"
+                aria-label="Cerrar modal">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Formulario -->
+      <form id="form-tarea" class="px-6 py-5 space-y-5" novalidate>
+        <!-- Campo oculto para ID (edición) -->
+        <input type="hidden" id="tarea-id" />
+
+        <!-- Título -->
+        <div>
+          <label for="tarea-titulo" class="block text-sm font-medium text-slate-300 mb-1.5">
+            Título <span class="text-rose-400" aria-hidden="true">*</span>
+          </label>
+          <input type="text" id="tarea-titulo" name="titulo" required
+                 placeholder="Ej: Revisar CVs del puesto Backend"
+                 class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60
+                        text-white placeholder-slate-500 text-sm
+                        focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+                        transition-all duration-200" />
+        </div>
+
+        <!-- Descripción -->
+        <div>
+          <label for="tarea-descripcion" class="block text-sm font-medium text-slate-300 mb-1.5">
+            Descripción
+          </label>
+          <textarea id="tarea-descripcion" name="descripcion" rows="3"
+                    placeholder="Describe brevemente la tarea..."
+                    class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60
+                           text-white placeholder-slate-500 text-sm resize-none
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+                           transition-all duration-200"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Estado -->
+          <div>
+            <label for="tarea-estado" class="block text-sm font-medium text-slate-300 mb-1.5">
+              Estado
+            </label>
+            <select id="tarea-estado" name="estado"
+                    class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60
+                           text-white text-sm appearance-none cursor-pointer
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+                           transition-all duration-200">
+              <option value="pendiente">Pendiente</option>
+              <option value="completada">Completada</option>
+            </select>
+          </div>
+
+          <!-- Fecha -->
+          <div>
+            <label for="tarea-fecha" class="block text-sm font-medium text-slate-300 mb-1.5">
+              Fecha <span class="text-rose-400" aria-hidden="true">*</span>
+            </label>
+            <input type="date" id="tarea-fecha" name="fecha" required
+                   class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60
+                          text-white text-sm
+                          focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
+                          transition-all duration-200" />
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" id="btn-cancelar-modal"
+                  class="px-5 py-2.5 text-sm font-medium rounded-xl
+                         bg-slate-700 text-slate-300 border border-slate-600/50
+                         hover:bg-slate-600 transition-colors duration-200
+                         focus:outline-none focus:ring-2 focus:ring-slate-500">
+            Cancelar
+          </button>
+          <button type="submit" id="btn-guardar-tarea"
+                  class="px-5 py-2.5 text-sm font-semibold rounded-xl
+                         bg-gradient-to-r from-indigo-600 to-indigo-500 text-white
+                         shadow-lg shadow-indigo-600/20
+                         hover:from-indigo-500 hover:to-indigo-400
+                         active:scale-[0.98] transition-all duration-200
+                         focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-800">
+            Guardar Tarea
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ -->
+  <footer class="border-t border-slate-800/60 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p class="text-xs text-slate-500">
+        &copy; 2026 JobConnect — Sistema de Empleabilidad
+      </p>
+      <p class="text-xs text-slate-600">
+        feature/tareas-ui · Equipo Frontend
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts (módulos ES) -->
+  <script type="module" src="./tareas.js"></script>
+
+</body>
+</html>
