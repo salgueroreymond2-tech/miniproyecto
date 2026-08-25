@@ -48,6 +48,16 @@ const inputFecha         = document.getElementById('tarea-fecha');
 const contadorTareas     = document.getElementById('contador-tareas');
 const filtrosContainer   = document.getElementById('filtros-container');
 
+// Elementos de validación en tiempo real
+const contadorCharTitulo = document.getElementById('contador-titulo');
+const contadorCharDesc   = document.getElementById('contador-descripcion');
+const errorTitulo        = document.getElementById('error-titulo');
+const errorDescripcion   = document.getElementById('error-descripcion');
+
+/** Límites máximos de caracteres */
+const MAX_TITULO      = 300;
+const MAX_DESCRIPCION = 1500;
+
 // ─────────────────────────────────────────────
 // 3. ESTADO LOCAL
 // ─────────────────────────────────────────────
@@ -338,6 +348,82 @@ function fechaHoy() {
   return new Date().toISOString().split('T')[0];
 }
 
+/**
+ * Sanitiza un texto: elimina espacios consecutivos (deja máximo uno).
+ * @param {string} texto - Texto a sanitizar.
+ * @returns {string} Texto limpio sin espacios duplicados.
+ */
+function sanitizarTexto(texto) {
+  return texto.replace(/\s{2,}/g, ' ');
+}
+
+/**
+ * Valida un campo de texto en tiempo real.
+ * Sanitiza espacios consecutivos, actualiza el contador y muestra errores.
+ *
+ * @param {HTMLInputElement|HTMLTextAreaElement} input - Campo a validar.
+ * @param {HTMLElement} contador - Elemento del contador de caracteres.
+ * @param {HTMLElement} errorEl - Elemento para mensajes de error.
+ * @param {number} max - Número máximo de caracteres permitidos.
+ */
+function validarCampoEnTiempoReal(input, contador, errorEl, max) {
+  // Sanitizar: reemplazar múltiples espacios por uno solo
+  const posicionCursor = input.selectionStart;
+  const textoOriginal = input.value;
+  const textoSanitizado = sanitizarTexto(textoOriginal);
+
+  // Si se limpió algún espacio extra, actualizar el valor y ajustar cursor
+  if (textoOriginal !== textoSanitizado) {
+    const diferencia = textoOriginal.length - textoSanitizado.length;
+    input.value = textoSanitizado;
+    input.setSelectionRange(posicionCursor - diferencia, posicionCursor - diferencia);
+  }
+
+  const longitud = input.value.length;
+
+  // Actualizar contador
+  contador.textContent = `${longitud}/${max}`;
+
+  // Cambiar color del contador según proximidad al límite
+  if (longitud >= max) {
+    contador.className = 'text-xs text-rose-400 font-mono font-semibold';
+  } else if (longitud >= max * 0.8) {
+    contador.className = 'text-xs text-amber-400 font-mono';
+  } else {
+    contador.className = 'text-xs text-slate-500 font-mono';
+  }
+
+  // Mostrar/ocultar error y borde rojo
+  if (longitud >= max) {
+    errorEl.textContent = `Has alcanzado el límite de ${max} caracteres.`;
+    errorEl.classList.remove('hidden');
+    input.classList.add('border-rose-500/60');
+    input.classList.remove('border-slate-700/60');
+  } else {
+    errorEl.textContent = '';
+    errorEl.classList.add('hidden');
+    input.classList.remove('border-rose-500/60');
+    input.classList.add('border-slate-700/60');
+  }
+}
+
+/**
+ * Resetea los indicadores visuales de validación de un campo.
+ * @param {HTMLInputElement|HTMLTextAreaElement} input - Campo.
+ * @param {HTMLElement} contador - Contador de caracteres.
+ * @param {HTMLElement} errorEl - Mensaje de error.
+ * @param {number} max - Límite máximo.
+ */
+function resetearValidacionCampo(input, contador, errorEl, max) {
+  const longitud = input.value.length;
+  contador.textContent = `${longitud}/${max}`;
+  contador.className = 'text-xs text-slate-500 font-mono';
+  errorEl.textContent = '';
+  errorEl.classList.add('hidden');
+  input.classList.remove('border-rose-500/60');
+  input.classList.add('border-slate-700/60');
+}
+
 // ─────────────────────────────────────────────
 // 7. GESTIÓN DEL MODAL (CREAR / EDITAR)
 // ─────────────────────────────────────────────
@@ -351,6 +437,11 @@ function abrirModalCrear() {
   inputFecha.value = fechaHoy();
   inputEstado.value = 'pendiente';
   modalTitulo.textContent = 'Nueva Tarea';
+
+  // Resetear contadores y errores visuales
+  resetearValidacionCampo(inputTitulo, contadorCharTitulo, errorTitulo, MAX_TITULO);
+  resetearValidacionCampo(inputDescripcion, contadorCharDesc, errorDescripcion, MAX_DESCRIPCION);
+
   abrirModal('modal-tarea');
 }
 
@@ -371,6 +462,11 @@ function abrirModalEditar(id) {
   inputEstado.value = tarea.estado;
   inputFecha.value = tarea.fecha;
   modalTitulo.textContent = 'Editar Tarea';
+
+  // Actualizar contadores con los valores precargados
+  resetearValidacionCampo(inputTitulo, contadorCharTitulo, errorTitulo, MAX_TITULO);
+  resetearValidacionCampo(inputDescripcion, contadorCharDesc, errorDescripcion, MAX_DESCRIPCION);
+
   abrirModal('modal-tarea');
 }
 
@@ -382,13 +478,31 @@ function abrirModalEditar(id) {
 async function procesarFormulario(e) {
   e.preventDefault();
 
-  const titulo = inputTitulo.value.trim();
-  const fecha  = inputFecha.value;
+  // Aplicar trim final antes de validar
+  inputTitulo.value = inputTitulo.value.trim();
+  inputDescripcion.value = inputDescripcion.value.trim();
 
-  // Validación básica
+  const titulo      = inputTitulo.value;
+  const descripcion = inputDescripcion.value;
+  const fecha       = inputFecha.value;
+
+  // ── Validaciones ──
+
   if (!titulo) {
     mostrarAlerta('El título es obligatorio.', 'advertencia');
     inputTitulo.focus();
+    return;
+  }
+
+  if (titulo.length > MAX_TITULO) {
+    mostrarAlerta(`El título no puede superar los ${MAX_TITULO} caracteres.`, 'advertencia');
+    inputTitulo.focus();
+    return;
+  }
+
+  if (descripcion.length > MAX_DESCRIPCION) {
+    mostrarAlerta(`La descripción no puede superar los ${MAX_DESCRIPCION} caracteres.`, 'advertencia');
+    inputDescripcion.focus();
     return;
   }
 
@@ -400,7 +514,7 @@ async function procesarFormulario(e) {
 
   const datos = {
     titulo,
-    descripcion: inputDescripcion.value.trim(),
+    descripcion,
     estado: inputEstado.value,
     fecha,
   };
@@ -494,6 +608,16 @@ btnCancelarModal.addEventListener('click', () => cerrarModal('modal-tarea'));
 
 // Submit del formulario
 formTarea.addEventListener('submit', procesarFormulario);
+
+// Validación en tiempo real del título (evento 'input' se dispara con cada tecla)
+inputTitulo.addEventListener('input', () => {
+  validarCampoEnTiempoReal(inputTitulo, contadorCharTitulo, errorTitulo, MAX_TITULO);
+});
+
+// Validación en tiempo real de la descripción
+inputDescripcion.addEventListener('input', () => {
+  validarCampoEnTiempoReal(inputDescripcion, contadorCharDesc, errorDescripcion, MAX_DESCRIPCION);
+});
 
 // Filtros
 filtrosContainer.addEventListener('click', (e) => {

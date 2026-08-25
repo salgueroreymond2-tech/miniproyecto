@@ -312,28 +312,38 @@
 
         <!-- Título -->
         <div>
-          <label for="tarea-titulo" class="block text-sm font-medium text-slate-300 mb-1.5">
-            Título <span class="text-rose-400" aria-hidden="true">*</span>
-          </label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="tarea-titulo" class="block text-sm font-medium text-slate-300">
+              Título <span class="text-rose-400" aria-hidden="true">*</span>
+            </label>
+            <span id="contador-titulo" class="text-xs text-slate-500 font-mono">0/20</span>
+          </div>
           <input type="text" id="tarea-titulo" name="titulo" required
-                 placeholder="Ej: Revisar CVs del puesto Backend"
+                 maxlength="20"
+                 placeholder="Ej: Revisar CVs"
                  class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60
                         text-white placeholder-slate-500 text-sm
                         focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
                         transition-all duration-200" />
+          <p id="error-titulo" class="mt-1 text-xs text-rose-400 hidden" role="alert"></p>
         </div>
 
         <!-- Descripción -->
         <div>
-          <label for="tarea-descripcion" class="block text-sm font-medium text-slate-300 mb-1.5">
-            Descripción
-          </label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="tarea-descripcion" class="block text-sm font-medium text-slate-300">
+              Descripción
+            </label>
+            <span id="contador-descripcion" class="text-xs text-slate-500 font-mono">0/50</span>
+          </div>
           <textarea id="tarea-descripcion" name="descripcion" rows="3"
+                    maxlength="50"
                     placeholder="Describe brevemente la tarea..."
                     class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60
                            text-white placeholder-slate-500 text-sm resize-none
                            focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
                            transition-all duration-200"></textarea>
+          <p id="error-descripcion" class="mt-1 text-xs text-rose-400 hidden" role="alert"></p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
