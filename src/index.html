@@ -27,94 +27,95 @@
             JobConnect
         </h1>
 
-        <nav>
+        <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
 
-            <a href="pages/postulaciones.html">
-                Postulaciones
-            </a>
-
-            <a href="pages/entrevistas.html">
-                Entrevistas
-            </a>
-
+        <nav class="header-nav" id="headerNav">
+            <a href="pages/postulaciones.html">Postulaciones</a>
+            <a href="pages/entrevistas.html">Entrevistas</a>
         </nav>
 
     </header>
 
+    <div class="layout">
 
-    <main class="container">
+        <aside class="sidebar" id="sidebar">
 
-        <section class="titulo">
+            <div class="sidebar-header">
+                <h2>Menú</h2>
+            </div>
 
-            <h2>
-                Panel de Administración
-            </h2>
+            <nav class="sidebar-nav">
 
-            <p>
-                Bienvenido al sistema de gestión de JobConnect.
-            </p>
+                <a href="pages/postulaciones.html" class="sidebar-link">
+                    <span class="sidebar-icon">📄</span>
+                    <span class="sidebar-text">Postulaciones</span>
+                </a>
 
-        </section>
+                <a href="pages/entrevistas.html" class="sidebar-link">
+                    <span class="sidebar-icon">📅</span>
+                    <span class="sidebar-text">Entrevistas</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>JobConnect &copy; 2026</p>
+            </div>
+
+        </aside>
 
 
-        <div
-            style="
-                display: flex;
-                gap: 20px;
-                flex-wrap: wrap;
-            "
-        >
+        <main class="main-content">
 
-            <a
-                href="pages/postulaciones.html"
-                style="
-                    background: white;
-                    padding: 30px;
-                    border-radius: 10px;
-                    text-decoration: none;
-                    color: #1f2937;
-                    box-shadow: 0 2px 8px rgba(0,0,0,.08);
-                    min-width: 250px;
-                "
-            >
+            <section class="titulo">
 
-                <h3>
-                    📄 Postulaciones
-                </h3>
+                <h2>
+                    Panel de Administración
+                </h2>
 
                 <p>
-                    Administrar candidatos y vacantes.
+                    Bienvenido al sistema de gestión de JobConnect.
                 </p>
 
-            </a>
+            </section>
 
 
-            <a
-                href="pages/entrevistas.html"
-                style="
-                    background: white;
-                    padding: 30px;
-                    border-radius: 10px;
-                    text-decoration: none;
-                    color: #1f2937;
-                    box-shadow: 0 2px 8px rgba(0,0,0,.08);
-                    min-width: 250px;
-                "
-            >
+            <div class="dashboard">
 
-                <h3>
-                    📅 Entrevistas
-                </h3>
+                <a href="pages/postulaciones.html" class="dash-card">
 
-                <p>
-                    Registrar y administrar entrevistas.
-                </p>
+                    <div class="dash-icon">📄</div>
 
-            </a>
+                    <div class="dash-info">
+                        <h3>Postulaciones</h3>
+                        <p>Administrar candidatos y vacantes.</p>
+                    </div>
 
-        </div>
+                </a>
 
-    </main>
+
+                <a href="pages/entrevistas.html" class="dash-card">
+
+                    <div class="dash-icon">📅</div>
+
+                    <div class="dash-info">
+                        <h3>Entrevistas</h3>
+                        <p>Registrar y administrar entrevistas.</p>
+                    </div>
+
+                </a>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+    </script>
 
 </body>
 

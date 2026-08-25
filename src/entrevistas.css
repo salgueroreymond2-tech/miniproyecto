@@ -3,6 +3,8 @@
     padding: 25px;
     border-radius: 10px;
     margin-bottom: 30px;
+    margin-left: 24px;
+    margin-right: 24px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -34,6 +36,7 @@
     border-radius: 6px;
     font-size: 14px;
     font-family: Arial, sans-serif;
+    width: 100%;
 }
 
 .campo textarea {
@@ -62,13 +65,18 @@
     background: white;
     padding: 25px;
     border-radius: 10px;
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-bottom: 24px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    min-width: 650px;
 }
 
 th,
@@ -76,6 +84,7 @@ td {
     padding: 12px;
     border-bottom: 1px solid #ddd;
     text-align: left;
+    white-space: nowrap;
 }
 
 th {
@@ -92,6 +101,7 @@ td select {
     display: block;
     max-width: 250px;
     word-wrap: break-word;
+    white-space: normal;
 }
 
 .btn-edit {
@@ -119,4 +129,52 @@ td select {
 
 .btn-delete:hover {
     background: #b91c1c;
+}
+
+@media (max-width: 768px) {
+
+    .formulario {
+        padding: 18px;
+    }
+
+    #formEntrevista {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .campo-notas {
+        grid-column: 1;
+    }
+
+    .tabla-section {
+        padding: 15px;
+    }
+
+    .btn-primary {
+        grid-column: 1;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .formulario {
+        padding: 14px;
+        border-radius: 8px;
+    }
+
+    .formulario h3 {
+        font-size: 16px;
+    }
+
+    .tabla-section {
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .btn-edit,
+    .btn-delete {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
 }

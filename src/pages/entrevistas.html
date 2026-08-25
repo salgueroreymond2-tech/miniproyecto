@@ -23,7 +23,9 @@
 
         <h1>JobConnect</h1>
 
-        <nav>
+        <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
+
+        <nav class="header-nav" id="headerNav">
 
             <a href="../index.html">
                 Inicio
@@ -41,184 +43,225 @@
 
     </header>
 
+    <div class="layout">
 
-    <main class="container">
+        <aside class="sidebar" id="sidebar">
 
-        <section class="titulo">
+            <div class="sidebar-header">
+                <h2>Menú</h2>
+            </div>
 
-            <h2>
-                Gestión de Entrevistas
-            </h2>
+            <nav class="sidebar-nav">
 
-            <p>
-                Registra y administra las entrevistas de los candidatos.
-            </p>
+                <a href="../index.html" class="sidebar-link">
+                    <span class="sidebar-icon">🏠</span>
+                    <span class="sidebar-text">Inicio</span>
+                </a>
 
-        </section>
+                <a href="postulaciones.html" class="sidebar-link">
+                    <span class="sidebar-icon">📄</span>
+                    <span class="sidebar-text">Postulaciones</span>
+                </a>
+
+                <a href="entrevistas.html" class="sidebar-link active-link">
+                    <span class="sidebar-icon">📅</span>
+                    <span class="sidebar-text">Entrevistas</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>JobConnect &copy; 2026</p>
+            </div>
+
+        </aside>
 
 
-        <section class="formulario">
+        <main class="main-content">
 
-            <h3>
-                Nueva entrevista
-            </h3>
+            <section class="titulo">
+
+                <h2>
+                    Gestión de Entrevistas
+                </h2>
+
+                <p>
+                    Registra y administra las entrevistas de los candidatos.
+                </p>
+
+            </section>
 
 
-            <form id="formEntrevista">
+            <section class="formulario">
+
+                <h3>
+                    Nueva entrevista
+                </h3>
 
 
-                <div class="campo">
+                <form id="formEntrevista">
 
-                    <label for="postulacion">
-                        Postulación
-                    </label>
 
-                    <select
-                        id="postulacion"
-                        required
+                    <div class="campo">
+
+                        <label for="postulacion">
+                            Postulación
+                        </label>
+
+                        <select
+                            id="postulacion"
+                            required
+                        >
+
+                            <option value="">
+                                Seleccione una postulación
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="fecha">
+                            Fecha
+                        </label>
+
+                        <input
+                            type="date"
+                            id="fecha"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="hora">
+                            Hora
+                        </label>
+
+                        <input
+                            type="time"
+                            id="hora"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="resultado">
+                            Resultado
+                        </label>
+
+                        <select
+                            id="resultado"
+                            required
+                        >
+
+                            <option value="Pendiente">
+                                Pendiente
+                            </option>
+
+                            <option value="Aprobado">
+                                Aprobado
+                            </option>
+
+                            <option value="Rechazado">
+                                Rechazado
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo campo-notas">
+
+                        <label for="notas">
+                            Notas
+                        </label>
+
+                        <textarea
+                            id="notas"
+                            rows="4"
+                            placeholder="Escriba las observaciones de la entrevista..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
                     >
-
-                        <option value="">
-                            Seleccione una postulación
-                        </option>
-
-                    </select>
-
-                </div>
+                        Registrar entrevista
+                    </button>
 
 
-                <div class="campo">
+                </form>
 
-                    <label for="fecha">
-                        Fecha
-                    </label>
-
-                    <input
-                        type="date"
-                        id="fecha"
-                        required
-                    >
-
-                </div>
+            </section>
 
 
-                <div class="campo">
+            <section class="tabla-section">
 
-                    <label for="hora">
-                        Hora
-                    </label>
-
-                    <input
-                        type="time"
-                        id="hora"
-                        required
-                    >
-
-                </div>
+                <h3>
+                    Entrevistas registradas
+                </h3>
 
 
-                <div class="campo">
+                <table>
 
-                    <label for="resultado">
-                        Resultado
-                    </label>
+                    <thead>
 
-                    <select
-                        id="resultado"
-                        required
-                    >
+                        <tr>
 
-                        <option value="Pendiente">
-                            Pendiente
-                        </option>
+                            <th>ID</th>
 
-                        <option value="Aprobado">
-                            Aprobado
-                        </option>
+                            <th>Candidato</th>
 
-                        <option value="Rechazado">
-                            Rechazado
-                        </option>
+                            <th>Vacante</th>
 
-                    </select>
+                            <th>Fecha</th>
 
-                </div>
+                            <th>Hora</th>
 
+                            <th>Resultado</th>
 
-                <div class="campo campo-notas">
+                            <th>Notas</th>
 
-                    <label for="notas">
-                        Notas
-                    </label>
+                            <th>Acciones</th>
 
-                    <textarea
-                        id="notas"
-                        rows="4"
-                        placeholder="Escriba las observaciones de la entrevista..."
-                    ></textarea>
+                        </tr>
 
-                </div>
+                    </thead>
 
 
-                <button
-                    type="submit"
-                    class="btn-primary"
-                >
-                    Registrar entrevista
-                </button>
+                    <tbody id="tablaEntrevistas"></tbody>
 
+                </table>
 
-            </form>
+            </section>
 
-        </section>
+        </main>
 
-
-        <section class="tabla-section">
-
-            <h3>
-                Entrevistas registradas
-            </h3>
-
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>ID</th>
-
-                        <th>Candidato</th>
-
-                        <th>Vacante</th>
-
-                        <th>Fecha</th>
-
-                        <th>Hora</th>
-
-                        <th>Resultado</th>
-
-                        <th>Notas</th>
-
-                        <th>Acciones</th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="tablaEntrevistas"></tbody>
-
-            </table>
-
-        </section>
-
-    </main>
+    </div>
 
 
     <script src="../JS/api.js"></script>
 
     <script src="../JS/entrevistas.js"></script>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+    </script>
 
 </body>
 

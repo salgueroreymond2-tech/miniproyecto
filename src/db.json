@@ -20,6 +20,27 @@
       "email": "carlos@gmail.com",
       "telefono": "8666-6666",
       "profesion": "Analista de Datos"
+    },
+    {
+      "id": "4",
+      "nombre": "Laura Fernández",
+      "email": "laura@gmail.com",
+      "telefono": "8555-5555",
+      "profesion": "Desarrolladora Full Stack"
+    },
+    {
+      "id": "5",
+      "nombre": "Andrés Castillo",
+      "email": "andres@gmail.com",
+      "telefono": "8444-4444",
+      "profesion": "Ingeniero de Software"
+    },
+    {
+      "id": "6",
+      "nombre": "Sofía Mora",
+      "email": "sofia@gmail.com",
+      "telefono": "8333-3333",
+      "profesion": "Project Manager"
     }
   ],
   "vacantes": [
@@ -43,6 +64,20 @@
       "empresa": "Data CR",
       "ubicacion": "Alajuela",
       "estado": "Activa"
+    },
+    {
+      "id": "4",
+      "titulo": "Desarrollador Full Stack",
+      "empresa": "Tech Solutions",
+      "ubicacion": "San José",
+      "estado": "Activa"
+    },
+    {
+      "id": "5",
+      "titulo": "Ingeniero DevOps",
+      "empresa": "Cloud Systems",
+      "ubicacion": "Cartago",
+      "estado": "Cerrada"
     }
   ],
   "postulaciones": [
@@ -50,15 +85,57 @@
       "id": "1",
       "candidatoId": "1",
       "vacanteId": "1",
-      "fecha": "2026-08-20",
-      "estado": "En revisión"
+      "fecha": "2026-08-15",
+      "estado": "Seleccionado"
     },
     {
       "id": "2",
       "candidatoId": "2",
       "vacanteId": "2",
+      "fecha": "2026-08-16",
+      "estado": "Entrevista"
+    },
+    {
+      "id": "3",
+      "candidatoId": "3",
+      "vacanteId": "3",
+      "fecha": "2026-08-17",
+      "estado": "En revisión"
+    },
+    {
+      "id": "4",
+      "candidatoId": "4",
+      "vacanteId": "4",
+      "fecha": "2026-08-18",
+      "estado": "Entrevista"
+    },
+    {
+      "id": "5",
+      "candidatoId": "5",
+      "vacanteId": "1",
+      "fecha": "2026-08-19",
+      "estado": "Rechazado"
+    },
+    {
+      "id": "6",
+      "candidatoId": "6",
+      "vacanteId": "4",
+      "fecha": "2026-08-20",
+      "estado": "En revisión"
+    },
+    {
+      "id": "7",
+      "candidatoId": "1",
+      "vacanteId": "4",
       "fecha": "2026-08-21",
       "estado": "Entrevista"
+    },
+    {
+      "id": "8",
+      "candidatoId": "3",
+      "vacanteId": "2",
+      "fecha": "2026-08-22",
+      "estado": "Rechazado"
     }
   ],
   "entrevistas": [
@@ -68,9 +145,39 @@
       "candidatoId": "2",
       "vacanteId": "2",
       "fecha": "2026-08-28",
-      "hora": "10:00",
+      "hora": "09:00",
       "resultado": "Pendiente",
-      "notas": "Primera entrevista con recursos humanos."
+      "notas": "Primera entrevista con recursos humanos. Revisar portafolio de diseño."
+    },
+    {
+      "id": "2",
+      "postulacionId": "4",
+      "candidatoId": "4",
+      "vacanteId": "4",
+      "fecha": "2026-08-29",
+      "hora": "14:00",
+      "resultado": "Aprobado",
+      "notas": "Excelente experiencia en React y Node.js. Candidato fuerte para el equipo."
+    },
+    {
+      "id": "3",
+      "postulacionId": "7",
+      "candidatoId": "1",
+      "vacanteId": "4",
+      "fecha": "2026-09-01",
+      "hora": "10:30",
+      "resultado": "Pendiente",
+      "notas": "Entrevista técnica pendiente. Evaluar conocimientos de backend."
+    },
+    {
+      "id": "4",
+      "postulacionId": "1",
+      "candidatoId": "1",
+      "vacanteId": "1",
+      "fecha": "2026-08-25",
+      "hora": "11:00",
+      "resultado": "Aprobado",
+      "notas": "Buen manejo de CSS y JavaScript. Contratado para el equipo de frontend."
     }
   ]
 }

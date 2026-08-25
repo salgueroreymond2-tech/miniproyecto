@@ -16,100 +16,124 @@
     <header class="header">
         <h1>JobConnect</h1>
 
-        <nav>
+        <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
+
+        <nav class="header-nav" id="headerNav">
             <a href="../index.html">Inicio</a>
             <a href="postulaciones.html">Postulaciones</a>
             <a href="entrevistas.html">Entrevistas</a>
         </nav>
     </header>
 
-    <main class="container">
+    <div class="layout">
 
-        <section class="titulo">
-            <h2>Gestión de Postulaciones</h2>
-            <p>Administra las postulaciones de los candidatos a las vacantes.</p>
-        </section>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Menú</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="../index.html" class="sidebar-link">
+                    <span class="sidebar-icon">🏠</span>
+                    <span class="sidebar-text">Inicio</span>
+                </a>
+                <a href="postulaciones.html" class="sidebar-link active-link">
+                    <span class="sidebar-icon">📄</span>
+                    <span class="sidebar-text">Postulaciones</span>
+                </a>
+                <a href="entrevistas.html" class="sidebar-link">
+                    <span class="sidebar-icon">📅</span>
+                    <span class="sidebar-text">Entrevistas</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>JobConnect &copy; 2026</p>
+            </div>
+        </aside>
 
-        <section class="formulario">
+        <main class="main-content">
 
-            <h3>Nueva postulación</h3>
+            <section class="titulo">
+                <h2>Gestión de Postulaciones</h2>
+                <p>Administra las postulaciones de los candidatos a las vacantes.</p>
+            </section>
 
-            <form id="formPostulacion">
+            <section class="formulario">
 
-                <div class="campo">
-                    <label for="candidato">Candidato</label>
+                <h3>Nueva postulación</h3>
 
-                    <select id="candidato" required>
-                        <option value="">Seleccione un candidato</option>
-                    </select>
-                </div>
+                <form id="formPostulacion">
 
-                <div class="campo">
-                    <label for="vacante">Vacante</label>
+                    <div class="campo">
+                        <label for="candidato">Candidato</label>
+                        <select id="candidato" required>
+                            <option value="">Seleccione un candidato</option>
+                        </select>
+                    </div>
 
-                    <select id="vacante" required>
-                        <option value="">Seleccione una vacante</option>
-                    </select>
-                </div>
+                    <div class="campo">
+                        <label for="vacante">Vacante</label>
+                        <select id="vacante" required>
+                            <option value="">Seleccione una vacante</option>
+                        </select>
+                    </div>
 
-                <div class="campo">
-                    <label for="fecha">Fecha</label>
+                    <div class="campo">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" id="fecha" required>
+                    </div>
 
-                    <input
-                        type="date"
-                        id="fecha"
-                        required
-                    >
-                </div>
+                    <div class="campo">
+                        <label for="estado">Estado</label>
+                        <select id="estado" required>
+                            <option value="En revisión">En revisión</option>
+                            <option value="Entrevista">Entrevista</option>
+                            <option value="Seleccionado">Seleccionado</option>
+                            <option value="Rechazado">Rechazado</option>
+                        </select>
+                    </div>
 
-                <div class="campo">
-                    <label for="estado">Estado</label>
+                    <button type="submit" class="btn-primary">
+                        Crear postulación
+                    </button>
 
-                    <select id="estado" required>
-                        <option value="En revisión">En revisión</option>
-                        <option value="Entrevista">Entrevista</option>
-                        <option value="Seleccionado">Seleccionado</option>
-                        <option value="Rechazado">Rechazado</option>
-                    </select>
-                </div>
+                </form>
 
-                <button type="submit" class="btn-primary">
-                    Crear postulación
-                </button>
+            </section>
 
-            </form>
+            <section class="tabla-section">
 
-        </section>
+                <h3>Postulaciones registradas</h3>
 
-        <section class="tabla-section">
+                <table>
 
-            <h3>Postulaciones registradas</h3>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Candidato</th>
+                            <th>Vacante</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
 
-            <table>
+                    <tbody id="tablaPostulaciones"></tbody>
 
-                <thead>
+                </table>
 
-                    <tr>
-                        <th>ID</th>
-                        <th>Candidato</th>
-                        <th>Vacante</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
+            </section>
 
-                </thead>
+        </main>
 
-                <tbody id="tablaPostulaciones"></tbody>
-
-            </table>
-
-        </section>
-
-    </main>
+    </div>
 
     <script src="../JS/api.js"></script>
     <script src="../JS/postulaciones.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+    </script>
 
 </body>
 
