@@ -1,55 +1,37 @@
 import { request } from '../services/api.js';
 
 const ENDPOINT_VACANTES = '/vacantes';
+const ESTADOS_VACANTE = ['abierta', 'cerrada', 'pausada'];
+
+let appContainer = null;
+let vacantesCache = [];
 
 /**
- * Renderiza la estructura base del módulo de vacantes en el contenedor.
+ * Muestra un mensaje de alerta o notificación en el contenedor provisto.
  *
- * @param {HTMLElement} container - Elemento del DOM donde se inyectará el módulo.
- */
-function renderBaseLayout(container) {
-  container.innerHTML = `
-    <section class="vacantes-section">
-      <header class="vacantes-header">
-        <h1 class="vacantes-title">Vacantes</h1>
-        <button type="button" id="btn-create-vacante" class="btn btn-primary">
-          Nueva Vacante
-        </button>
-      </header>
-      <div id="vacantes-messages" class="vacantes-messages" aria-live="polite"></div>
-      <div id="vacantes-content" class="vacantes-content">
-        <p class="loading-message">Cargando vacantes...</p>
-      </div>
-    </section>
-  `;
-}
-
-/**
- * Muestra un mensaje en el contenedor de alertas/notificaciones.
- *
- * @param {HTMLElement} messageContainer - Contenedor de mensajes en el DOM.
+ * @param {HTMLElement} messageContainer - Contenedor en el DOM para mensajes.
  * @param {string} message - Texto del mensaje a desplegar.
- * @param {boolean} [isError=false] - Indica si el mensaje representa un estado de error.
+ * @param {boolean} [isError=false] - Indica si el mensaje es de tipo error.
  */
-function displayMessage(messageContainer, message, isError = false) {
+function mostrarMensaje(messageContainer, message, isError = false) {
   if (!messageContainer) return;
-  const messageClass = isError ? 'message error' : 'message success';
-  messageContainer.innerHTML = `<div class="${messageClass}">${message}</div>`;
+  const tipoClase = isError ? 'message error' : 'message success';
+  messageContainer.innerHTML = `<div class="${tipoClase}">${message}</div>`;
 }
 
 /**
- * Genera el template HTML para una fila individual de vacante.
+ * Genera el template HTML de una fila individual para la tabla de vacantes.
  *
  * @param {object} vacante - Objeto con los datos de la vacante.
  * @returns {string} Fila <tr> en formato HTML.
  */
-function buildVacanteRow(vacante) {
+function construirFilaVacante(vacante) {
   const id = vacante.id ?? '';
   const titulo = vacante.titulo || vacante.title || 'Sin título';
   const descripcion = vacante.descripcion || vacante.description || 'Sin descripción';
   const empresa = vacante.empresa || vacante.company || 'N/A';
   const salario = vacante.salario || vacante.salary || 'N/A';
-  const estado = vacante.estado || vacante.status || 'Activo';
+  const estado = vacante.estado || vacante.status || 'abierta';
 
   return `
     <tr data-id="${id}">
@@ -71,17 +53,17 @@ function buildVacanteRow(vacante) {
 }
 
 /**
- * Genera el template HTML de la tabla con las vacantes provistas.
+ * Genera el template HTML de la tabla con la lista de vacantes.
  *
- * @param {Array<object>} vacantes - Arreglo de vacantes recibidas del servidor.
- * @returns {string} Tabla en formato HTML o mensaje de lista vacía.
+ * @param {Array<object>} vacantes - Lista de vacantes a renderizar.
+ * @returns {string} Tabla HTML o mensaje de lista vacía.
  */
-function buildVacantesTable(vacantes) {
+function construirTablaVacantes(vacantes) {
   if (!Array.isArray(vacantes) || vacantes.length === 0) {
     return '<p class="empty-message">No hay vacantes disponibles en este momento.</p>';
   }
 
-  const rowsHtml = vacantes.map(buildVacanteRow).join('');
+  const filasHtml = vacantes.map(construirFilaVacante).join('');
 
   return `
     <table class="vacantes-table">
@@ -96,40 +78,258 @@ function buildVacantesTable(vacantes) {
         </tr>
       </thead>
       <tbody>
-        ${rowsHtml}
+        ${filasHtml}
       </tbody>
     </table>
   `;
 }
 
 /**
- * Configura y escucha los eventos interactivos del módulo.
+ * Genera el template HTML del formulario de creación o edición de vacantes.
  *
- * @param {HTMLElement} container - Elemento contenedor principal.
+ * @param {object|null} [vacante=null] - Datos de la vacante a precargar si se está editando.
+ * @returns {string} Formulario HTML.
  */
-function setupEventListeners(container) {
-  const createButton = container.querySelector('#btn-create-vacante');
-  if (createButton) {
-    createButton.addEventListener('click', () => {
-      console.log('Acción: Crear nueva vacante');
+function construirFormularioVacante(vacante = null) {
+  const esEdicion = Boolean(vacante && vacante.id);
+  const tituloVista = esEdicion ? 'Editar Vacante' : 'Nueva Vacante';
+  const textoBotonSubmit = esEdicion ? 'Guardar Cambios' : 'Crear Vacante';
+
+  const titulo = vacante?.titulo || vacante?.title || '';
+  const descripcion = vacante?.descripcion || vacante?.description || '';
+  const empresa = vacante?.empresa || vacante?.company || '';
+  const salario = vacante?.salario || vacante?.salary || '';
+  const requisitos = vacante?.requisitos || vacante?.requirements || '';
+  const estadoActual = (vacante?.estado || vacante?.status || 'abierta').toLowerCase();
+
+  const opcionesEstado = ESTADOS_VACANTE.map((estado) => {
+    const selected = estado === estadoActual ? 'selected' : '';
+    const label = estado.charAt(0).toUpperCase() + estado.slice(1);
+    return `<option value="${estado}" ${selected}>${label}</option>`;
+  }).join('');
+
+  return `
+    <section class="vacantes-form-section">
+      <header class="form-header">
+        <h2 class="form-title">${tituloVista}</h2>
+      </header>
+      <div id="form-messages" class="form-messages" aria-live="polite"></div>
+      <form id="form-vacante" class="form-vacante" novalidate>
+        <div class="form-group">
+          <label for="campo-titulo">Título *</label>
+          <input
+            type="text"
+            id="campo-titulo"
+            name="titulo"
+            value="${titulo}"
+            placeholder="Ej. Desarrollador Frontend"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="campo-descripcion">Descripción *</label>
+          <textarea
+            id="campo-descripcion"
+            name="descripcion"
+            rows="4"
+            placeholder="Descripción del puesto..."
+            required
+          >${descripcion}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="campo-empresa">Empresa</label>
+          <input
+            type="text"
+            id="campo-empresa"
+            name="empresa"
+            value="${empresa}"
+            placeholder="Nombre de la empresa"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="campo-salario">Salario</label>
+          <input
+            type="text"
+            id="campo-salario"
+            name="salario"
+            value="${salario}"
+            placeholder="Ej. 2500 USD"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="campo-requisitos">Requisitos</label>
+          <textarea
+            id="campo-requisitos"
+            name="requisitos"
+            rows="3"
+            placeholder="Requisitos y tecnologías deseadas..."
+          >${requisitos}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="campo-estado">Estado</label>
+          <select id="campo-estado" name="estado">
+            ${opcionesEstado}
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="btn-submit-vacante" class="btn btn-primary">
+            ${textoBotonSubmit}
+          </button>
+          <button type="button" id="btn-cancelar-vacante" class="btn btn-secondary">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </section>
+  `;
+}
+
+/**
+ * Valida los campos obligatorios del formulario de vacante.
+ *
+ * @param {object} datos - Datos extraídos del formulario.
+ * @returns {boolean} True si cumple las validaciones de campos requeridos.
+ */
+function validarCamposVacante(datos) {
+  return Boolean(datos.titulo && datos.descripcion);
+}
+
+/**
+ * Renderiza la vista de listado de vacantes y consulta los registros al servidor.
+ *
+ * @param {HTMLElement} container - Contenedor principal donde se muestra la vista.
+ */
+async function cargarYMostrarListado(container) {
+  if (!container) return;
+
+  container.innerHTML = `
+    <section class="vacantes-section">
+      <header class="vacantes-header">
+        <h1 class="vacantes-title">Vacantes</h1>
+        <button type="button" id="btn-nueva-vacante" class="btn btn-primary">
+          Nueva Vacante
+        </button>
+      </header>
+      <div id="vacantes-messages" class="vacantes-messages" aria-live="polite"></div>
+      <div id="vacantes-content" class="vacantes-content">
+        <p class="loading-message">Cargando vacantes...</p>
+      </div>
+    </section>
+  `;
+
+  const btnNuevaVacante = container.querySelector('#btn-nueva-vacante');
+  const messagesContainer = container.querySelector('#vacantes-messages');
+  const contentContainer = container.querySelector('#vacantes-content');
+
+  if (btnNuevaVacante) {
+    btnNuevaVacante.addEventListener('click', () => {
+      mostrarFormularioVacante();
     });
   }
 
-  const contentContainer = container.querySelector('#vacantes-content');
   if (contentContainer) {
     contentContainer.addEventListener('click', (event) => {
-      const actionButton = event.target.closest('button[data-action]');
-      if (!actionButton) return;
+      const botonAccion = event.target.closest('button[data-action]');
+      if (!botonAccion) return;
 
-      const { action, id } = actionButton.dataset;
+      const { action, id } = botonAccion.dataset;
 
       if (action === 'edit') {
-        console.log(`Acción: Editar vacante con ID ${id}`);
+        const vacanteSeleccionada = vacantesCache.find(
+          (item) => String(item.id) === String(id)
+        );
+        mostrarFormularioVacante(vacanteSeleccionada || { id });
         return;
       }
 
       if (action === 'delete') {
         console.log(`Acción: Eliminar vacante con ID ${id}`);
+      }
+    });
+  }
+
+  try {
+    const vacantes = await request(ENDPOINT_VACANTES, 'GET');
+    vacantesCache = Array.isArray(vacantes) ? vacantes : [];
+    contentContainer.innerHTML = construirTablaVacantes(vacantesCache);
+  } catch (error) {
+    vacantesCache = [];
+    contentContainer.innerHTML = '';
+    mostrarMensaje(
+      messagesContainer,
+      `Error al cargar las vacantes: ${error.message}`,
+      true
+    );
+  }
+}
+
+/**
+ * Renderiza y gestiona el formulario de creación o edición de vacantes.
+ *
+ * @param {object|null} [vacante=null] - Datos de la vacante a editar o null para crear una nueva.
+ */
+export function mostrarFormularioVacante(vacante = null) {
+  if (!appContainer) {
+    console.error('El contenedor principal no ha sido inicializado.');
+    return;
+  }
+
+  appContainer.innerHTML = construirFormularioVacante(vacante);
+
+  const formulario = appContainer.querySelector('#form-vacante');
+  const btnCancelar = appContainer.querySelector('#btn-cancelar-vacante');
+  const messagesContainer = appContainer.querySelector('#form-messages');
+
+  if (btnCancelar) {
+    btnCancelar.addEventListener('click', () => {
+      cargarYMostrarListado(appContainer);
+    });
+  }
+
+  if (formulario) {
+    formulario.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(formulario);
+      const datosVacante = {
+        titulo: (formData.get('titulo') || '').trim(),
+        descripcion: (formData.get('descripcion') || '').trim(),
+        empresa: (formData.get('empresa') || '').trim(),
+        salario: (formData.get('salario') || '').trim(),
+        requisitos: (formData.get('requisitos') || '').trim(),
+        estado: formData.get('estado') || 'abierta',
+      };
+
+      if (!validarCamposVacante(datosVacante)) {
+        mostrarMensaje(
+          messagesContainer,
+          'El título y la descripción son campos obligatorios.',
+          true
+        );
+        return;
+      }
+
+      try {
+        const esEdicion = Boolean(vacante && vacante.id);
+        const endpoint = esEdicion
+          ? `${ENDPOINT_VACANTES}/${vacante.id}`
+          : ENDPOINT_VACANTES;
+        const metodo = esEdicion ? 'PUT' : 'POST';
+
+        await request(endpoint, metodo, datosVacante);
+        await cargarYMostrarListado(appContainer);
+      } catch (error) {
+        mostrarMensaje(
+          messagesContainer,
+          `Error al guardar la vacante: ${error.message}`,
+          true
+        );
       }
     });
   }
@@ -146,22 +346,6 @@ export async function initVacantes(container) {
     return;
   }
 
-  renderBaseLayout(container);
-
-  const messagesContainer = container.querySelector('#vacantes-messages');
-  const contentContainer = container.querySelector('#vacantes-content');
-
-  setupEventListeners(container);
-
-  try {
-    const vacantes = await request(ENDPOINT_VACANTES, 'GET');
-    contentContainer.innerHTML = buildVacantesTable(vacantes);
-  } catch (error) {
-    contentContainer.innerHTML = '';
-    displayMessage(
-      messagesContainer,
-      `Error al cargar las vacantes: ${error.message}`,
-      true
-    );
-  }
+  appContainer = container;
+  await cargarYMostrarListado(appContainer);
 }
