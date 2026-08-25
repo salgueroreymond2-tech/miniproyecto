@@ -158,7 +158,22 @@ function mostrarEntrevistas() {
 
 
             <td>
+                ${candidato?.email || "-"}
+            </td>
+
+
+            <td>
                 ${vacante?.titulo || "No encontrada"}
+            </td>
+
+
+            <td>
+                ${vacante?.empresa || "-"}
+            </td>
+
+
+            <td>
+                ${vacante?.ubicacion || "-"}
             </td>
 
 
@@ -339,9 +354,6 @@ async function crearEntrevista(event) {
             nuevaEntrevista
         );
 
-
-        // También cambiamos el estado
-        // de la postulación a Entrevista
 
         await actualizarDato(
             "postulaciones",

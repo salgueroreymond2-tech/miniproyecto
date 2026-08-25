@@ -131,13 +131,37 @@ function mostrarPostulaciones() {
             <td>
                 ${candidato
                     ? candidato.nombre
-                    : "Candidato no encontrado"}
+                    : "No encontrado"}
+            </td>
+
+            <td>
+                ${candidato
+                    ? candidato.email
+                    : "-"}
+            </td>
+
+            <td>
+                ${candidato
+                    ? candidato.telefono
+                    : "-"}
             </td>
 
             <td>
                 ${vacante
                     ? vacante.titulo
-                    : "Vacante no encontrada"}
+                    : "No encontrada"}
+            </td>
+
+            <td>
+                ${vacante
+                    ? vacante.empresa
+                    : "-"}
+            </td>
+
+            <td>
+                ${vacante
+                    ? vacante.ubicacion
+                    : "-"}
             </td>
 
             <td>
