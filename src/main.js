@@ -233,10 +233,6 @@ function mostrarDashboard() {
               Inicio
             </button>
 
-            <button class="module-button" data-module="candidatos">
-              Candidatos
-            </button>
-
             <button class="module-button" data-module="vacantes">
               Vacantes
             </button>
@@ -265,18 +261,16 @@ function mostrarDashboard() {
             <h1>Bienvenido, ${session.nombre}</h1>
 
             <p>
-              Selecciona uno de los módulos del menú para comenzar
-              a administrar JobConnect.
+              Selecciona uno de los módulos para administrar las distintas áreas de JobConnect.
             </p>
           </section>
 
           <section class="module-grid">
-            ${crearTarjeta("Candidatos", "Administrar perfiles de candidatos", "candidatos")}
-            ${crearTarjeta("Vacantes", "Gestionar oportunidades laborales", "vacantes")}
-            ${crearTarjeta("Empresas", "Administrar empresas clientes", "empresas")}
-            ${crearTarjeta("Postulaciones", "Revisar procesos de aplicación", "postulaciones")}
-            ${crearTarjeta("Entrevistas", "Organizar entrevistas y notas", "entrevistas")}
-            ${crearTarjeta("Tareas", "Controlar tareas de reclutamiento", "tareas", true)}
+            ${crearTarjeta("Vacantes", "Gestionar oportunidades laborales y puestos", "/pages/vacantes.html", "vacantes")}
+            ${crearTarjeta("Empresas", "Administrar empresas clientes y contactos", "/pages/empresas.html", "empresas")}
+            ${crearTarjeta("Postulaciones", "Revisar procesos de aplicación y estados", "/src/pages/postulaciones.html", "postulaciones")}
+            ${crearTarjeta("Entrevistas", "Organizar entrevistas y notas de selección", "/src/pages/entrevistas.html", "entrevistas")}
+            ${crearTarjeta("Tareas", "Controlar tareas del reclutador y seguimiento", "/tareas-e-interfaz/tareas.html", "tareas")}
           </section>
         </main>
       </div>
@@ -286,15 +280,19 @@ function mostrarDashboard() {
   configurarDashboard();
 }
 
-function crearTarjeta(nombre, descripcion, modulo, activo = false) {
+function crearTarjeta(nombre, descripcion, url, modulo) {
   return `
-    <article class="module-card" data-module="${modulo}" style="cursor: pointer;">
+    <article class="module-card" data-module="${modulo}" data-url="${url}" style="cursor: pointer;">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 9px;">
         <h2 style="margin: 0;">${nombre}</h2>
-        ${activo ? '<span class="status-badge active" style="font-size: 11px; padding: 2px 8px; border-radius: 6px; background: #e0f2fe; color: #0369a1; font-weight: 700;">Disponible</span>' : '<span class="status-badge" style="font-size: 11px; padding: 2px 8px; border-radius: 6px; background: #f1f5f9; color: #64748b; font-weight: 600;">En desarrollo</span>'}
+        <span class="status-badge active" style="font-size: 11px; padding: 2px 8px; border-radius: 6px; background: #e0f2fe; color: #0369a1; font-weight: 700;">Disponible</span>
       </div>
       <p>${descripcion}</p>
-      ${activo ? '<div style="margin-top: 14px;"><a href="/tareas-e-interfaz/tareas.html" class="primary-button" style="display: inline-block; padding: 8px 14px; font-size: 13px; text-decoration: none; text-align: center; border-radius: 8px;">Ir al módulo →</a></div>' : ''}
+      <div style="margin-top: 14px;">
+        <a href="${url}" class="primary-button" style="display: inline-block; padding: 8px 14px; font-size: 13px; text-decoration: none; text-align: center; border-radius: 8px;">
+          Abrir módulo →
+        </a>
+      </div>
     </article>
   `;
 }
@@ -302,7 +300,6 @@ function crearTarjeta(nombre, descripcion, modulo, activo = false) {
 function configurarDashboard() {
   const logoutButton = document.querySelector("#logout-button");
   const moduleButtons = document.querySelectorAll(".module-button");
-  const dashboardContent = document.querySelector("#dashboard-content");
   const moduleCards = document.querySelectorAll(".module-card");
 
   logoutButton.addEventListener("click", cerrarSesion);
@@ -311,28 +308,16 @@ function configurarDashboard() {
   moduleCards.forEach((card) => {
     card.addEventListener("click", (e) => {
       if (e.target.tagName === "A") return;
-
-      const moduleName = card.dataset.module;
-      if (moduleName === "tareas") {
-        window.location.href = "/tareas-e-interfaz/tareas.html";
-        return;
-      }
-
-      const correspondingButton = document.querySelector(`.module-button[data-module="${moduleName}"]`);
-      if (correspondingButton) {
-        correspondingButton.click();
+      const url = card.dataset.url;
+      if (url) {
+        window.location.href = url;
       }
     });
   });
 
+  // Clics en botones del sidebar
   moduleButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      moduleButtons.forEach((item) => {
-        item.classList.remove("active");
-      });
-
-      button.classList.add("active");
-
       const moduleName = button.dataset.module;
 
       if (moduleName === "inicio") {
@@ -340,36 +325,17 @@ function configurarDashboard() {
         return;
       }
 
-      if (moduleName === "tareas") {
-        dashboardContent.innerHTML = `
-          <section class="empty-module">
-            <p class="eyebrow">Módulo</p>
-            <h1>Gestión de Tareas</h1>
+      const rutas = {
+        vacantes: "/pages/vacantes.html",
+        empresas: "/pages/empresas.html",
+        postulaciones: "/src/pages/postulaciones.html",
+        entrevistas: "/src/pages/entrevistas.html",
+        tareas: "/tareas-e-interfaz/tareas.html",
+      };
 
-            <p style="margin-bottom: 20px;">
-              El módulo de Gestión de Tareas está listo y funcional con CRUD completo,
-              validaciones en tiempo real y persistencia en la API local.
-            </p>
-
-            <a href="/tareas-e-interfaz/tareas.html" class="primary-button" style="display: inline-block; padding: 12px 24px; text-decoration: none; text-align: center; max-width: 260px;">
-              Abrir Gestión de Tareas →
-            </a>
-          </section>
-        `;
-        return;
+      if (rutas[moduleName]) {
+        window.location.href = rutas[moduleName];
       }
-
-      dashboardContent.innerHTML = `
-        <section class="empty-module">
-          <p class="eyebrow">Módulo</p>
-          <h1>${capitalizar(moduleName)}</h1>
-
-          <p>
-            Este espacio está preparado para integrar el módulo de
-            ${moduleName} desarrollado por el equipo.
-          </p>
-        </section>
-      `;
     });
   });
 }
