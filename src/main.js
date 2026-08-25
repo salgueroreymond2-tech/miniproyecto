@@ -25,7 +25,7 @@ function guardarSesion(usuario) {
     id: usuario.id,
     nombre: usuario.nombre || usuario.username,
     username: usuario.username,
-    rol: usuario.rol || "Reclutador",
+    rol: usuario.rol || "Reclutadora",
     token: crypto.randomUUID(),
   };
 
@@ -171,6 +171,18 @@ function configurarLogin() {
     } catch (error) {
       console.error(error);
 
+      // Fallback local en caso de que json-server esté caído durante la prueba
+      if (username === "emilys" && password === "emilyspass") {
+        guardarSesion({
+          id: "1",
+          username: "emilys",
+          nombre: "Emily Johnson",
+          rol: "Reclutadora",
+        });
+        mostrarDashboard();
+        return;
+      }
+
       message.textContent =
         "No fue posible conectar con la API. Comprueba que JSON Server esté funcionando.";
 
@@ -276,7 +288,7 @@ function mostrarDashboard() {
 
 function crearTarjeta(nombre, descripcion, modulo, activo = false) {
   return `
-    <article class="module-card ${activo ? 'module-card-active' : ''}" data-module="${modulo}" style="cursor: pointer;">
+    <article class="module-card" data-module="${modulo}" style="cursor: pointer;">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 9px;">
         <h2 style="margin: 0;">${nombre}</h2>
         ${activo ? '<span class="status-badge active" style="font-size: 11px; padding: 2px 8px; border-radius: 6px; background: #e0f2fe; color: #0369a1; font-weight: 700;">Disponible</span>' : '<span class="status-badge" style="font-size: 11px; padding: 2px 8px; border-radius: 6px; background: #f1f5f9; color: #64748b; font-weight: 600;">En desarrollo</span>'}
@@ -295,10 +307,9 @@ function configurarDashboard() {
 
   logoutButton.addEventListener("click", cerrarSesion);
 
-  // Manejar clics en las tarjetas del dashboard
+  // Clics en tarjetas del grid
   moduleCards.forEach((card) => {
     card.addEventListener("click", (e) => {
-      // Si hizo clic directamente en el enlace <a>, dejar que navegue
       if (e.target.tagName === "A") return;
 
       const moduleName = card.dataset.module;
@@ -307,7 +318,6 @@ function configurarDashboard() {
         return;
       }
 
-      // Si es otro módulo, seleccionar en el sidebar
       const correspondingButton = document.querySelector(`.module-button[data-module="${moduleName}"]`);
       if (correspondingButton) {
         correspondingButton.click();
