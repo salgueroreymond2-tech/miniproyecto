@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>JobConnect</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <h1>
+            JobConnect
+        </h1>
+
+        <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
+
+        <nav class="header-nav" id="headerNav">
+            <a href="pages/postulaciones.html">Postulaciones</a>
+            <a href="pages/entrevistas.html">Entrevistas</a>
+        </nav>
+
+    </header>
+
+    <div class="layout">
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-header">
+                <h2>Menú</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="pages/postulaciones.html" class="sidebar-link">
+                    <span class="sidebar-icon">📄</span>
+                    <span class="sidebar-text">Postulaciones</span>
+                </a>
+
+                <a href="pages/entrevistas.html" class="sidebar-link">
+                    <span class="sidebar-icon">📅</span>
+                    <span class="sidebar-text">Entrevistas</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>JobConnect &copy; 2026</p>
+            </div>
+
+        </aside>
+
+
+        <main class="main-content">
+
+            <section class="titulo">
+
+                <h2>
+                    Panel de Administración
+                </h2>
+
+                <p>
+                    Bienvenido al sistema de gestión de JobConnect.
+                </p>
+
+            </section>
+
+
+            <div class="dashboard">
+
+                <a href="pages/postulaciones.html" class="dash-card">
+
+                    <div class="dash-icon">📄</div>
+
+                    <div class="dash-info">
+                        <h3>Postulaciones</h3>
+                        <p>Administrar candidatos y vacantes.</p>
+                    </div>
+
+                </a>
+
+
+                <a href="pages/entrevistas.html" class="dash-card">
+
+                    <div class="dash-icon">📅</div>
+
+                    <div class="dash-info">
+                        <h3>Entrevistas</h3>
+                        <p>Registrar y administrar entrevistas.</p>
+                    </div>
+
+                </a>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+    </script>
+
+</body>
+
+</html>
