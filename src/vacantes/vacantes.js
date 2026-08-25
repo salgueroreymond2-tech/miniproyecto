@@ -2,6 +2,8 @@ import { request } from '../services/api.js';
 
 const ENDPOINT_VACANTES = '/vacantes';
 const ESTADOS_VACANTE = ['abierta', 'cerrada', 'pausada'];
+const MENSAJE_CONFIRMAR_ELIMINAR = '¿Estás seguro de eliminar esta vacante?';
+const MENSAJE_VACANTE_ELIMINADA = 'Vacante eliminada';
 
 let appContainer = null;
 let vacantesCache = [];
@@ -82,6 +84,54 @@ function construirTablaVacantes(vacantes) {
       </tbody>
     </table>
   `;
+}
+
+/**
+ * Consulta la API y recarga el contenido de la tabla de vacantes.
+ *
+ * @param {HTMLElement} contentContainer - Contenedor donde se inserta la tabla.
+ * @param {HTMLElement} messagesContainer - Contenedor para mostrar mensajes de error.
+ */
+async function recargarListaVacantes(contentContainer, messagesContainer) {
+  try {
+    const vacantes = await request(ENDPOINT_VACANTES, 'GET');
+    vacantesCache = Array.isArray(vacantes) ? vacantes : [];
+    contentContainer.innerHTML = construirTablaVacantes(vacantesCache);
+  } catch (error) {
+    vacantesCache = [];
+    contentContainer.innerHTML = '';
+    mostrarMensaje(
+      messagesContainer,
+      `Error al cargar las vacantes: ${error.message}`,
+      true
+    );
+  }
+}
+
+/**
+ * Gestiona el proceso de confirmación y eliminación de una vacante por ID.
+ *
+ * @param {string|number} id - Identificador único de la vacante a eliminar.
+ * @param {HTMLElement} messagesContainer - Contenedor para notificar el resultado.
+ * @param {HTMLElement} contentContainer - Contenedor de la tabla a actualizar.
+ */
+async function eliminarVacante(id, messagesContainer, contentContainer) {
+  if (!id) return;
+
+  const confirmacionUsuario = window.confirm(MENSAJE_CONFIRMAR_ELIMINAR);
+  if (!confirmacionUsuario) return;
+
+  try {
+    await request(`${ENDPOINT_VACANTES}/${id}`, 'DELETE');
+    await recargarListaVacantes(contentContainer, messagesContainer);
+    mostrarMensaje(messagesContainer, MENSAJE_VACANTE_ELIMINADA);
+  } catch (error) {
+    mostrarMensaje(
+      messagesContainer,
+      `Error al eliminar la vacante: ${error.message}`,
+      true
+    );
+  }
 }
 
 /**
@@ -201,7 +251,7 @@ function validarCamposVacante(datos) {
 }
 
 /**
- * Renderiza la vista de listado de vacantes y consulta los registros al servidor.
+ * Renderiza la vista de listado de vacantes y configura los manejadores de eventos.
  *
  * @param {HTMLElement} container - Contenedor principal donde se muestra la vista.
  */
@@ -234,7 +284,7 @@ async function cargarYMostrarListado(container) {
   }
 
   if (contentContainer) {
-    contentContainer.addEventListener('click', (event) => {
+    contentContainer.addEventListener('click', async (event) => {
       const botonAccion = event.target.closest('button[data-action]');
       if (!botonAccion) return;
 
@@ -249,24 +299,12 @@ async function cargarYMostrarListado(container) {
       }
 
       if (action === 'delete') {
-        console.log(`Acción: Eliminar vacante con ID ${id}`);
+        await eliminarVacante(id, messagesContainer, contentContainer);
       }
     });
   }
 
-  try {
-    const vacantes = await request(ENDPOINT_VACANTES, 'GET');
-    vacantesCache = Array.isArray(vacantes) ? vacantes : [];
-    contentContainer.innerHTML = construirTablaVacantes(vacantesCache);
-  } catch (error) {
-    vacantesCache = [];
-    contentContainer.innerHTML = '';
-    mostrarMensaje(
-      messagesContainer,
-      `Error al cargar las vacantes: ${error.message}`,
-      true
-    );
-  }
+  await recargarListaVacantes(contentContainer, messagesContainer);
 }
 
 /**
