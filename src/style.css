@@ -401,6 +401,12 @@ body {
   color: var(--text-main);
 }
 
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
 .form-group input,
 .form-group textarea,
 .form-group select {

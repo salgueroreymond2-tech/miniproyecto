@@ -5,11 +5,18 @@ import {
   eliminarEmpresaPorId,
 } from '../src/services/empresasService.js';
 
-const ESTADOS_VACANTE = ['abierta', 'cerrada', 'pausada'];
 const MENSAJE_CONFIRMAR_ELIMINAR = '¿Estás seguro de eliminar esta empresa?';
 const MENSAJE_EXITO_CREAR = 'Empresa creada exitosamente';
 const MENSAJE_EXITO_ACTUALIZAR = 'Empresa actualizada exitosamente';
 const MENSAJE_EXITO_ELIMINAR = 'Empresa eliminada correctamente';
+
+const MIN_CARACTERES_NOMBRE = 2;
+const MAX_CARACTERES_NOMBRE = 100;
+const MAX_CARACTERES_INDUSTRIA = 80;
+const MAX_CARACTERES_CONTACTO = 100;
+const MAX_CARACTERES_TELEFONO = 25;
+const MAX_CARACTERES_EMAIL = 100;
+const PATRON_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 let appContainer = null;
 let empresasCache = [];
@@ -141,7 +148,7 @@ async function eliminarEmpresa(id, messagesContainer, contentContainer) {
 }
 
 /**
- * Genera el template HTML del formulario de creación o edición de empresas.
+ * Genera el template HTML del formulario de creación o edición de empresas con restricciones de caracteres.
  *
  * @param {object|null} [empresa=null] - Datos de la empresa a precargar si se está editando.
  * @returns {string} Formulario HTML.
@@ -172,8 +179,11 @@ function construirFormularioEmpresa(empresa = null) {
             name="nombre"
             value="${nombre}"
             placeholder="Ej. Tech Solutions S.A."
+            minlength="${MIN_CARACTERES_NOMBRE}"
+            maxlength="${MAX_CARACTERES_NOMBRE}"
             required
           />
+          <small class="form-hint">Entre ${MIN_CARACTERES_NOMBRE} y ${MAX_CARACTERES_NOMBRE} caracteres.</small>
         </div>
 
         <div class="form-group">
@@ -184,7 +194,9 @@ function construirFormularioEmpresa(empresa = null) {
             name="industria"
             value="${industria}"
             placeholder="Ej. Tecnología, Finanzas, Salud..."
+            maxlength="${MAX_CARACTERES_INDUSTRIA}"
           />
+          <small class="form-hint">Máximo ${MAX_CARACTERES_INDUSTRIA} caracteres.</small>
         </div>
 
         <div class="form-group">
@@ -195,7 +207,9 @@ function construirFormularioEmpresa(empresa = null) {
             name="contacto"
             value="${contacto}"
             placeholder="Nombre del contacto o departamento"
+            maxlength="${MAX_CARACTERES_CONTACTO}"
           />
+          <small class="form-hint">Máximo ${MAX_CARACTERES_CONTACTO} caracteres.</small>
         </div>
 
         <div class="form-group">
@@ -206,7 +220,9 @@ function construirFormularioEmpresa(empresa = null) {
             name="telefono"
             value="${telefono}"
             placeholder="Ej. +506 8888-8888"
+            maxlength="${MAX_CARACTERES_TELEFONO}"
           />
+          <small class="form-hint">Máximo ${MAX_CARACTERES_TELEFONO} caracteres.</small>
         </div>
 
         <div class="form-group">
@@ -217,7 +233,9 @@ function construirFormularioEmpresa(empresa = null) {
             name="email"
             value="${email}"
             placeholder="contacto@empresa.com"
+            maxlength="${MAX_CARACTERES_EMAIL}"
           />
+          <small class="form-hint">Máximo ${MAX_CARACTERES_EMAIL} caracteres.</small>
         </div>
 
         <div class="form-actions">
@@ -234,13 +252,64 @@ function construirFormularioEmpresa(empresa = null) {
 }
 
 /**
- * Valida los campos obligatorios del formulario de empresa.
+ * Valida los campos y restricciones de caracteres del formulario de empresa.
  *
  * @param {object} datos - Datos extraídos del formulario.
- * @returns {boolean} True si cumple las validaciones de campos requeridos.
+ * @returns {{esValido: boolean, mensaje: string}} Objeto con el resultado y mensaje explicativo.
  */
 function validarCamposEmpresa(datos) {
-  return Boolean(datos.nombre);
+  if (!datos.nombre || datos.nombre.length < MIN_CARACTERES_NOMBRE) {
+    return {
+      esValido: false,
+      mensaje: `El nombre es obligatorio y debe tener al menos ${MIN_CARACTERES_NOMBRE} caracteres.`,
+    };
+  }
+
+  if (datos.nombre.length > MAX_CARACTERES_NOMBRE) {
+    return {
+      esValido: false,
+      mensaje: `El nombre no puede exceder los ${MAX_CARACTERES_NOMBRE} caracteres.`,
+    };
+  }
+
+  if (datos.industria && datos.industria.length > MAX_CARACTERES_INDUSTRIA) {
+    return {
+      esValido: false,
+      mensaje: `El campo industria no puede superar ${MAX_CARACTERES_INDUSTRIA} caracteres.`,
+    };
+  }
+
+  if (datos.contacto && datos.contacto.length > MAX_CARACTERES_CONTACTO) {
+    return {
+      esValido: false,
+      mensaje: `El campo contacto no puede superar ${MAX_CARACTERES_CONTACTO} caracteres.`,
+    };
+  }
+
+  if (datos.telefono && datos.telefono.length > MAX_CARACTERES_TELEFONO) {
+    return {
+      esValido: false,
+      mensaje: `El teléfono no puede superar ${MAX_CARACTERES_TELEFONO} caracteres.`,
+    };
+  }
+
+  if (datos.email) {
+    if (datos.email.length > MAX_CARACTERES_EMAIL) {
+      return {
+        esValido: false,
+        mensaje: `El correo electrónico no puede superar ${MAX_CARACTERES_EMAIL} caracteres.`,
+      };
+    }
+
+    if (!PATRON_EMAIL.test(datos.email)) {
+      return {
+        esValido: false,
+        mensaje: 'El formato del correo electrónico ingresado no es válido (ejemplo: contacto@empresa.com).',
+      };
+    }
+  }
+
+  return { esValido: true, mensaje: '' };
 }
 
 /**
@@ -348,12 +417,9 @@ export function mostrarFormularioEmpresa(empresa = null) {
         email: (formData.get('email') || '').trim(),
       };
 
-      if (!validarCamposEmpresa(datosEmpresa)) {
-        mostrarMensaje(
-          messagesContainer,
-          'El nombre de la empresa es un campo obligatorio.',
-          true
-        );
+      const validacion = validarCamposEmpresa(datosEmpresa);
+      if (!validacion.esValido) {
+        mostrarMensaje(messagesContainer, validacion.mensaje, true);
         return;
       }
 

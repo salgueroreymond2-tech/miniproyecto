@@ -11,6 +11,14 @@ const MENSAJE_EXITO_CREAR = 'Vacante creada exitosamente';
 const MENSAJE_EXITO_ACTUALIZAR = 'Vacante actualizada exitosamente';
 const MENSAJE_EXITO_ELIMINAR = 'Vacante eliminada correctamente';
 
+const MIN_CARACTERES_TITULO = 3;
+const MAX_CARACTERES_TITULO = 100;
+const MIN_CARACTERES_DESCRIPCION = 10;
+const MAX_CARACTERES_DESCRIPCION = 1000;
+const MAX_CARACTERES_EMPRESA = 80;
+const MAX_CARACTERES_SALARIO = 50;
+const MAX_CARACTERES_REQUISITOS = 500;
+
 let appContainer = null;
 let vacantesCache = [];
 
@@ -141,7 +149,7 @@ async function eliminarVacante(id, messagesContainer, contentContainer) {
 }
 
 /**
- * Genera el template HTML del formulario de creación o edición de vacantes.
+ * Genera el template HTML del formulario de creación o edición de vacantes con restricciones de caracteres.
  *
  * @param {object|null} [vacante=null] - Datos de la vacante a precargar si se está editando.
  * @returns {string} Formulario HTML.
@@ -179,8 +187,11 @@ function construirFormularioVacante(vacante = null) {
             name="titulo"
             value="${titulo}"
             placeholder="Ej. Desarrollador Frontend"
+            minlength="${MIN_CARACTERES_TITULO}"
+            maxlength="${MAX_CARACTERES_TITULO}"
             required
           />
+          <small class="form-hint">Entre ${MIN_CARACTERES_TITULO} y ${MAX_CARACTERES_TITULO} caracteres.</small>
         </div>
 
         <div class="form-group">
@@ -190,8 +201,11 @@ function construirFormularioVacante(vacante = null) {
             name="descripcion"
             rows="4"
             placeholder="Descripción del puesto..."
+            minlength="${MIN_CARACTERES_DESCRIPCION}"
+            maxlength="${MAX_CARACTERES_DESCRIPCION}"
             required
           >${descripcion}</textarea>
+          <small class="form-hint">Entre ${MIN_CARACTERES_DESCRIPCION} y ${MAX_CARACTERES_DESCRIPCION} caracteres.</small>
         </div>
 
         <div class="form-group">
@@ -202,7 +216,9 @@ function construirFormularioVacante(vacante = null) {
             name="empresa"
             value="${empresa}"
             placeholder="Nombre de la empresa"
+            maxlength="${MAX_CARACTERES_EMPRESA}"
           />
+          <small class="form-hint">Máximo ${MAX_CARACTERES_EMPRESA} caracteres.</small>
         </div>
 
         <div class="form-group">
@@ -213,7 +229,9 @@ function construirFormularioVacante(vacante = null) {
             name="salario"
             value="${salario}"
             placeholder="Ej. 2500 USD"
+            maxlength="${MAX_CARACTERES_SALARIO}"
           />
+          <small class="form-hint">Máximo ${MAX_CARACTERES_SALARIO} caracteres.</small>
         </div>
 
         <div class="form-group">
@@ -223,7 +241,9 @@ function construirFormularioVacante(vacante = null) {
             name="requisitos"
             rows="3"
             placeholder="Requisitos y tecnologías deseadas..."
+            maxlength="${MAX_CARACTERES_REQUISITOS}"
           >${requisitos}</textarea>
+          <small class="form-hint">Máximo ${MAX_CARACTERES_REQUISITOS} caracteres.</small>
         </div>
 
         <div class="form-group">
@@ -247,13 +267,62 @@ function construirFormularioVacante(vacante = null) {
 }
 
 /**
- * Valida los campos obligatorios del formulario de vacante.
+ * Valida los campos y restricciones de caracteres del formulario de vacante.
  *
  * @param {object} datos - Datos extraídos del formulario.
- * @returns {boolean} True si cumple las validaciones de campos requeridos.
+ * @returns {{esValido: boolean, mensaje: string}} Objeto con el resultado y mensaje explicativo.
  */
 function validarCamposVacante(datos) {
-  return Boolean(datos.titulo && datos.descripcion);
+  if (!datos.titulo || datos.titulo.length < MIN_CARACTERES_TITULO) {
+    return {
+      esValido: false,
+      mensaje: `El título es obligatorio y debe tener al menos ${MIN_CARACTERES_TITULO} caracteres.`,
+    };
+  }
+
+  if (datos.titulo.length > MAX_CARACTERES_TITULO) {
+    return {
+      esValido: false,
+      mensaje: `El título no puede exceder los ${MAX_CARACTERES_TITULO} caracteres.`,
+    };
+  }
+
+  if (!datos.descripcion || datos.descripcion.length < MIN_CARACTERES_DESCRIPCION) {
+    return {
+      esValido: false,
+      mensaje: `La descripción es obligatoria y debe tener al menos ${MIN_CARACTERES_DESCRIPCION} caracteres.`,
+    };
+  }
+
+  if (datos.descripcion.length > MAX_CARACTERES_DESCRIPCION) {
+    return {
+      esValido: false,
+      mensaje: `La descripción no puede exceder los ${MAX_CARACTERES_DESCRIPCION} caracteres.`,
+    };
+  }
+
+  if (datos.empresa && datos.empresa.length > MAX_CARACTERES_EMPRESA) {
+    return {
+      esValido: false,
+      mensaje: `El nombre de la empresa no puede superar ${MAX_CARACTERES_EMPRESA} caracteres.`,
+    };
+  }
+
+  if (datos.salario && datos.salario.length > MAX_CARACTERES_SALARIO) {
+    return {
+      esValido: false,
+      mensaje: `El campo salario no puede superar ${MAX_CARACTERES_SALARIO} caracteres.`,
+    };
+  }
+
+  if (datos.requisitos && datos.requisitos.length > MAX_CARACTERES_REQUISITOS) {
+    return {
+      esValido: false,
+      mensaje: `Los requisitos no pueden superar ${MAX_CARACTERES_REQUISITOS} caracteres.`,
+    };
+  }
+
+  return { esValido: true, mensaje: '' };
 }
 
 /**
@@ -362,12 +431,9 @@ export function mostrarFormularioVacante(vacante = null) {
         estado: formData.get('estado') || 'abierta',
       };
 
-      if (!validarCamposVacante(datosVacante)) {
-        mostrarMensaje(
-          messagesContainer,
-          'El título y la descripción son campos obligatorios.',
-          true
-        );
+      const validacion = validarCamposVacante(datosVacante);
+      if (!validacion.esValido) {
+        mostrarMensaje(messagesContainer, validacion.mensaje, true);
         return;
       }
 
