@@ -1,0 +1,76 @@
+{
+  "candidatos": [
+    {
+      "id": "1",
+      "nombre": "Bryan Gomez",
+      "email": "bryan@gmail.com",
+      "telefono": "8888-8888",
+      "profesion": "Desarrollador Web"
+    },
+    {
+      "id": "2",
+      "nombre": "María Rodríguez",
+      "email": "maria@gmail.com",
+      "telefono": "8777-7777",
+      "profesion": "Diseñadora UX/UI"
+    },
+    {
+      "id": "3",
+      "nombre": "Carlos Pérez",
+      "email": "carlos@gmail.com",
+      "telefono": "8666-6666",
+      "profesion": "Analista de Datos"
+    }
+  ],
+  "vacantes": [
+    {
+      "id": "1",
+      "titulo": "Desarrollador Frontend",
+      "empresa": "Tech Solutions",
+      "ubicacion": "San José",
+      "estado": "Activa"
+    },
+    {
+      "id": "2",
+      "titulo": "Diseñador UX/UI",
+      "empresa": "Digital Corp",
+      "ubicacion": "Heredia",
+      "estado": "Activa"
+    },
+    {
+      "id": "3",
+      "titulo": "Analista de Datos",
+      "empresa": "Data CR",
+      "ubicacion": "Alajuela",
+      "estado": "Activa"
+    }
+  ],
+  "postulaciones": [
+    {
+      "id": "1",
+      "candidatoId": "1",
+      "vacanteId": "1",
+      "fecha": "2026-08-20",
+      "estado": "En revisión"
+    },
+    {
+      "id": "2",
+      "candidatoId": "2",
+      "vacanteId": "2",
+      "fecha": "2026-08-21",
+      "estado": "Entrevista"
+    }
+  ],
+  "entrevistas": [
+    {
+      "id": "1",
+      "postulacionId": "2",
+      "candidatoId": "2",
+      "vacanteId": "2",
+      "fecha": "2026-08-28",
+      "hora": "10:00",
+      "resultado": "Pendiente",
+      "notas": "Primera entrevista con recursos humanos."
+    }
+  ]
+}

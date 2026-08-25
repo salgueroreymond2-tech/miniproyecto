@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JobConnect - Postulaciones</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../postulaciones.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>JobConnect</h1>
+
+        <nav>
+            <a href="../index.html">Inicio</a>
+            <a href="postulaciones.html">Postulaciones</a>
+            <a href="entrevistas.html">Entrevistas</a>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <section class="titulo">
+            <h2>Gestión de Postulaciones</h2>
+            <p>Administra las postulaciones de los candidatos a las vacantes.</p>
+        </section>
+
+        <section class="formulario">
+
+            <h3>Nueva postulación</h3>
+
+            <form id="formPostulacion">
+
+                <div class="campo">
+                    <label for="candidato">Candidato</label>
+
+                    <select id="candidato" required>
+                        <option value="">Seleccione un candidato</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="vacante">Vacante</label>
+
+                    <select id="vacante" required>
+                        <option value="">Seleccione una vacante</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="fecha">Fecha</label>
+
+                    <input
+                        type="date"
+                        id="fecha"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="estado">Estado</label>
+
+                    <select id="estado" required>
+                        <option value="En revisión">En revisión</option>
+                        <option value="Entrevista">Entrevista</option>
+                        <option value="Seleccionado">Seleccionado</option>
+                        <option value="Rechazado">Rechazado</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Crear postulación
+                </button>
+
+            </form>
+
+        </section>
+
+        <section class="tabla-section">
+
+            <h3>Postulaciones registradas</h3>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Candidato</th>
+                        <th>Vacante</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="tablaPostulaciones"></tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+    <script src="../JS/api.js"></script>
+    <script src="../JS/postulaciones.js"></script>
+
+</body>
+
+</html>
