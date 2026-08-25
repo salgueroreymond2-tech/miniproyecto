@@ -1,0 +1,40 @@
+{
+  "vacantes": [
+    {
+      "id": 1,
+      "titulo": "Desarrollador Frontend",
+      "descripcion": "Buscamos dev con experiencia en React",
+      "empresa": "TechCorp",
+      "salario": "2500 USD",
+      "requisitos": "HTML, CSS, JS, React",
+      "estado": "abierta"
+    },
+    {
+      "id": 2,
+      "titulo": "Diseñador UX",
+      "descripcion": "Diseño de interfaces mobile",
+      "empresa": "CreativeStudio",
+      "salario": "2000 USD",
+      "requisitos": "Figma, Adobe XD",
+      "estado": "abierta"
+    }
+  ],
+  "empresas": [
+    {
+      "id": 1,
+      "nombre": "TechCorp",
+      "industria": "Tecnología",
+      "contacto": "Samuel Ellis",
+      "telefono": "+506 8888-1111",
+      "email": "samu@techcorp.com"
+    },
+    {
+      "id": 2,
+      "nombre": "CreativeStudio",
+      "industria": "Diseño",
+      "contacto": "Carlos Ruiz",
+      "telefono": "+506 8888-2222",
+      "email": "carlos@creativestudio.com"
+    }
+  ]
+}
