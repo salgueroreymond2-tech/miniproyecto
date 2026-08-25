@@ -99,6 +99,48 @@
       "empresa": "QualitySoft",
       "ubicacion": "Limón",
       "estado": "Activa"
+    },
+    {
+      "id": "7",
+      "titulo": "Desarrollador Backend",
+      "empresa": "CodeHouse",
+      "ubicacion": "Remoto",
+      "estado": "Activa"
+    },
+    {
+      "id": "8",
+      "titulo": "Gerente de Producto",
+      "empresa": "InnovateCR",
+      "ubicacion": "San José",
+      "estado": "Activa"
+    },
+    {
+      "id": "9",
+      "titulo": "Ingeniero de Ciberseguridad",
+      "empresa": "SecureNet",
+      "ubicacion": "Heredia",
+      "estado": "Activa"
+    },
+    {
+      "id": "10",
+      "titulo": "Analista de Marketing Digital",
+      "empresa": "MediaBoost",
+      "ubicacion": "Alajuela",
+      "estado": "Activa"
+    },
+    {
+      "id": "11",
+      "titulo": "Administrador de Bases de Datos",
+      "empresa": "DataCR",
+      "ubicacion": "Cartago",
+      "estado": "Activa"
+    },
+    {
+      "id": "12",
+      "titulo": "Desarrollador Móvil",
+      "empresa": "AppWorks",
+      "ubicacion": "Remoto",
+      "estado": "Activa"
     }
   ],
   "postulaciones": [
