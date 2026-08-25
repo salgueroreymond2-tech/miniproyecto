@@ -1,13 +1,121 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>miniproyecto</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>JobConnect</title>
+
+    <link
+        rel="stylesheet"
+        href="css/main.css"
+    >
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <h1>
+            JobConnect
+        </h1>
+
+        <nav>
+
+            <a href="pages/postulaciones.html">
+                Postulaciones
+            </a>
+
+            <a href="pages/entrevistas.html">
+                Entrevistas
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main class="container">
+
+        <section class="titulo">
+
+            <h2>
+                Panel de Administración
+            </h2>
+
+            <p>
+                Bienvenido al sistema de gestión de JobConnect.
+            </p>
+
+        </section>
+
+
+        <div
+            style="
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+            "
+        >
+
+            <a
+                href="pages/postulaciones.html"
+                style="
+                    background: white;
+                    padding: 30px;
+                    border-radius: 10px;
+                    text-decoration: none;
+                    color: #1f2937;
+                    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+                    min-width: 250px;
+                "
+            >
+
+                <h3>
+                    📄 Postulaciones
+                </h3>
+
+                <p>
+                    Administrar candidatos y vacantes.
+                </p>
+
+            </a>
+
+
+            <a
+                href="pages/entrevistas.html"
+                style="
+                    background: white;
+                    padding: 30px;
+                    border-radius: 10px;
+                    text-decoration: none;
+                    color: #1f2937;
+                    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+                    min-width: 250px;
+                "
+            >
+
+                <h3>
+                    📅 Entrevistas
+                </h3>
+
+                <p>
+                    Registrar y administrar entrevistas.
+                </p>
+
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+
 </html>
