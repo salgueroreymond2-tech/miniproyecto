@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>JobConnect - Entrevistas</title>
-
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../entrevistas.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrevistas - JobConnect</title>
+    <!-- Core Global Design System -->
+    <link rel="stylesheet" href="/src/style.css">
+    <!-- Module Specific Style -->
+    <link rel="stylesheet" href="./entrevistas.css">
 </head>
-
 <body>
 
     <!-- ── NAVBAR ── -->
@@ -30,15 +22,6 @@
                 <span class="jc-navbar-name">JobConnect</span>
             </a>
         </div>
-
-        <nav class="jc-navbar-links" aria-label="Navegación principal">
-            <a href="/index.html" class="jc-nav-link">Dashboard</a>
-            <a href="/pages/vacantes.html" class="jc-nav-link">Vacantes</a>
-            <a href="/pages/empresas.html" class="jc-nav-link">Empresas</a>
-            <a href="/src/pages/postulaciones.html" class="jc-nav-link">Postulaciones</a>
-            <a href="/src/pages/entrevistas.html" class="jc-nav-link active">Entrevistas</a>
-            <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link">Tareas</a>
-        </nav>
 
         <div style="display: flex; align-items: center; gap: 14px;">
             <div style="text-align: right; display: grid; gap: 1px;">
@@ -63,7 +46,7 @@
                         </div>
                     </a>
 
-                    <a href="/pages/vacantes.html" class="module-button">
+                    <a href="/vacantes/vacantes.html" class="module-button">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">work</span>
                             <span>Vacantes</span>
@@ -71,7 +54,7 @@
                         <span class="module-badge-count">6</span>
                     </a>
 
-                    <a href="/pages/empresas.html" class="module-button">
+                    <a href="/empresas/empresas.html" class="module-button">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">domain</span>
                             <span>Empresas</span>
@@ -79,7 +62,7 @@
                         <span class="module-badge-count">4</span>
                     </a>
 
-                    <a href="/src/pages/postulaciones.html" class="module-button">
+                    <a href="/postulaciones/postulaciones.html" class="module-button">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">description</span>
                             <span>Postulaciones</span>
@@ -87,7 +70,7 @@
                         <span class="module-badge-count">6</span>
                     </a>
 
-                    <a href="/src/pages/entrevistas.html" class="module-button active">
+                    <a href="/entrevistas/entrevistas.html" class="module-button active">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">calendar_month</span>
                             <span>Entrevistas</span>
@@ -113,199 +96,93 @@
             </div>
         </aside>
 
+        <!-- ── CONTENIDO PRINCIPAL ── -->
+        <main class="dashboard-content" style="padding: 32px 36px;">
 
-        <main class="main-content">
+            <div class="welcome-card" style="margin-bottom: 24px;">
+                <p class="eyebrow">Agenda y Selección</p>
+                <h1>Gestión de Entrevistas</h1>
+                <p>Programa reuniones de selección, evalúa a los candidatos y añade observaciones de desempeño.</p>
+            </div>
 
-            <section class="titulo">
-
-                <h2>
-                    Gestión de Entrevistas
-                </h2>
-
-                <p>
-                    Registra y administra las entrevistas de los candidatos.
-                </p>
-
-            </section>
-
-
+            <!-- FORMULARIO -->
             <section class="formulario">
-
-                <h3>
-                    Nueva entrevista
-                </h3>
-
+                <h3>Agendar Nueva Entrevista</h3>
 
                 <form id="formEntrevista">
-
-
-                    <div class="campo">
-
-                        <label for="postulacion">
-                            Postulación
-                        </label>
-
-                        <select
-                            id="postulacion"
-                            required
-                        >
-
-                            <option value="">
-                                Seleccione una postulación
-                            </option>
-
+                    <div class="campo" style="grid-column: 1 / 3;">
+                        <label for="postulacion">Postulación Asociada *</label>
+                        <select id="postulacion" required>
+                            <option value="">Cargando postulaciones...</option>
                         </select>
-
                     </div>
 
-
                     <div class="campo">
-
-                        <label for="fecha">
-                            Fecha
-                        </label>
-
-                        <input
-                            type="date"
-                            id="fecha"
-                            required
-                        >
-
+                        <label for="fecha">Fecha *</label>
+                        <input type="date" id="fecha" required>
                     </div>
 
-
                     <div class="campo">
-
-                        <label for="hora">
-                            Hora
-                        </label>
-
-                        <input
-                            type="time"
-                            id="hora"
-                            required
-                        >
-
+                        <label for="hora">Hora *</label>
+                        <input type="time" id="hora" required>
                     </div>
 
-
-                    <div class="campo">
-
-                        <label for="resultado">
-                            Resultado
-                        </label>
-
-                        <select
-                            id="resultado"
-                            required
-                        >
-
-                            <option value="Pendiente">
-                                Pendiente
-                            </option>
-
-                            <option value="Aprobado">
-                                Aprobado
-                            </option>
-
-                            <option value="Rechazado">
-                                Rechazado
-                            </option>
-
+                    <div class="campo" style="grid-column: 1 / 3;">
+                        <label for="resultado">Resultado Inicial *</label>
+                        <select id="resultado" required>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Aprobado">Aprobado</option>
+                            <option value="Rechazado">Rechazado</option>
                         </select>
-
                     </div>
-
 
                     <div class="campo campo-notas">
-
-                        <label for="notas">
-                            Notas
-                        </label>
-
-                        <textarea
-                            id="notas"
-                            rows="4"
-                            placeholder="Escriba las observaciones de la entrevista..."
-                        ></textarea>
-
+                        <label for="notas">Notas de la Entrevista</label>
+                        <textarea id="notas" rows="3" placeholder="Observaciones técnicas, impresiones o acuerdos..."></textarea>
                     </div>
 
-
-                    <button
-                        type="submit"
-                        class="btn-primary"
-                    >
-                        Registrar entrevista
+                    <button type="submit" class="btn btn-primary" style="grid-column: 1 / 3; justify-content: center;">
+                        + Programar Entrevista
                     </button>
-
-
                 </form>
-
             </section>
 
-
+            <!-- TABLA -->
             <section class="tabla-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div>
+                        <h3>Entrevistas Programadas</h3>
+                        <p style="color: var(--text-secondary); font-size: 13px;">Supervisa los horarios y el resultado final de cada sesión.</p>
+                    </div>
+                </div>
 
-                <h3>
-                    Entrevistas registradas
-                </h3>
-
-
-                <table>
-
+                <table class="vacantes-table">
                     <thead>
-
                         <tr>
-
                             <th>ID</th>
-
                             <th>Candidato</th>
-
                             <th>Email</th>
-
                             <th>Vacante</th>
-
                             <th>Empresa</th>
-
                             <th>Ubicación</th>
-
                             <th>Fecha</th>
-
                             <th>Hora</th>
-
                             <th>Resultado</th>
-
                             <th>Notas</th>
-
                             <th>Acciones</th>
-
                         </tr>
-
                     </thead>
-
-
-                    <tbody id="tablaEntrevistas"></tbody>
-
+                    <tbody id="tablaEntrevistas">
+                        <!-- Se llena dinámicamente -->
+                    </tbody>
                 </table>
-
             </section>
 
         </main>
-
     </div>
 
-
-    <script src="../JS/api.js"></script>
-
-    <script src="../JS/entrevistas.js"></script>
-
-    <script>
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
-    </script>
+    <!-- Scripts del módulo -->
+    <script type="module" src="./entrevistas.js"></script>
 
 </body>
-
 </html>

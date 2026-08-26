@@ -42,3 +42,69 @@ export async function request(endpoint, method = 'GET', body = null) {
     throw error;
   }
 }
+
+/**
+ * Muestra una notificación Toast moderna y flotante sin bloquear la interfaz.
+ * @param {string} mensaje 
+ * @param {'success'|'error'|'info'} tipo 
+ */
+export function mostrarToast(mensaje, tipo = 'success') {
+  let container = document.getElementById('jc-toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'jc-toast-container';
+    document.body.appendChild(container);
+  }
+
+  const iconName = tipo === 'success' ? 'check_circle' : tipo === 'error' ? 'error' : 'info';
+
+  const toast = document.createElement('div');
+  toast.className = `jc-toast ${tipo}`;
+  toast.innerHTML = `
+    <span class="material-symbols-rounded jc-toast-icon">${iconName}</span>
+    <span>${mensaje}</span>
+  `;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 250);
+  }, 3500);
+}
+
+/**
+ * Muestra un diálogo modal de confirmación con diseño SaaS oscuro.
+ * @param {string} titulo 
+ * @param {string} mensaje 
+ * @param {Function} onConfirmar 
+ */
+export function confirmarAccion(titulo, mensaje, onConfirmar) {
+  const overlay = document.createElement('div');
+  overlay.className = 'jc-modal-overlay';
+  overlay.innerHTML = `
+    <div class="jc-modal-box">
+      <div class="jc-modal-header">
+        <span class="material-symbols-rounded" style="color: #EF4444; font-size: 26px;">warning</span>
+        <h3 class="jc-modal-title">${titulo}</h3>
+      </div>
+      <p class="jc-modal-body">${mensaje}</p>
+      <div class="jc-modal-actions">
+        <button type="button" class="btn btn-secondary" id="btn-cancelar-modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="btn-confirmar-modal">Confirmar</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const btnCancelar = overlay.querySelector('#btn-cancelar-modal');
+  const btnConfirmar = overlay.querySelector('#btn-confirmar-modal');
+
+  btnCancelar.addEventListener('click', () => overlay.remove());
+  btnConfirmar.addEventListener('click', () => {
+    overlay.remove();
+    onConfirmar();
+  });
+}
+

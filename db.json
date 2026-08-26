@@ -20,6 +20,16 @@
       "password": "cthulhu",
       "rol": "Reclutador",
       "id": 3
+    },
+    {
+      "id": "y6J_k9cOeKw",
+      "username": "victorgonzalez2679@gmail.com",
+      "password": "123456",
+      "nombre": "Victor",
+      "email": "victorgonzalez2679@gmail.com",
+      "telefono": "e858340543'5",
+      "profesion": "desarrollador",
+      "rol": "Postulante"
     }
   ],
   "candidatos": [
@@ -78,6 +88,13 @@
       "email": "valentina@gmail.com",
       "telefono": "8111-1111",
       "profesion": "Ingeniera de QA"
+    },
+    {
+      "id": "Tv_j_ohea0M",
+      "nombre": "Victor",
+      "email": "victorgonzalez2679@gmail.com",
+      "telefono": "e858340543'5",
+      "profesion": "desarrollador"
     }
   ],
   "vacantes": [
@@ -217,6 +234,13 @@
       "candidatoId": "6",
       "vacanteId": "4",
       "fecha": "2026-08-20",
+      "estado": "En revisión"
+    },
+    {
+      "id": "AdacUoCvorM",
+      "candidatoId": "y6J_k9cOeKw",
+      "vacanteId": "1",
+      "fecha": "2026-08-26",
       "estado": "En revisión"
     }
   ],

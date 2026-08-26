@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>JobConnect - Postulaciones</title>
-
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../postulaciones.css">
+    <title>Postulaciones - JobConnect</title>
+    <!-- Core Global Design System -->
+    <link rel="stylesheet" href="/src/style.css">
+    <!-- Module Specific Style -->
+    <link rel="stylesheet" href="./postulaciones.css">
 </head>
-
 <body>
 
     <!-- ── NAVBAR ── -->
@@ -24,15 +22,6 @@
                 <span class="jc-navbar-name">JobConnect</span>
             </a>
         </div>
-
-        <nav class="jc-navbar-links" aria-label="Navegación principal">
-            <a href="/index.html" class="jc-nav-link">Dashboard</a>
-            <a href="/pages/vacantes.html" class="jc-nav-link">Vacantes</a>
-            <a href="/pages/empresas.html" class="jc-nav-link">Empresas</a>
-            <a href="/src/pages/postulaciones.html" class="jc-nav-link active">Postulaciones</a>
-            <a href="/src/pages/entrevistas.html" class="jc-nav-link">Entrevistas</a>
-            <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link">Tareas</a>
-        </nav>
 
         <div style="display: flex; align-items: center; gap: 14px;">
             <div style="text-align: right; display: grid; gap: 1px;">
@@ -57,7 +46,7 @@
                         </div>
                     </a>
 
-                    <a href="/pages/vacantes.html" class="module-button">
+                    <a href="/vacantes/vacantes.html" class="module-button">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">work</span>
                             <span>Vacantes</span>
@@ -65,7 +54,7 @@
                         <span class="module-badge-count">6</span>
                     </a>
 
-                    <a href="/pages/empresas.html" class="module-button">
+                    <a href="/empresas/empresas.html" class="module-button">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">domain</span>
                             <span>Empresas</span>
@@ -73,7 +62,7 @@
                         <span class="module-badge-count">4</span>
                     </a>
 
-                    <a href="/src/pages/postulaciones.html" class="module-button active">
+                    <a href="/postulaciones/postulaciones.html" class="module-button active">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">description</span>
                             <span>Postulaciones</span>
@@ -81,7 +70,7 @@
                         <span class="module-badge-count">6</span>
                     </a>
 
-                    <a href="/src/pages/entrevistas.html" class="module-button">
+                    <a href="/entrevistas/entrevistas.html" class="module-button">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">calendar_month</span>
                             <span>Entrevistas</span>
@@ -107,40 +96,41 @@
             </div>
         </aside>
 
-        <main class="main-content">
+        <!-- ── CONTENIDO PRINCIPAL ── -->
+        <main class="dashboard-content" style="padding: 32px 36px;">
 
-            <section class="titulo">
-                <h2>Gestión de Postulaciones</h2>
-                <p>Administra las postulaciones de los candidatos a las vacantes.</p>
-            </section>
+            <div class="welcome-card" style="margin-bottom: 24px;">
+                <p class="eyebrow">Gestión de Talento</p>
+                <h1>Postulaciones de Candidatos</h1>
+                <p>Registra y supervisa el progreso de los candidatos en los procesos de selección activos.</p>
+            </div>
 
+            <!-- FORMULARIO -->
             <section class="formulario">
-
-                <h3>Nueva postulación</h3>
+                <h3>Nueva Postulación</h3>
 
                 <form id="formPostulacion">
-
                     <div class="campo">
-                        <label for="candidato">Candidato</label>
+                        <label for="candidato">Candidato *</label>
                         <select id="candidato" required>
-                            <option value="">Seleccione un candidato</option>
+                            <option value="">Cargando candidatos...</option>
                         </select>
                     </div>
 
                     <div class="campo">
-                        <label for="vacante">Vacante</label>
+                        <label for="vacante">Vacante *</label>
                         <select id="vacante" required>
-                            <option value="">Seleccione una vacante</option>
+                            <option value="">Cargando vacantes...</option>
                         </select>
                     </div>
 
                     <div class="campo">
-                        <label for="fecha">Fecha</label>
+                        <label for="fecha">Fecha de Postulación *</label>
                         <input type="date" id="fecha" required>
                     </div>
 
                     <div class="campo">
-                        <label for="estado">Estado</label>
+                        <label for="estado">Estado Inicial *</label>
                         <select id="estado" required>
                             <option value="En revisión">En revisión</option>
                             <option value="Entrevista">Entrevista</option>
@@ -149,20 +139,22 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn-primary">
-                        Crear postulación
+                    <button type="submit" class="btn btn-primary" style="grid-column: span 2; margin-top: 8px; justify-content: center;">
+                        + Registrar Postulación
                     </button>
-
                 </form>
-
             </section>
 
+            <!-- TABLA -->
             <section class="tabla-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div>
+                        <h3>Historial de Postulaciones</h3>
+                        <p style="color: var(--text-secondary); font-size: 13px;">Gestiona el estado de cada postulación registrada.</p>
+                    </div>
+                </div>
 
-                <h3>Postulaciones registradas</h3>
-
-                <table>
-
+                <table class="vacantes-table">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -177,25 +169,17 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-
-                    <tbody id="tablaPostulaciones"></tbody>
-
+                    <tbody id="tablaPostulaciones">
+                        <!-- Se llena dinámicamente -->
+                    </tbody>
                 </table>
-
             </section>
 
         </main>
-
     </div>
 
-    <script src="../JS/api.js"></script>
-    <script src="../JS/postulaciones.js"></script>
-    <script>
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
-    </script>
+    <!-- Scripts del módulo -->
+    <script type="module" src="./postulaciones.js"></script>
 
 </body>
-
 </html>
