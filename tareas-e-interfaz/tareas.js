@@ -222,73 +222,51 @@ function renderizarTabla() {
 
     // Badge de estado
     const badgeEstado = esPendiente
-      ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/20">
-           <span class="w-1.5 h-1.5 rounded-full bg-amber-400" style="animation: pulse-dot 2s infinite"></span>
+      ? `<span class="pill pill-pending">
+           <span class="pill-dot"></span>
            Pendiente
          </span>`
-      : `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">
-           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-           </svg>
+      : `<span class="pill pill-done">
+           <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
            Completada
          </span>`;
 
     // Botón completar/reabrir
     const btnToggleEstado = esPendiente
-      ? `<button data-accion="completar" data-id="${tarea.id}" title="Marcar como completada"
-                 class="p-2 rounded-xl text-emerald-400/70 hover:text-emerald-400 hover:bg-emerald-500/10
-                        transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500">
-           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-           </svg>
+      ? `<button data-accion="completar" data-id="${tarea.id}" title="Marcar como completada" class="action-btn complete">
+           <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
          </button>`
-      : `<button data-accion="reabrir" data-id="${tarea.id}" title="Reabrir tarea"
-                 class="p-2 rounded-xl text-amber-400/70 hover:text-amber-400 hover:bg-amber-500/10
-                        transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500">
-           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-           </svg>
+      : `<button data-accion="reabrir" data-id="${tarea.id}" title="Reabrir tarea" class="action-btn reopen">
+           <svg viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
          </button>`;
 
     // Formatear fecha
     const fechaFormateada = formatearFecha(tarea.fecha);
 
     return `
-      <tr class="group hover:bg-slate-800/40 transition-colors duration-150">
-        <td data-label="Título" class="px-6 py-4">
-          <span class="text-sm font-medium text-white ${!esPendiente ? 'line-through opacity-60' : ''}">
+      <tr>
+        <td data-label="Título">
+          <span class="task-title ${!esPendiente ? 'done' : ''}">
             ${escaparHTML(tarea.titulo)}
           </span>
         </td>
-        <td data-label="Descripción" class="px-6 py-4 hidden md:table-cell">
-          <span class="text-sm text-slate-400 line-clamp-1">
-            ${escaparHTML(tarea.descripcion || '—')}
-          </span>
+        <td data-label="Descripción" class="hide-mobile">
+          <span class="task-desc">${escaparHTML(tarea.descripcion || '—')}</span>
         </td>
-        <td data-label="Estado" class="px-6 py-4">
+        <td data-label="Estado">
           ${badgeEstado}
         </td>
-        <td data-label="Fecha" class="px-6 py-4 hidden sm:table-cell">
-          <span class="text-sm text-slate-400">${fechaFormateada}</span>
+        <td data-label="Fecha" class="hide-mobile">
+          <span class="task-date">${fechaFormateada}</span>
         </td>
-        <td data-label="Acciones" class="px-6 py-4">
-          <div class="flex items-center justify-end gap-1">
+        <td data-label="Acciones">
+          <div class="actions-cell">
             ${btnToggleEstado}
-            <button data-accion="editar" data-id="${tarea.id}" title="Editar tarea"
-                    class="p-2 rounded-xl text-indigo-400/70 hover:text-indigo-400 hover:bg-indigo-500/10
-                           transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-              </svg>
+            <button data-accion="editar" data-id="${tarea.id}" title="Editar tarea" class="action-btn edit">
+              <svg viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
             </button>
-            <button data-accion="eliminar" data-id="${tarea.id}" title="Eliminar tarea"
-                    class="p-2 rounded-xl text-rose-400/70 hover:text-rose-400 hover:bg-rose-500/10
-                           transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-              </svg>
+            <button data-accion="eliminar" data-id="${tarea.id}" title="Eliminar tarea" class="action-btn delete">
+              <svg viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
             </button>
           </div>
         </td>
@@ -386,24 +364,22 @@ function validarCampoEnTiempoReal(input, contador, errorEl, max) {
 
   // Cambiar color del contador según proximidad al límite
   if (longitud >= max) {
-    contador.className = 'text-xs text-rose-400 font-mono font-semibold';
+    contador.className = 'char-counter danger';
   } else if (longitud >= max * 0.8) {
-    contador.className = 'text-xs text-amber-400 font-mono';
+    contador.className = 'char-counter warn';
   } else {
-    contador.className = 'text-xs text-slate-500 font-mono';
+    contador.className = 'char-counter';
   }
 
   // Mostrar/ocultar error y borde rojo
   if (longitud >= max) {
     errorEl.textContent = `Has alcanzado el límite de ${max} caracteres.`;
     errorEl.classList.remove('hidden');
-    input.classList.add('border-rose-500/60');
-    input.classList.remove('border-slate-700/60');
+    input.classList.add('input-error');
   } else {
     errorEl.textContent = '';
     errorEl.classList.add('hidden');
-    input.classList.remove('border-rose-500/60');
-    input.classList.add('border-slate-700/60');
+    input.classList.remove('input-error');
   }
 }
 
@@ -417,11 +393,10 @@ function validarCampoEnTiempoReal(input, contador, errorEl, max) {
 function resetearValidacionCampo(input, contador, errorEl, max) {
   const longitud = input.value.length;
   contador.textContent = `${longitud}/${max}`;
-  contador.className = 'text-xs text-slate-500 font-mono';
+  contador.className = 'char-counter';
   errorEl.textContent = '';
   errorEl.classList.add('hidden');
-  input.classList.remove('border-rose-500/60');
-  input.classList.add('border-slate-700/60');
+  input.classList.remove('input-error');
 }
 
 // ─────────────────────────────────────────────
@@ -547,15 +522,9 @@ function aplicarFiltro(filtro) {
     const esFiltroActivo = btn.dataset.filtro === filtro;
 
     if (esFiltroActivo) {
-      btn.className = `filtro-btn activo px-4 py-2 text-sm font-medium rounded-xl
-                        bg-indigo-600/20 text-indigo-300 border border-indigo-500/30
-                        hover:bg-indigo-600/30 transition-all duration-200
-                        focus:outline-none focus:ring-2 focus:ring-indigo-400`;
+      btn.className = 'filtro-btn activo';
     } else {
-      btn.className = `filtro-btn px-4 py-2 text-sm font-medium rounded-xl
-                        bg-slate-800/50 text-slate-400 border border-slate-700/50
-                        hover:bg-slate-700/50 hover:text-slate-300 transition-all duration-200
-                        focus:outline-none focus:ring-2 focus:ring-slate-500`;
+      btn.className = 'filtro-btn';
     }
   });
 
