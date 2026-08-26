@@ -13,40 +13,97 @@
 
 <body>
 
-    <header class="header">
-        <h1>JobConnect</h1>
+    <!-- ── NAVBAR ── -->
+    <header class="jc-navbar">
+        <div class="jc-navbar-brand">
+            <a href="/index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                <div class="jc-navbar-logo">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <span class="jc-navbar-name">JobConnect</span>
+            </a>
+        </div>
 
-        <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
-
-        <nav class="header-nav" id="headerNav">
-            <a href="../index.html">Inicio</a>
-            <a href="postulaciones.html">Postulaciones</a>
-            <a href="entrevistas.html">Entrevistas</a>
+        <nav class="jc-navbar-links" aria-label="Navegación principal">
+            <a href="/index.html" class="jc-nav-link">Dashboard</a>
+            <a href="/pages/vacantes.html" class="jc-nav-link">Vacantes</a>
+            <a href="/pages/empresas.html" class="jc-nav-link">Empresas</a>
+            <a href="/src/pages/postulaciones.html" class="jc-nav-link active">Postulaciones</a>
+            <a href="/src/pages/entrevistas.html" class="jc-nav-link">Entrevistas</a>
+            <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link">Tareas</a>
         </nav>
+
+        <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="text-align: right; display: grid; gap: 1px;">
+                <strong style="font-size: 14px; font-weight: 600; color: #F0F0F0;">Emily Johnson</strong>
+                <span style="font-size: 12px; color: #606474;">Reclutadora</span>
+            </div>
+            <div class="jc-navbar-avatar" title="Emily Johnson">EJ</div>
+            <button id="logout-button" class="logout-button" type="button" title="Cerrar sesión" onclick="localStorage.removeItem('jobconnect_session'); window.location.href='/index.html';">Salir</button>
+        </div>
     </header>
 
-    <div class="layout">
+    <div class="dashboard-layout">
 
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h2>Menú</h2>
+            <div>
+                <div class="sidebar-section-title">Módulos del Sistema</div>
+                <nav aria-label="Módulos de JobConnect">
+                    <a href="/index.html" class="module-button">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">dashboard</span>
+                            <span>Inicio</span>
+                        </div>
+                    </a>
+
+                    <a href="/pages/vacantes.html" class="module-button">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">work</span>
+                            <span>Vacantes</span>
+                        </div>
+                        <span class="module-badge-count">6</span>
+                    </a>
+
+                    <a href="/pages/empresas.html" class="module-button">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">domain</span>
+                            <span>Empresas</span>
+                        </div>
+                        <span class="module-badge-count">4</span>
+                    </a>
+
+                    <a href="/src/pages/postulaciones.html" class="module-button active">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">description</span>
+                            <span>Postulaciones</span>
+                        </div>
+                        <span class="module-badge-count">6</span>
+                    </a>
+
+                    <a href="/src/pages/entrevistas.html" class="module-button">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">calendar_month</span>
+                            <span>Entrevistas</span>
+                        </div>
+                        <span class="module-badge-count">3</span>
+                    </a>
+
+                    <a href="/tareas-e-interfaz/tareas.html" class="module-button">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">task_alt</span>
+                            <span>Tareas</span>
+                        </div>
+                        <span class="module-badge-count">5</span>
+                    </a>
+                </nav>
             </div>
-            <nav class="sidebar-nav">
-                <a href="../index.html" class="sidebar-link">
-                    <span class="sidebar-icon">🏠</span>
-                    <span class="sidebar-text">Inicio</span>
-                </a>
-                <a href="postulaciones.html" class="sidebar-link active-link">
-                    <span class="sidebar-icon">📄</span>
-                    <span class="sidebar-text">Postulaciones</span>
-                </a>
-                <a href="entrevistas.html" class="sidebar-link">
-                    <span class="sidebar-icon">📅</span>
-                    <span class="sidebar-text">Entrevistas</span>
-                </a>
-            </nav>
-            <div class="sidebar-footer">
-                <p>JobConnect &copy; 2026</p>
+
+            <div class="sidebar-bottom-info">
+                <div class="sidebar-status-pill">
+                    <span class="status-dot-online"></span>
+                    <span>Servidor y API Activos</span>
+                </div>
             </div>
         </aside>
 
