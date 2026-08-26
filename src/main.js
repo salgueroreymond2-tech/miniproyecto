@@ -42,7 +42,7 @@ function mostrarLogin() {
   app.innerHTML = `
     <main class="login-page">
       <section class="login-card">
-        <a href="/src/paginaPrincipal/paginaInicial.html" style="display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); text-decoration: none; font-size: 13px; margin-bottom: 18px; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">
+        <a href="/paginaPrincipal/paginaInicial.html" style="display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); text-decoration: none; font-size: 13px; margin-bottom: 18px; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">
           <span class="material-symbols-rounded" style="font-size: 16px;">arrow_back</span>
           <span>Volver al portal público</span>
         </a>
