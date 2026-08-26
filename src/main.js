@@ -6,7 +6,7 @@ const SESSION_KEY = "jobconnect_session";
 const app = document.querySelector("#app");
 
 /* =========================================================
-   UTILIDADES
+UTILIDADES
 ========================================================= */
 
 function escaparHTML(valor = "") {
@@ -23,7 +23,7 @@ function capitalizar(texto) {
 }
 
 /* =========================================================
-   SESIÓN
+SESIÓN
 ========================================================= */
 
 function obtenerSesion() {
@@ -75,7 +75,7 @@ function cerrarSesion() {
 }
 
 /* =========================================================
-   LOGIN Y REGISTRO
+LOGIN Y REGISTRO
 ========================================================= */
 
 function mostrarLogin() {
@@ -102,14 +102,14 @@ function mostrarLogin() {
           <div class="form-group">
             <label for="username">Usuario</label>
             <input id="username" name="username" type="text"
-                   autocomplete="username" placeholder="Escribe tu usuario" required>
+            autocomplete="username" placeholder="Escribe tu usuario" required>
           </div>
 
           <div class="form-group">
             <label for="password">Contraseña</label>
             <div class="password-container">
               <input id="password" name="password" type="password"
-                     autocomplete="current-password" placeholder="Escribe tu contraseña" required>
+                utocomplete="current-password" placeholder="Escribe tu contraseña" required>
               <button id="toggle-password" class="password-button" type="button"
                       aria-label="Mostrar contraseña">Mostrar</button>
             </div>
