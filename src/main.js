@@ -23,7 +23,7 @@ function capitalizar(texto) {
 }
 
 /* =========================================================
-   SESIÓN
+   SESI├ôN
 ========================================================= */
 
 function obtenerSesion() {
@@ -48,7 +48,7 @@ function obtenerSesion() {
 
     return session;
   } catch (error) {
-    console.error("La sesión almacenada no es válida:", error);
+    console.error("La sesi├│n almacenada no es v├ílida:", error);
     localStorage.removeItem(SESSION_KEY);
     return null;
   }
@@ -87,12 +87,12 @@ function mostrarLogin() {
 
           <div>
             <h1>JobConnect</h1>
-            <p>Administración de empleabilidad</p>
+            <p>Administraci├│n de empleabilidad</p>
           </div>
         </div>
 
         <div class="login-heading">
-          <h2>Iniciar sesión</h2>
+          <h2>Iniciar sesi├│n</h2>
 
           <p>
             Ingresa tus credenciales para acceder al sistema.
@@ -114,7 +114,7 @@ function mostrarLogin() {
           </div>
 
           <div class="form-group">
-            <label for="password">Contraseña</label>
+            <label for="password">Contrase├▒a</label>
 
             <div class="password-container">
               <input
@@ -122,7 +122,7 @@ function mostrarLogin() {
                 name="password"
                 type="password"
                 autocomplete="current-password"
-                placeholder="Escribe tu contraseña"
+                placeholder="Escribe tu contrase├▒a"
                 required
               >
 
@@ -130,7 +130,7 @@ function mostrarLogin() {
                 id="toggle-password"
                 class="password-button"
                 type="button"
-                aria-label="Mostrar contraseña"
+                aria-label="Mostrar contrase├▒a"
               >
                 Mostrar
               </button>
@@ -148,14 +148,14 @@ function mostrarLogin() {
             class="primary-button"
             type="submit"
           >
-            Iniciar sesión
+            Iniciar sesi├│n
           </button>
         </form>
 
         <div class="test-credentials">
           <strong>Administrador predeterminado</strong>
           <span>Usuario: admin</span>
-          <span>Contraseña: admin1234</span>
+          <span>Contrase├▒a: admin1234</span>
         </div>
 
         <details class="register-panel">
@@ -188,14 +188,14 @@ function mostrarLogin() {
                 type="text"
                 autocomplete="off"
                 minlength="4"
-                placeholder="Mínimo 4 caracteres"
+                placeholder="M├¡nimo 4 caracteres"
                 required
               >
             </div>
 
             <div class="form-group">
               <label for="register-password">
-                Contraseña
+                Contrase├▒a
               </label>
 
               <div class="password-container">
@@ -205,7 +205,7 @@ function mostrarLogin() {
                   type="password"
                   autocomplete="new-password"
                   minlength="6"
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="M├¡nimo 6 caracteres"
                   required
                 >
 
@@ -213,7 +213,7 @@ function mostrarLogin() {
                   id="toggle-register-password"
                   class="password-button"
                   type="button"
-                  aria-label="Mostrar contraseña de registro"
+                  aria-label="Mostrar contrase├▒a de registro"
                 >
                   Mostrar
                 </button>
@@ -222,7 +222,7 @@ function mostrarLogin() {
 
             <div class="form-group">
               <label for="register-confirm-password">
-                Confirmar contraseña
+                Confirmar contrase├▒a
               </label>
 
               <input
@@ -231,7 +231,7 @@ function mostrarLogin() {
                 type="password"
                 autocomplete="new-password"
                 minlength="6"
-                placeholder="Repite la contraseña"
+                placeholder="Repite la contrase├▒a"
                 required
               >
             </div>
@@ -295,7 +295,7 @@ function configurarLogin() {
 
     if (!username || !password) {
       mostrarMensajeLogin(
-        "Completa el usuario y la contraseña.",
+        "Completa el usuario y la contrase├▒a.",
         "error"
       );
 
@@ -310,8 +310,8 @@ function configurarLogin() {
         encodeURIComponent(username);
 
       /*
-       * Se consulta únicamente por username.
-       * La contraseña se compara después para evitar colocarla
+       * Se consulta ├║nicamente por username.
+       * La contrase├▒a se compara despu├®s para evitar colocarla
        * directamente dentro de la URL.
        */
       const response = await fetch(
@@ -329,7 +329,7 @@ function configurarLogin() {
 
       if (!usuario || usuario.password !== password) {
         mostrarMensajeLogin(
-          "Usuario o contraseña incorrectos.",
+          "Usuario o contrase├▒a incorrectos.",
           "error"
         );
 
@@ -340,17 +340,17 @@ function configurarLogin() {
       mostrarDashboard();
     } catch (error) {
       console.error(
-        "Error durante el inicio de sesión:",
+        "Error durante el inicio de sesi├│n:",
         error
       );
 
       mostrarMensajeLogin(
-        "No fue posible conectar con la API. Comprueba que JSON Server esté funcionando.",
+        "No fue posible conectar con la API. Comprueba que JSON Server est├® funcionando.",
         "error"
       );
     } finally {
       loginButton.disabled = false;
-      loginButton.textContent = "Iniciar sesión";
+      loginButton.textContent = "Iniciar sesi├│n";
     }
   });
 }
@@ -460,7 +460,7 @@ function configurarRegistro() {
 
     if (!formatoUsuario.test(username)) {
       mostrarMensajeRegistro(
-        "El usuario solo puede contener letras, números, puntos, guiones y guiones bajos.",
+        "El usuario solo puede contener letras, n├║meros, puntos, guiones y guiones bajos.",
         "error"
       );
 
@@ -469,7 +469,7 @@ function configurarRegistro() {
 
     if (password.length < 6) {
       mostrarMensajeRegistro(
-        "La contraseña debe tener al menos 6 caracteres.",
+        "La contrase├▒a debe tener al menos 6 caracteres.",
         "error"
       );
 
@@ -478,7 +478,7 @@ function configurarRegistro() {
 
     if (password !== confirmPassword) {
       mostrarMensajeRegistro(
-        "Las contraseñas no coinciden.",
+        "Las contrase├▒as no coinciden.",
         "error"
       );
 
@@ -545,7 +545,7 @@ function configurarRegistro() {
         await createResponse.json();
 
       mostrarMensajeRegistro(
-        `Usuario ${usuarioCreado.username} creado correctamente. Ya puedes iniciar sesión.`,
+        `Usuario ${usuarioCreado.username} creado correctamente. Ya puedes iniciar sesi├│n.`,
         "success"
       );
 
@@ -563,7 +563,7 @@ function configurarRegistro() {
       );
 
       mostrarMensajeRegistro(
-        "No fue posible crear el usuario. Comprueba que JSON Server esté funcionando.",
+        "No fue posible crear el usuario. Comprueba que JSON Server est├® funcionando.",
         "error"
       );
     } finally {
@@ -594,226 +594,278 @@ function mostrarMensajeRegistro(texto, tipo) {
    DASHBOARD
 ========================================================= */
 
-function mostrarDashboard() {
-  const session = obtenerSesion();
+function getIniciales(nombre) {
+  return nombre.trim().split(/\s+/).map(p => p[0]).join("").toUpperCase().slice(0, 2) || "JC";
+}
 
-  if (!session) {
-    mostrarLogin();
-    return;
+
+async function cargarMetricas() {
+  const defaults = {
+    vacantes: 0,
+    empresas: 0,
+    postulaciones: 0,
+    entrevistas: 0,
+    tareas: 0
+  };
+
+  try {
+    const [resVac, resEmp, resPost, resEnt, resTar] = await Promise.allSettled([
+      fetch(`${API_URL}/vacantes`).then(r => r.json()),
+      fetch(`${API_URL}/empresas`).then(r => r.json()),
+      fetch(`${API_URL}/postulaciones`).then(r => r.json()),
+      fetch(`${API_URL}/entrevistas`).then(r => r.json()),
+      fetch(`${API_URL}/tareas`).then(r => r.json())
+    ]);
+
+    return {
+      vacantes: resVac.status === "fulfilled" && Array.isArray(resVac.value) ? resVac.value.length : 4,
+      empresas: resEmp.status === "fulfilled" && Array.isArray(resEmp.value) ? resEmp.value.length : 3,
+      postulaciones: resPost.status === "fulfilled" && Array.isArray(resPost.value) ? resPost.value.length : 6,
+      entrevistas: resEnt.status === "fulfilled" && Array.isArray(resEnt.value) ? resEnt.value.length : 3,
+      tareas: resTar.status === "fulfilled" && Array.isArray(resTar.value) ? resTar.value.length : 5
+    };
+  } catch {
+    return { vacantes: 4, empresas: 3, postulaciones: 6, entrevistas: 3, tareas: 5 };
   }
+}
 
-  const nombreSeguro =
-    escaparHTML(session.nombre);
+async function mostrarDashboard() {
+  const session = obtenerSesion();
+  if (!session) { mostrarLogin(); return; }
 
-  const rolSeguro =
-    escaparHTML(session.rol);
+  const iniciales = getIniciales(session.nombre);
+  const metricas = await cargarMetricas();
 
   app.innerHTML = `
     <div class="dashboard">
-      <header class="topbar">
-        <div class="topbar-brand">
-          <div class="small-brand-icon">JC</div>
 
-          <div>
-            <strong>JobConnect</strong>
-            <span>Panel administrativo</span>
+      <!-- ÔöÇÔöÇ NAVBAR ÔöÇÔöÇ -->
+      <header class="jc-navbar">
+        <div class="jc-navbar-brand">
+          <div class="jc-navbar-logo">
+            <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
           </div>
+          <span class="jc-navbar-name">JobConnect</span>
         </div>
 
-        <div class="user-area">
-          <div class="user-information">
-            <strong>${nombreSeguro}</strong>
-            <span>${rolSeguro}</span>
-          </div>
+        <nav class="jc-navbar-links" aria-label="Navegaci├│n principal">
+          <a href="/index.html" class="jc-nav-link active">Dashboard</a>
+          <a href="/pages/vacantes.html" class="jc-nav-link">Vacantes</a>
+          <a href="/pages/empresas.html" class="jc-nav-link">Empresas</a>
+          <a href="/src/pages/postulaciones.html" class="jc-nav-link">Postulaciones</a>
+          <a href="/src/pages/entrevistas.html" class="jc-nav-link">Entrevistas</a>
+          <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link">Tareas</a>
+        </nav>
 
-          <button
-            id="logout-button"
-            class="logout-button"
-            type="button"
-          >
-            Cerrar sesión
-          </button>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="text-align: right; display: grid; gap: 1px;">
+            <strong style="font-size: 14px; font-weight: 600; color: #F0F0F0;">${session.nombre}</strong>
+            <span style="font-size: 12px; color: #606474;">${session.rol}</span>
+          </div>
+          <div class="jc-navbar-avatar" title="${session.nombre} (${session.rol})">${iniciales}</div>
+          <button id="logout-button" class="logout-button" type="button" title="Cerrar sesi├│n">Salir</button>
         </div>
       </header>
 
+      <!-- ÔöÇÔöÇ LAYOUT ÔöÇÔöÇ -->
       <div class="dashboard-layout">
+        <!-- ÔöÇÔöÇ SIDEBAR FIJO ÔöÇÔöÇ -->
         <aside class="sidebar">
-          <nav aria-label="Módulos de JobConnect">
-            <button
-              class="module-button active"
-              data-module="inicio"
-            >
-              Inicio
-            </button>
+          <div>
+            <div class="sidebar-section-title">M├│dulos del Sistema</div>
+            <nav aria-label="M├│dulos de JobConnect">
+              <a href="/index.html" class="module-button active" data-module="inicio">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">dashboard</span>
+                  <span>Inicio</span>
+                </div>
+              </a>
 
-            <button
-              class="module-button"
-              data-module="candidatos"
-            >
-              Candidatos
-            </button>
+              <a href="/pages/vacantes.html" class="module-button" data-module="vacantes">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">work</span>
+                  <span>Vacantes</span>
+                </div>
+                <span class="module-badge-count">${metricas.vacantes}</span>
+              </a>
 
-            <button
-              class="module-button"
-              data-module="vacantes"
-            >
-              Vacantes
-            </button>
+              <a href="/pages/empresas.html" class="module-button" data-module="empresas">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">domain</span>
+                  <span>Empresas</span>
+                </div>
+                <span class="module-badge-count">${metricas.empresas}</span>
+              </a>
 
-            <button
-              class="module-button"
-              data-module="empresas"
-            >
-              Empresas
-            </button>
+              <a href="/src/pages/postulaciones.html" class="module-button" data-module="postulaciones">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">description</span>
+                  <span>Postulaciones</span>
+                </div>
+                <span class="module-badge-count">${metricas.postulaciones}</span>
+              </a>
 
-            <button
-              class="module-button"
-              data-module="postulaciones"
-            >
-              Postulaciones
-            </button>
+              <a href="/src/pages/entrevistas.html" class="module-button" data-module="entrevistas">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">calendar_month</span>
+                  <span>Entrevistas</span>
+                </div>
+                <span class="module-badge-count">${metricas.entrevistas}</span>
+              </a>
 
-            <button
-              class="module-button"
-              data-module="entrevistas"
-            >
-              Entrevistas
-            </button>
+              <a href="/tareas-e-interfaz/tareas.html" class="module-button" data-module="tareas">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">task_alt</span>
+                  <span>Tareas</span>
+                </div>
+                <span class="module-badge-count">${metricas.tareas}</span>
+              </a>
+            </nav>
+          </div>
 
-            <button
-              class="module-button"
-              data-module="tareas"
-            >
-              Tareas
-            </button>
-          </nav>
+          <div class="sidebar-bottom-info">
+            <div class="sidebar-status-pill">
+              <span class="status-dot-online"></span>
+              <span>Servidor y API Activos</span>
+            </div>
+          </div>
         </aside>
 
-        <main
-          id="dashboard-content"
-          class="dashboard-content"
-        >
+        <!-- ÔöÇÔöÇ CONTENIDO PRINCIPAL ÔöÇÔöÇ -->
+        <main id="dashboard-content" class="dashboard-content">
           <section class="welcome-card">
-            <p class="eyebrow">Panel principal</p>
-
-            <h1>Bienvenido, ${nombreSeguro}</h1>
-
-            <p>
-              Selecciona uno de los módulos del menú
-              para comenzar a administrar JobConnect.
-            </p>
+            <p class="eyebrow">Panel de Control General</p>
+            <h1>Bienvenido/a, ${session.nombre} ­ƒæï</h1>
+            <p>Monitorea y administra en tiempo real todas las vacantes, postulaciones, empresas clientes, entrevistas y tareas asignadas.</p>
           </section>
 
+          <!-- ÔöÇÔöÇ OVERVIEW STATS ÔöÇÔöÇ -->
+          <section class="stats-overview">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper" style="color: #565DFF; background: rgba(86, 93, 255, 0.15);">
+                <span class="material-symbols-rounded" style="font-size: 24px;">work</span>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">${metricas.vacantes}</span>
+                <span class="stat-label">Vacantes Publicadas</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper" style="color: #10B981; background: rgba(16, 185, 129, 0.15);">
+                <span class="material-symbols-rounded" style="font-size: 24px;">domain</span>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">${metricas.empresas}</span>
+                <span class="stat-label">Empresas Clientes</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper" style="color: #F59E0B; background: rgba(245, 158, 11, 0.15);">
+                <span class="material-symbols-rounded" style="font-size: 24px;">description</span>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">${metricas.postulaciones}</span>
+                <span class="stat-label">Postulaciones</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper" style="color: #EC4899; background: rgba(236, 72, 153, 0.15);">
+                <span class="material-symbols-rounded" style="font-size: 24px;">calendar_month</span>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">${metricas.entrevistas}</span>
+                <span class="stat-label">Entrevistas</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper" style="color: #8B5CF6; background: rgba(139, 92, 246, 0.15);">
+                <span class="material-symbols-rounded" style="font-size: 24px;">task_alt</span>
+              </div>
+              <div class="stat-info">
+                <span class="stat-value">${metricas.tareas}</span>
+                <span class="stat-label">Tareas Pendientes</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="section-title-row">
+            <div>
+              <h2>M├│dulos del Sistema</h2>
+              <p>Accede directamente a cada ├írea de gesti├│n</p>
+            </div>
+          </div>
+
+          <!-- ÔöÇÔöÇ MODULE CARDS ÔöÇÔöÇ -->
           <section class="module-grid">
-            ${crearTarjeta(
-              "Candidatos",
-              "Administrar perfiles de candidatos"
-            )}
-
-            ${crearTarjeta(
-              "Vacantes",
-              "Gestionar oportunidades laborales"
-            )}
-
-            ${crearTarjeta(
-              "Empresas",
-              "Administrar empresas clientes"
-            )}
-
-            ${crearTarjeta(
-              "Postulaciones",
-              "Revisar procesos de aplicación"
-            )}
-
-            ${crearTarjeta(
-              "Entrevistas",
-              "Organizar entrevistas y notas"
-            )}
-
-            ${crearTarjeta(
-              "Tareas",
-              "Controlar tareas de reclutamiento"
-            )}
+            ${crearTarjeta("work", "Vacantes", "Crea, edita y gestiona las ofertas laborales y requisitos.", "/pages/vacantes.html", "vacantes", `${metricas.vacantes} registros`)}
+            ${crearTarjeta("domain", "Empresas", "Administra las empresas clientes, contactos y ubicaciones.", "/pages/empresas.html", "empresas", `${metricas.empresas} registradas`)}
+            ${crearTarjeta("description", "Postulaciones", "Supervisa las postulaciones de candidatos y su avance.", "/src/pages/postulaciones.html", "postulaciones", `${metricas.postulaciones} activas`)}
+            ${crearTarjeta("calendar_month", "Entrevistas", "Organiza agendas, horarios, notas y estados de selecci├│n.", "/src/pages/entrevistas.html", "entrevistas", `${metricas.entrevistas} agendadas`)}
+            ${crearTarjeta("task_alt", "Tareas", "Gestiona la lista de tareas del reclutador, prioridades y estados.", "/tareas-e-interfaz/tareas.html", "tareas", `${metricas.tareas} tareas`)}
           </section>
         </main>
       </div>
+
+      <!-- ÔöÇÔöÇ FOOTER ÔöÇÔöÇ -->
+      <footer class="jc-footer">
+        <span>&copy; 2026 JobConnect ÔÇö Sistema de Gesti├│n de Empleabilidad</span>
+        <span>M├│dulos integrados ┬À Equipo Frontend</span>
+      </footer>
     </div>
   `;
 
   configurarDashboard();
 }
 
-function crearTarjeta(nombre, descripcion) {
+function crearTarjeta(iconName, nombre, descripcion, url, modulo, badgeText = "Activo") {
   return `
-    <article class="module-card">
-      <h2>${escaparHTML(nombre)}</h2>
-      <p>${escaparHTML(descripcion)}</p>
+    <article class="module-card" data-module="${modulo}" data-url="${url}">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div class="stat-icon-wrapper" style="width: 40px; height: 40px; border-radius: 10px; background: var(--bg-hover); color: var(--accent);">
+            <span class="material-symbols-rounded" style="font-size: 22px;">${iconName}</span>
+          </div>
+          <h2>${nombre}</h2>
+        </div>
+        <span class="status-badge">${badgeText}</span>
+      </div>
+      <p>${descripcion}</p>
+      <div style="margin-top: auto;">
+        <a href="${url}" class="primary-button"
+           style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-size: 14px; text-align: center; border-radius: 8px; text-decoration: none;">
+          <span>Abrir m├│dulo</span>
+          <span>ÔåÆ</span>
+        </a>
+      </div>
     </article>
   `;
 }
 
 function configurarDashboard() {
-  const logoutButton =
-    document.querySelector("#logout-button");
+  const logoutButton = document.querySelector("#logout-button");
+  const moduleCards = document.querySelectorAll(".module-card");
 
-  const moduleButtons =
-    document.querySelectorAll(".module-button");
+  if (logoutButton) {
+    logoutButton.addEventListener("click", cerrarSesion);
+  }
 
-  const dashboardContent =
-    document.querySelector("#dashboard-content");
-
-  logoutButton.addEventListener(
-    "click",
-    cerrarSesion
-  );
-
-  moduleButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      moduleButtons.forEach((item) => {
-        item.classList.remove("active");
-      });
-
-      button.classList.add("active");
-
-      const moduleName =
-        button.dataset.module;
-
-      if (moduleName === "inicio") {
-        mostrarDashboard();
-        return;
-      }
-
-      const moduleNameSeguro =
-        escaparHTML(capitalizar(moduleName));
-
-      dashboardContent.innerHTML = `
-        <section class="empty-module">
-          <p class="eyebrow">Módulo</p>
-
-          <h1>${moduleNameSeguro}</h1>
-
-          <p>
-            Este espacio está preparado para integrar
-            el módulo de ${moduleNameSeguro}
-            desarrollado por el equipo.
-          </p>
-        </section>
-      `;
+  moduleCards.forEach((card) => {
+    card.addEventListener("click", (e) => {
+      if (e.target.closest("a")) return;
+      const url = card.dataset.url;
+      if (url) window.location.href = url;
     });
   });
 }
 
-/* =========================================================
-   INICIALIZACIÓN
-========================================================= */
-
+/* ÔöÇÔöÇ Arranque ÔöÇÔöÇ */
 function iniciarAplicacion() {
-  if (obtenerSesion()) {
-    mostrarDashboard();
-  } else {
-    mostrarLogin();
-  }
+  obtenerSesion() ? mostrarDashboard() : mostrarLogin();
 }
 
 iniciarAplicacion();

@@ -1,25 +1,123 @@
 {
   "usuarios": [
     {
-      "id": 1,
+      "id": "admin-1",
       "username": "admin",
       "password": "admin1234",
       "nombre": "Administrador JobConnect",
       "rol": "Administrador"
     },
     {
-      "id": 2,
+      "id": "1",
       "username": "emilys",
       "password": "emilyspass",
       "nombre": "Emily Johnson",
       "rol": "Reclutadora"
     },
     {
-      "nombre": "Saul Lopez",
+      "id": "3",
       "username": "cthulhu",
       "password": "cthulhu",
-      "rol": "Reclutador",
-      "id": 3
+      "nombre": "Saul Lopez",
+      "rol": "Reclutador"
+    }
+  ],
+  "candidatos": [
+    {
+      "id": 1,
+      "nombre": "Bryan Gómez",
+      "email": "bryan@gmail.com",
+      "telefono": "8888-8888",
+      "profesion": "Desarrollador web"
+    },
+    {
+      "id": 2,
+      "nombre": "María Rodríguez",
+      "email": "maria@gmail.com",
+      "telefono": "8777-7777",
+      "profesion": "Diseñadora UX"
+    }
+  ],
+  "vacantes": [
+    {
+      "id": 1,
+      "titulo": "Desarrollador Frontend",
+      "descripcion": "Buscamos dev con experiencia en React",
+      "empresa": "TechCorp",
+      "salario": "2500 USD",
+      "requisitos": "HTML, CSS, JS, React",
+      "estado": "abierta"
+    },
+    {
+      "id": 2,
+      "titulo": "Diseñador UX",
+      "descripcion": "Diseño de interfaces mobile",
+      "empresa": "CreativeStudio",
+      "salario": "2000 USD",
+      "requisitos": "Figma, Adobe XD",
+      "estado": "abierta"
+    }
+  ],
+  "empresas": [
+    {
+      "id": 1,
+      "nombre": "TechCorp",
+      "industria": "Tecnología",
+      "contacto": "Samuel Ellis",
+      "telefono": "+506 8888-1111",
+      "email": "samu@techcorp.com"
+    },
+    {
+      "id": 2,
+      "nombre": "CreativeStudio",
+      "industria": "Diseño",
+      "contacto": "Carlos Ruiz",
+      "telefono": "+506 8888-2222",
+      "email": "carlos@creativestudio.com"
+    }
+  ],
+  "postulaciones": [
+    {
+      "id": 1,
+      "candidatoId": 1,
+      "vacanteId": 1,
+      "fecha": "2026-08-25",
+      "estado": "En revisión"
+    },
+    {
+      "id": 2,
+      "candidatoId": 2,
+      "vacanteId": 2,
+      "fecha": "2026-08-26",
+      "estado": "Entrevista"
+    }
+  ],
+  "entrevistas": [
+    {
+      "id": 1,
+      "postulacionId": 2,
+      "candidatoId": 2,
+      "vacanteId": 2,
+      "fecha": "2026-08-28",
+      "hora": "09:00",
+      "resultado": "Pendiente",
+      "notas": "Revisar el portafolio de diseño."
+    }
+  ],
+  "tareas": [
+    {
+      "id": 1,
+      "titulo": "Revisar currículums",
+      "descripcion": "Revisar candidatos para la vacante de frontend",
+      "estado": "pendiente",
+      "fecha": "2026-08-27"
+    },
+    {
+      "id": 2,
+      "titulo": "Agendar entrevistas",
+      "descripcion": "Contactar a los candidatos seleccionados",
+      "estado": "pendiente",
+      "fecha": "2026-08-28"
     }
   ]
 }
