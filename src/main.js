@@ -39,13 +39,9 @@ function getIniciales(nombre) {
    LOGIN
    ═══════════════════════════════════════════════ */
 
-<<<<<<< HEAD
-function mostrarLogin() {
-=======
 function mostrarLogin(modo = "login") {
   const esLogin = modo === "login";
 
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
   app.innerHTML = `
     <main class="login-page">
       <section class="login-card">
@@ -63,13 +59,8 @@ function mostrarLogin(modo = "login") {
         </div>
 
         <div class="login-heading">
-<<<<<<< HEAD
-          <h2>Iniciar sesión</h2>
-          <p>Ingresa tus credenciales para acceder al panel.</p>
-=======
           <h2>${esLogin ? "Iniciar sesión" : "Registro de Postulante"}</h2>
           <p>${esLogin ? "Ingresa tus credenciales para acceder al panel." : "Crea tu cuenta de candidato para postularte a vacantes."}</p>
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
         </div>
 
         <!-- ── SELECTOR DE MODO (LOGIN / REGISTRO) ── -->
@@ -85,15 +76,9 @@ function mostrarLogin(modo = "login") {
         <!-- ── FORMULARIO DE INICIO DE SESIÓN ── -->
         <form id="login-form" novalidate>
           <div class="form-group">
-<<<<<<< HEAD
-            <label for="username">Usuario</label>
-            <input id="username" name="username" type="text"
-                   autocomplete="username" placeholder="Escribe tu usuario" required>
-=======
             <label for="username">Usuario o Correo</label>
             <input id="username" name="username" type="text"
                    autocomplete="username" placeholder="Escribe tu usuario o correo" required>
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
           </div>
 
           <div class="form-group">
@@ -111,7 +96,7 @@ function mostrarLogin(modo = "login") {
           </button>
 
           <p class="auth-switch-text">
-            ¿No tienes una cuenta? 
+            ¿No tienes una cuenta?
             <button type="button" id="switch-to-register" class="auth-switch-link">Regístrate como postulante</button>
           </p>
         </form>
@@ -163,7 +148,7 @@ function mostrarLogin(modo = "login") {
           </button>
 
           <p class="auth-switch-text">
-            ¿Ya tienes una cuenta? 
+            ¿Ya tienes una cuenta?
             <button type="button" id="switch-to-login" class="auth-switch-link">Inicia sesión aquí</button>
           </p>
         </form>
@@ -183,18 +168,6 @@ function configurarAuth(modo) {
   const message = document.querySelector("#auth-message");
   const submitButton = document.querySelector("#auth-submit-button");
 
-<<<<<<< HEAD
-  togglePassword.addEventListener("click", () => {
-    const oculta = passwordInput.type === "password";
-    passwordInput.type = oculta ? "text" : "password";
-    togglePassword.textContent = oculta ? "Ocultar" : "Mostrar";
-  });
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const username = form.username.value.trim();
-    const password = form.password.value;
-=======
   if (tabLogin) tabLogin.addEventListener("click", () => mostrarLogin("login"));
   if (tabRegistro) tabRegistro.addEventListener("click", () => mostrarLogin("registro"));
   if (switchRegister) switchRegister.addEventListener("click", () => mostrarLogin("registro"));
@@ -219,33 +192,12 @@ function configurarAuth(modo) {
       event.preventDefault();
       const usernameInput = loginForm.username.value.trim();
       const password = loginForm.password.value;
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
 
       message.textContent = "";
       message.className = "login-message";
 
-<<<<<<< HEAD
-    if (!username || !password) {
-      message.textContent = "Completa el usuario y la contraseña.";
-      message.classList.add("error");
-      return;
-    }
-
-    loginButton.disabled = true;
-    loginButton.textContent = "Verificando...";
-
-    try {
-      const params = new URLSearchParams({ username, password });
-      const response = await fetch(`${API_URL}/usuarios?${params.toString()}`);
-      if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
-
-      const usuarios = await response.json();
-      if (usuarios.length === 0) {
-        message.textContent = "Usuario o contraseña incorrectos.";
-=======
       if (!usernameInput || !password) {
         message.textContent = "Por favor, completa el usuario y la contraseña.";
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
         message.classList.add("error");
         return;
       }
@@ -253,11 +205,6 @@ function configurarAuth(modo) {
       submitButton.disabled = true;
       submitButton.textContent = "Verificando...";
 
-<<<<<<< HEAD
-      // Fallback local
-      if (username === "emilys" && password === "emilyspass") {
-        guardarSesion({ id: "1", username: "emilys", nombre: "Emily Johnson", rol: "Reclutadora" });
-=======
       try {
         const response = await fetch(`${API_URL}/usuarios`);
         if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
@@ -274,7 +221,6 @@ function configurarAuth(modo) {
         }
 
         guardarSesion(usuarioEncontrado);
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
         mostrarDashboard();
       } catch (error) {
         console.error(error);
@@ -308,15 +254,6 @@ function configurarAuth(modo) {
         return;
       }
 
-<<<<<<< HEAD
-      message.textContent = "No fue posible conectar con la API. Comprueba que JSON Server esté funcionando.";
-      message.classList.add("error");
-    } finally {
-      loginButton.disabled = false;
-      loginButton.textContent = "Iniciar sesión";
-    }
-  });
-=======
       if (password.length < 6) {
         message.textContent = "La contraseña debe tener al menos 6 caracteres.";
         message.classList.add("error");
@@ -390,42 +327,12 @@ function configurarAuth(modo) {
       }
     });
   }
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
 }
 
 /* ═══════════════════════════════════════════════
    DASHBOARD
    ═══════════════════════════════════════════════ */
 
-<<<<<<< HEAD
-async function cargarMetricas() {
-  const defaults = {
-    vacantes: 0,
-    empresas: 0,
-    postulaciones: 0,
-    entrevistas: 0,
-    tareas: 0
-  };
-
-  try {
-    const [resVac, resEmp, resPost, resEnt, resTar] = await Promise.allSettled([
-      fetch(`${API_URL}/vacantes`).then(r => r.json()),
-      fetch(`${API_URL}/empresas`).then(r => r.json()),
-      fetch(`${API_URL}/postulaciones`).then(r => r.json()),
-      fetch(`${API_URL}/entrevistas`).then(r => r.json()),
-      fetch(`${API_URL}/tareas`).then(r => r.json())
-    ]);
-
-    return {
-      vacantes: resVac.status === "fulfilled" && Array.isArray(resVac.value) ? resVac.value.length : 4,
-      empresas: resEmp.status === "fulfilled" && Array.isArray(resEmp.value) ? resEmp.value.length : 3,
-      postulaciones: resPost.status === "fulfilled" && Array.isArray(resPost.value) ? resPost.value.length : 6,
-      entrevistas: resEnt.status === "fulfilled" && Array.isArray(resEnt.value) ? resEnt.value.length : 3,
-      tareas: resTar.status === "fulfilled" && Array.isArray(resTar.value) ? resTar.value.length : 5
-    };
-  } catch {
-    return { vacantes: 4, empresas: 3, postulaciones: 6, entrevistas: 3, tareas: 5 };
-=======
 async function mostrarDashboard() {
   const session = obtenerSesion();
   if (!session) { mostrarLogin(); return; }
@@ -433,28 +340,8 @@ async function mostrarDashboard() {
   if (session.rol === "Postulante") {
     await mostrarPortalPostulante("inicio");
     return;
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
   }
-}
 
-async function mostrarDashboard() {
-  const session = obtenerSesion();
-  if (!session) { mostrarLogin(); return; }
-
-  const iniciales = getIniciales(session.nombre);
-  const metricas = await cargarMetricas();
-
-<<<<<<< HEAD
-  app.innerHTML = `
-    <div class="dashboard">
-
-      <!-- ── NAVBAR ── -->
-      <header class="jc-navbar">
-        <div class="jc-navbar-brand">
-          <div class="jc-navbar-logo">
-            <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-=======
   await mostrarDashboardAdmin();
 }
 
@@ -538,28 +425,9 @@ async function mostrarPortalPostulante(vistaActiva = "inicio") {
           <div class="stat-info">
             <span class="stat-value">${vacantes.length}</span>
             <span class="stat-label">Vacantes Disponibles</span>
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
           </div>
-          <span class="jc-navbar-name">JobConnect</span>
         </div>
 
-<<<<<<< HEAD
-        <nav class="jc-navbar-links" aria-label="Navegación principal">
-          <a href="/index.html" class="jc-nav-link active">Dashboard</a>
-          <a href="/pages/vacantes.html" class="jc-nav-link">Vacantes</a>
-          <a href="/pages/empresas.html" class="jc-nav-link">Empresas</a>
-          <a href="/src/pages/postulaciones.html" class="jc-nav-link">Postulaciones</a>
-          <a href="/src/pages/entrevistas.html" class="jc-nav-link">Entrevistas</a>
-          <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link">Tareas</a>
-        </nav>
-
-        <div style="display: flex; align-items: center; gap: 14px;">
-          <div style="text-align: right; display: grid; gap: 1px;">
-            <strong style="font-size: 14px; font-weight: 600; color: #F0F0F0;">${session.nombre}</strong>
-            <span style="font-size: 12px; color: #606474;">${session.rol}</span>
-          </div>
-          <div class="jc-navbar-avatar" title="${session.nombre} (${session.rol})">${iniciales}</div>
-=======
         <div class="stat-card" role="button" data-nav="mis-postulaciones" style="cursor: pointer;">
           <div class="stat-icon-wrapper" style="color: #F59E0B; background: rgba(245, 158, 11, 0.15);">
             <span class="material-symbols-rounded" style="font-size: 24px;">description</span>
@@ -809,77 +677,14 @@ async function mostrarPortalPostulante(vistaActiva = "inicio") {
             <span style="font-size: 12px; color: #10B981; font-weight: 600;">Postulante</span>
           </div>
           <div class="jc-navbar-avatar" style="background: linear-gradient(135deg, #10B981, #059669);">${iniciales}</div>
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
           <button id="logout-button" class="logout-button" type="button" title="Cerrar sesión">Salir</button>
         </div>
       </header>
 
-<<<<<<< HEAD
-      <!-- ── LAYOUT ── -->
-=======
       <!-- ── LAYOUT CON SIDEBAR DEL POSTULANTE ── -->
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
       <div class="dashboard-layout">
-        <!-- ── SIDEBAR FIJO ── -->
         <aside class="sidebar">
           <div>
-<<<<<<< HEAD
-            <div class="sidebar-section-title">Módulos del Sistema</div>
-            <nav aria-label="Módulos de JobConnect">
-              <a href="/index.html" class="module-button active" data-module="inicio">
-                <div class="module-button-content">
-                  <span class="material-symbols-rounded module-button-icon">dashboard</span>
-                  <span>Inicio</span>
-                </div>
-              </a>
-
-              <a href="/pages/vacantes.html" class="module-button" data-module="vacantes">
-                <div class="module-button-content">
-                  <span class="material-symbols-rounded module-button-icon">work</span>
-                  <span>Vacantes</span>
-                </div>
-                <span class="module-badge-count">${metricas.vacantes}</span>
-              </a>
-
-              <a href="/pages/empresas.html" class="module-button" data-module="empresas">
-                <div class="module-button-content">
-                  <span class="material-symbols-rounded module-button-icon">domain</span>
-                  <span>Empresas</span>
-                </div>
-                <span class="module-badge-count">${metricas.empresas}</span>
-              </a>
-
-              <a href="/src/pages/postulaciones.html" class="module-button" data-module="postulaciones">
-                <div class="module-button-content">
-                  <span class="material-symbols-rounded module-button-icon">description</span>
-                  <span>Postulaciones</span>
-                </div>
-                <span class="module-badge-count">${metricas.postulaciones}</span>
-              </a>
-
-              <a href="/src/pages/entrevistas.html" class="module-button" data-module="entrevistas">
-                <div class="module-button-content">
-                  <span class="material-symbols-rounded module-button-icon">calendar_month</span>
-                  <span>Entrevistas</span>
-                </div>
-                <span class="module-badge-count">${metricas.entrevistas}</span>
-              </a>
-
-              <a href="/tareas-e-interfaz/tareas.html" class="module-button" data-module="tareas">
-                <div class="module-button-content">
-                  <span class="material-symbols-rounded module-button-icon">task_alt</span>
-                  <span>Tareas</span>
-                </div>
-                <span class="module-badge-count">${metricas.tareas}</span>
-              </a>
-            </nav>
-          </div>
-
-          <div class="sidebar-bottom-info">
-            <div class="sidebar-status-pill">
-              <span class="status-dot-online"></span>
-              <span>Servidor y API Activos</span>
-=======
             <div class="sidebar-section-title">Portal del Candidato</div>
             <nav aria-label="Módulos del Postulante">
               <button class="module-button ${vistaActiva === 'inicio' ? 'active' : ''}" data-nav="inicio">
@@ -918,14 +723,11 @@ async function mostrarPortalPostulante(vistaActiva = "inicio") {
             <div class="sidebar-status-pill">
               <span class="status-dot-online"></span>
               <span>Candidato Conectado</span>
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
             </div>
           </div>
         </aside>
 
         <!-- ── CONTENIDO PRINCIPAL ── -->
-<<<<<<< HEAD
-=======
         <main id="dashboard-content" class="dashboard-content">
           ${contenidoPrincipal}
         </main>
@@ -1017,7 +819,7 @@ function configurarEventosPostulante(vistaActiva, vacantes, misPostulaciones, mi
   if (inputBuscar && contenedorVacantes) {
     inputBuscar.addEventListener("input", (e) => {
       const termino = e.target.value.toLowerCase().trim();
-      const filtradas = vacantes.filter(v => 
+      const filtradas = vacantes.filter(v =>
         (v.titulo && v.titulo.toLowerCase().includes(termino)) ||
         (v.empresa && v.empresa.toLowerCase().includes(termino)) ||
         (v.ubicacion && v.ubicacion.toLowerCase().includes(termino)) ||
@@ -1025,7 +827,7 @@ function configurarEventosPostulante(vistaActiva, vacantes, misPostulaciones, mi
         (v.descripcion && v.descripcion.toLowerCase().includes(termino))
       );
 
-      contenedorVacantes.innerHTML = filtradas.length === 0 
+      contenedorVacantes.innerHTML = filtradas.length === 0
         ? '<p class="empty-message">No se encontraron vacantes con ese criterio de búsqueda.</p>'
         : filtradas.map(v => renderTarjetaVacanteCandidato(v, misPostulaciones)).join("");
 
@@ -1291,7 +1093,6 @@ async function mostrarDashboardAdmin() {
         </aside>
 
         <!-- ── CONTENIDO PRINCIPAL ── -->
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
         <main id="dashboard-content" class="dashboard-content">
           <section class="welcome-card">
             <p class="eyebrow">Panel de Control General</p>
@@ -1361,17 +1162,10 @@ async function mostrarDashboardAdmin() {
 
           <!-- ── MODULE CARDS ── -->
           <section class="module-grid">
-<<<<<<< HEAD
-            ${crearTarjeta("work", "Vacantes", "Crea, edita y gestiona las ofertas laborales y requisitos.", "/pages/vacantes.html", "vacantes", `${metricas.vacantes} registros`)}
-            ${crearTarjeta("domain", "Empresas", "Administra las empresas clientes, contactos y ubicaciones.", "/pages/empresas.html", "empresas", `${metricas.empresas} registradas`)}
-            ${crearTarjeta("description", "Postulaciones", "Supervisa las postulaciones de candidatos y su avance.", "/src/pages/postulaciones.html", "postulaciones", `${metricas.postulaciones} activas`)}
-            ${crearTarjeta("calendar_month", "Entrevistas", "Organiza agendas, horarios, notas y estados de selección.", "/src/pages/entrevistas.html", "entrevistas", `${metricas.entrevistas} agendadas`)}
-=======
             ${crearTarjeta("work", "Vacantes", "Crea, edita y gestiona las ofertas laborales y requisitos.", "/vacantes/vacantes.html", "vacantes", `${metricas.vacantes} registros`)}
             ${crearTarjeta("domain", "Empresas", "Administra las empresas clientes, contactos y ubicaciones.", "/empresas/empresas.html", "empresas", `${metricas.empresas} registradas`)}
             ${crearTarjeta("description", "Postulaciones", "Supervisa las postulaciones de candidatos y su avance.", "/postulaciones/postulaciones.html", "postulaciones", `${metricas.postulaciones} activas`)}
             ${crearTarjeta("calendar_month", "Entrevistas", "Organiza agendas, horarios, notas y estados de selección.", "/entrevistas/entrevistas.html", "entrevistas", `${metricas.entrevistas} agendadas`)}
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
             ${crearTarjeta("task_alt", "Tareas", "Gestiona la lista de tareas del reclutador, prioridades y estados.", "/tareas-e-interfaz/tareas.html", "tareas", `${metricas.tareas} tareas`)}
           </section>
         </main>

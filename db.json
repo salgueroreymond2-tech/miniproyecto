@@ -1,6 +1,4 @@
 {
-<<<<<<< HEAD
-=======
   "usuarios": [
     {
       "id": "1",
@@ -92,30 +90,71 @@
       "profesion": "desarrollador"
     }
   ],
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
   "vacantes": [
     {
-      "id": 1,
+      "id": "1",
       "titulo": "Desarrollador Frontend",
-      "descripcion": "Buscamos dev con experiencia en React",
+      "descripcion": "Buscamos dev con experiencia en React y JavaScript",
       "empresa": "TechCorp",
       "salario": "2500 USD",
       "requisitos": "HTML, CSS, JS, React",
+      "ubicacion": "San José",
       "estado": "abierta"
     },
     {
-      "id": 2,
-      "titulo": "Diseñador UX",
-      "descripcion": "Diseño de interfaces mobile",
+      "id": "2",
+      "titulo": "Diseñador UX/UI",
+      "descripcion": "Diseño de interfaces mobile y web",
       "empresa": "CreativeStudio",
       "salario": "2000 USD",
       "requisitos": "Figma, Adobe XD",
+      "ubicacion": "Heredia",
+      "estado": "abierta"
+    },
+    {
+      "id": "3",
+      "titulo": "Analista de Datos",
+      "descripcion": "Análisis estadístico y visualización",
+      "empresa": "Data CR",
+      "salario": "2200 USD",
+      "requisitos": "SQL, Python, PowerBI",
+      "ubicacion": "Alajuela",
+      "estado": "abierta"
+    },
+    {
+      "id": "4",
+      "titulo": "Desarrollador Full Stack",
+      "descripcion": "Desarrollo de APIs y aplicaciones web",
+      "empresa": "Tech Solutions",
+      "salario": "2800 USD",
+      "requisitos": "Node.js, React, MongoDB",
+      "ubicacion": "San José",
+      "estado": "abierta"
+    },
+    {
+      "id": "5",
+      "titulo": "Ingeniero DevOps",
+      "descripcion": "Automatización de pipelines CI/CD",
+      "empresa": "Cloud Systems",
+      "salario": "3000 USD",
+      "requisitos": "Docker, Kubernetes, AWS",
+      "ubicacion": "Cartago",
+      "estado": "cerrada"
+    },
+    {
+      "id": "6",
+      "titulo": "Ingeniero de QA",
+      "descripcion": "Pruebas manuales y automatizadas",
+      "empresa": "QualitySoft",
+      "salario": "2100 USD",
+      "requisitos": "Selenium, Cypress, Postman",
+      "ubicacion": "Limón",
       "estado": "abierta"
     }
   ],
   "empresas": [
     {
-      "id": 1,
+      "id": "1",
       "nombre": "TechCorp",
       "industria": "Tecnología",
       "contacto": "Samuel Ellis",
@@ -123,14 +162,12 @@
       "email": "samu@techcorp.com"
     },
     {
-      "id": 2,
+      "id": "2",
       "nombre": "CreativeStudio",
       "industria": "Diseño",
       "contacto": "Carlos Ruiz",
       "telefono": "+506 8888-2222",
       "email": "carlos@creativestudio.com"
-<<<<<<< HEAD
-=======
     },
     {
       "id": "3",
@@ -253,7 +290,6 @@
       "descripcion": "Redactar y publicar la oferta de empleo en el portal JobConnect",
       "estado": "completada",
       "fecha": "2026-08-20"
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
     }
   ]
 }

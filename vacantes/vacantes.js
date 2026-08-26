@@ -321,18 +321,6 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
           </a>
         </div>
 
-<<<<<<< HEAD:pages/vacantes.js
-        <nav class="jc-navbar-links" aria-label="Navegación principal">
-          <a href="/index.html" class="jc-nav-link ${moduloActivo === 'inicio' ? 'active' : ''}">Dashboard</a>
-          <a href="/pages/vacantes.html" class="jc-nav-link ${moduloActivo === 'vacantes' ? 'active' : ''}">Vacantes</a>
-          <a href="/pages/empresas.html" class="jc-nav-link ${moduloActivo === 'empresas' ? 'active' : ''}">Empresas</a>
-          <a href="/src/pages/postulaciones.html" class="jc-nav-link ${moduloActivo === 'postulaciones' ? 'active' : ''}">Postulaciones</a>
-          <a href="/src/pages/entrevistas.html" class="jc-nav-link ${moduloActivo === 'entrevistas' ? 'active' : ''}">Entrevistas</a>
-          <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link ${moduloActivo === 'tareas' ? 'active' : ''}">Tareas</a>
-        </nav>
-
-=======
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683:vacantes/vacantes.js
         <div style="display: flex; align-items: center; gap: 14px;">
           <div style="text-align: right; display: grid; gap: 1px;">
             <strong style="font-size: 14px; font-weight: 600; color: #F0F0F0;">${sesion.nombre}</strong>
@@ -357,11 +345,7 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 </div>
               </a>
 
-<<<<<<< HEAD:pages/vacantes.js
-              <a href="/pages/vacantes.html" class="module-button ${moduloActivo === 'vacantes' ? 'active' : ''}">
-=======
               <a href="/vacantes/vacantes.html" class="module-button ${moduloActivo === 'vacantes' ? 'active' : ''}">
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683:vacantes/vacantes.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">work</span>
                   <span>Vacantes</span>
@@ -369,11 +353,7 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 <span class="module-badge-count">${totalVac}</span>
               </a>
 
-<<<<<<< HEAD:pages/vacantes.js
-              <a href="/pages/empresas.html" class="module-button ${moduloActivo === 'empresas' ? 'active' : ''}">
-=======
               <a href="/empresas/empresas.html" class="module-button ${moduloActivo === 'empresas' ? 'active' : ''}">
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683:vacantes/vacantes.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">domain</span>
                   <span>Empresas</span>
@@ -381,11 +361,7 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 <span class="module-badge-count">4</span>
               </a>
 
-<<<<<<< HEAD:pages/vacantes.js
-              <a href="/src/pages/postulaciones.html" class="module-button ${moduloActivo === 'postulaciones' ? 'active' : ''}">
-=======
               <a href="/postulaciones/postulaciones.html" class="module-button ${moduloActivo === 'postulaciones' ? 'active' : ''}">
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683:vacantes/vacantes.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">description</span>
                   <span>Postulaciones</span>
@@ -393,11 +369,7 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 <span class="module-badge-count">6</span>
               </a>
 
-<<<<<<< HEAD:pages/vacantes.js
-              <a href="/src/pages/entrevistas.html" class="module-button ${moduloActivo === 'entrevistas' ? 'active' : ''}">
-=======
               <a href="/entrevistas/entrevistas.html" class="module-button ${moduloActivo === 'entrevistas' ? 'active' : ''}">
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683:vacantes/vacantes.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">calendar_month</span>
                   <span>Entrevistas</span>
@@ -432,14 +404,6 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
   `;
 }
 
-<<<<<<< HEAD:pages/vacantes.js
-/**
- * Renderiza la vista de listado de vacantes y configura los manejadores de eventos.
- *
- * @param {HTMLElement} container - Contenedor principal donde se muestra la vista.
- */
-=======
->>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683:vacantes/vacantes.js
 async function cargarYMostrarListado(container) {
   if (!container) return;
 
