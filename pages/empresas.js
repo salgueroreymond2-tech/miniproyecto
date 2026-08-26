@@ -312,6 +312,126 @@ function validarCamposEmpresa(datos) {
   return { esValido: true, mensaje: '' };
 }
 
+function obtenerSesion() {
+  try {
+    const s = localStorage.getItem('jobconnect_session');
+    return s ? JSON.parse(s) : { nombre: 'Emily Johnson', rol: 'Reclutadora' };
+  } catch {
+    return { nombre: 'Emily Johnson', rol: 'Reclutadora' };
+  }
+}
+
+function generarLayout(moduloActivo, contenidoPrincipal) {
+  const sesion = obtenerSesion();
+  const iniciales = sesion.nombre ? sesion.nombre.split(/\s+/).map(p => p[0]).join('').toUpperCase().slice(0, 2) : 'EJ';
+  const totalEmp = empresasCache.length || 4;
+
+  return `
+    <div class="dashboard">
+      <!-- ── NAVBAR ── -->
+      <header class="jc-navbar">
+        <div class="jc-navbar-brand">
+          <a href="/index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+            <div class="jc-navbar-logo">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <span class="jc-navbar-name">JobConnect</span>
+          </a>
+        </div>
+
+        <nav class="jc-navbar-links" aria-label="Navegación principal">
+          <a href="/index.html" class="jc-nav-link ${moduloActivo === 'inicio' ? 'active' : ''}">Dashboard</a>
+          <a href="/pages/vacantes.html" class="jc-nav-link ${moduloActivo === 'vacantes' ? 'active' : ''}">Vacantes</a>
+          <a href="/pages/empresas.html" class="jc-nav-link ${moduloActivo === 'empresas' ? 'active' : ''}">Empresas</a>
+          <a href="/src/pages/postulaciones.html" class="jc-nav-link ${moduloActivo === 'postulaciones' ? 'active' : ''}">Postulaciones</a>
+          <a href="/src/pages/entrevistas.html" class="jc-nav-link ${moduloActivo === 'entrevistas' ? 'active' : ''}">Entrevistas</a>
+          <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link ${moduloActivo === 'tareas' ? 'active' : ''}">Tareas</a>
+        </nav>
+
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="text-align: right; display: grid; gap: 1px;">
+            <strong style="font-size: 14px; font-weight: 600; color: #F0F0F0;">${sesion.nombre}</strong>
+            <span style="font-size: 12px; color: #606474;">${sesion.rol}</span>
+          </div>
+          <div class="jc-navbar-avatar" title="${sesion.nombre}">${iniciales}</div>
+          <button id="logout-button" class="logout-button" type="button" title="Cerrar sesión" onclick="localStorage.removeItem('jobconnect_session'); window.location.href='/index.html';">Salir</button>
+        </div>
+      </header>
+
+      <!-- ── LAYOUT ── -->
+      <div class="dashboard-layout">
+        <!-- ── SIDEBAR FIJO ── -->
+        <aside class="sidebar">
+          <div>
+            <div class="sidebar-section-title">Módulos del Sistema</div>
+            <nav aria-label="Módulos de JobConnect">
+              <a href="/index.html" class="module-button ${moduloActivo === 'inicio' ? 'active' : ''}">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">dashboard</span>
+                  <span>Inicio</span>
+                </div>
+              </a>
+
+              <a href="/pages/vacantes.html" class="module-button ${moduloActivo === 'vacantes' ? 'active' : ''}">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">work</span>
+                  <span>Vacantes</span>
+                </div>
+                <span class="module-badge-count">6</span>
+              </a>
+
+              <a href="/pages/empresas.html" class="module-button ${moduloActivo === 'empresas' ? 'active' : ''}">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">domain</span>
+                  <span>Empresas</span>
+                </div>
+                <span class="module-badge-count">${totalEmp}</span>
+              </a>
+
+              <a href="/src/pages/postulaciones.html" class="module-button ${moduloActivo === 'postulaciones' ? 'active' : ''}">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">description</span>
+                  <span>Postulaciones</span>
+                </div>
+                <span class="module-badge-count">6</span>
+              </a>
+
+              <a href="/src/pages/entrevistas.html" class="module-button ${moduloActivo === 'entrevistas' ? 'active' : ''}">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">calendar_month</span>
+                  <span>Entrevistas</span>
+                </div>
+                <span class="module-badge-count">3</span>
+              </a>
+
+              <a href="/tareas-e-interfaz/tareas.html" class="module-button ${moduloActivo === 'tareas' ? 'active' : ''}">
+                <div class="module-button-content">
+                  <span class="material-symbols-rounded module-button-icon">task_alt</span>
+                  <span>Tareas</span>
+                </div>
+                <span class="module-badge-count">5</span>
+              </a>
+            </nav>
+          </div>
+
+          <div class="sidebar-bottom-info">
+            <div class="sidebar-status-pill">
+              <span class="status-dot-online"></span>
+              <span>Servidor y API Activos</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- ── CONTENIDO PRINCIPAL ── -->
+        <main class="dashboard-content">
+          ${contenidoPrincipal}
+        </main>
+      </div>
+    </div>
+  `;
+}
+
 /**
  * Renderiza la vista de listado de empresas y configura los manejadores de eventos.
  *
@@ -320,17 +440,15 @@ function validarCamposEmpresa(datos) {
 async function cargarYMostrarListado(container) {
   if (!container) return;
 
-  container.innerHTML = `
-    <nav class="main-nav">
-      <a href="../index.html" class="nav-link">Inicio</a>
-      <a href="./vacantes.html" class="nav-link">Vacantes</a>
-      <a href="./empresas.html" class="nav-link active">Empresas</a>
-    </nav>
+  const contenido = `
     <section class="empresas-section">
       <header class="empresas-header">
-        <h1 class="empresas-title">Gestión de Empresas</h1>
-        <button type="button" id="btn-nueva-empresa" class="btn btn-primary">
-          Nueva Empresa
+        <div>
+          <h1 class="empresas-title">Gestión de Empresas</h1>
+          <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">Administra los convenios, clientes corporativos y contactos.</p>
+        </div>
+        <button type="button" id="btn-nueva-empresa" class="btn btn-primary" style="box-shadow: var(--shadow-accent);">
+          + Nueva Empresa
         </button>
       </header>
       <div id="empresas-messages" class="empresas-messages" aria-live="polite"></div>
@@ -339,6 +457,8 @@ async function cargarYMostrarListado(container) {
       </div>
     </section>
   `;
+
+  container.innerHTML = generarLayout('empresas', contenido);
 
   const btnNuevaEmpresa = container.querySelector('#btn-nueva-empresa');
   const messagesContainer = container.querySelector('#empresas-messages');
@@ -385,14 +505,7 @@ export function mostrarFormularioEmpresa(empresa = null) {
     return;
   }
 
-  appContainer.innerHTML = `
-    <nav class="main-nav">
-      <a href="../index.html" class="nav-link">Inicio</a>
-      <a href="./vacantes.html" class="nav-link">Vacantes</a>
-      <a href="./empresas.html" class="nav-link active">Empresas</a>
-    </nav>
-    ${construirFormularioEmpresa(empresa)}
-  `;
+  appContainer.innerHTML = generarLayout('empresas', construirFormularioEmpresa(empresa));
 
   const formulario = appContainer.querySelector('#form-empresa');
   const btnCancelar = appContainer.querySelector('#btn-cancelar-empresa');

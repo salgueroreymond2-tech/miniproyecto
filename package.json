@@ -5,24 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "server": "json-server --watch src/db.json --port 3000",
     "build": "vite build",
     "preview": "vite preview",
-<<<<<<< HEAD
-    "server": "json-server --watch db.json --port 3000"
-  },
-  "devDependencies": {
-    "vite": "^8.2.2",
-    "json-server": "^0.17.4"
-=======
+    "server": "json-server --watch db.json --port 3000",
     "api": "json-server --watch db.json --port 3000"
   },
   "devDependencies": {
     "json-server": "^1.0.0-beta.3",
     "vite": "^8.2.2"
-  },
-  "dependencies": {
-    "json-server": "^1.0.0-beta.15"
->>>>>>> 5c3aa3c776e63fa296aaa4b17a22e1d33e05280b
   }
 }
