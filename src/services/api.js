@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://localhost:3001';
 const METHODS_WITH_BODY = ['POST', 'PUT', 'PATCH'];
 const HTTP_ERROR_STATUS_THRESHOLD = 400;
 

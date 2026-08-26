@@ -1,14 +1,307 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JobConnect — Portal de Gestión de Empleabilidad</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/src/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobConnect — Portal de Gestión de Empleabilidad</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <!-- Google Fonts & Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap">
+    <link rel="stylesheet" href="/paginaPrincipal/principal.css">
 </head>
+
 <body>
-  <div id="app"></div>
-  <script type="module" src="/src/main.js"></script>
+
+    <!-- ── BARRA DE NAVEGACIÓN ── -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="#" class="brand-link">
+                <div class="navbar-logo-box">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <span class="navbar-brand">JobConnect</span>
+            </a>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación">
+            <span class="material-symbols-rounded">menu</span>
+        </button>
+
+        <div class="navbar-right" id="navLinks">
+            <a href="#servicios" class="nav-item">Módulos y Servicios</a>
+            <a href="#ventajas" class="nav-item">Ventajas</a>
+            <a href="#preguntas" class="nav-item">Preguntas</a>
+            <a href="#contacto" class="nav-item">Contacto</a>
+            <a href="/vacantes/vacantes.html" class="nav-item-highlight">Ver Ofertas</a>
+            <a href="/login.html" class="btn-login">
+                <span class="material-symbols-rounded" style="font-size: 18px;">login</span>
+                <span>Ingresar al Sistema</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- ── SECCIÓN HERO ── -->
+    <header class="hero">
+        <div class="hero-container">
+            <div class="hero-badge">
+                <span class="status-dot"></span>
+                <span>Plataforma Activa y en Tiempo Real</span>
+            </div>
+            <h1>Conecta Talento con <span>Oportunidades Reales</span></h1>
+            <p>La plataforma integral y moderna para publicar vacantes, supervisar postulaciones, organizar entrevistas y gestionar tareas de reclutamiento.</p>
+            
+            <div class="hero-actions">
+                <a href="/login.html" class="hero-btn hero-btn-primary">
+                    <span class="material-symbols-rounded">dashboard</span>
+                    <span>Acceder al Panel de Control</span>
+                </a>
+                <a href="/vacantes/vacantes.html" class="hero-btn hero-btn-secondary">
+                    <span class="material-symbols-rounded">work</span>
+                    <span>Explorar Vacantes</span>
+                </a>
+            </div>
+
+            <!-- Quick Navigation Pills -->
+            <div class="hero-pills">
+                <span>Acceso Rápido:</span>
+                <a href="/vacantes/vacantes.html" class="pill">💼 Vacantes</a>
+                <a href="/empresas/empresas.html" class="pill">🏢 Empresas</a>
+                <a href="/postulaciones/postulaciones.html" class="pill">📄 Postulaciones</a>
+                <a href="/entrevistas/entrevistas.html" class="pill">📅 Entrevistas</a>
+                <a href="/tareas-e-interfaz/tareas.html" class="pill">✅ Tareas</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── SECCIÓN DE SERVICIOS Y MÓDULOS ── -->
+    <section class="section" id="servicios">
+        <div class="section-header">
+            <span class="section-tag">Ecosistema Completo</span>
+            <h2>Módulos del Sistema</h2>
+            <p>Diseñado para que reclutadores, empresas y candidatos interactúen de manera ágil y ordenada.</p>
+        </div>
+
+        <div class="cards-grid">
+            <a href="/vacantes/vacantes.html" class="card-link">
+                <div class="card">
+                    <div class="card-icon-wrapper icon-blue">
+                        <span class="material-symbols-rounded">work</span>
+                    </div>
+                    <h3>Gestión de Vacantes</h3>
+                    <p>Publica ofertas laborales detallando empresa, salario, requisitos y ubicación en tiempo real.</p>
+                    <span class="card-cta">Ir al módulo &rarr;</span>
+                </div>
+            </a>
+
+            <a href="/empresas/empresas.html" class="card-link">
+                <div class="card">
+                    <div class="card-icon-wrapper icon-green">
+                        <span class="material-symbols-rounded">domain</span>
+                    </div>
+                    <h3>Empresas Clientes</h3>
+                    <p>Administra los convenios comerciales, contactos directos, industrias y canales de comunicación.</p>
+                    <span class="card-cta">Ir al módulo &rarr;</span>
+                </div>
+            </a>
+
+            <a href="/postulaciones/postulaciones.html" class="card-link">
+                <div class="card">
+                    <div class="card-icon-wrapper icon-amber">
+                        <span class="material-symbols-rounded">description</span>
+                    </div>
+                    <h3>Postulaciones de Talento</h3>
+                    <p>Supervisa el pipeline de selección de candidatos cambiando estados de revisión a contratación.</p>
+                    <span class="card-cta">Ir al módulo &rarr;</span>
+                </div>
+            </a>
+
+            <a href="/entrevistas/entrevistas.html" class="card-link">
+                <div class="card">
+                    <div class="card-icon-wrapper icon-pink">
+                        <span class="material-symbols-rounded">calendar_month</span>
+                    </div>
+                    <h3>Agenda de Entrevistas</h3>
+                    <p>Coordina fechas, horarios, notas de retroalimentación técnica y resultados de selección.</p>
+                    <span class="card-cta">Ir al módulo &rarr;</span>
+                </div>
+            </a>
+
+            <a href="/tareas-e-interfaz/tareas.html" class="card-link">
+                <div class="card">
+                    <div class="card-icon-wrapper icon-purple">
+                        <span class="material-symbols-rounded">task_alt</span>
+                    </div>
+                    <h3>Tareas de Reclutamiento</h3>
+                    <p>Controla las tareas diarias, filtra por estado y mantén tu productividad al máximo.</p>
+                    <span class="card-cta">Ir al módulo &rarr;</span>
+                </div>
+            </a>
+
+            <a href="/login.html" class="card-link">
+                <div class="card card-featured">
+                    <div class="card-icon-wrapper icon-indigo">
+                        <span class="material-symbols-rounded">dashboard</span>
+                    </div>
+                    <h3>Dashboard Central</h3>
+                    <p>Monitorea métricas en vivo, gráficos, accesos rápidos y estado del servidor y API.</p>
+                    <span class="card-cta">Entrar ahora &rarr;</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ── SECCIÓN DE VENTAJAS ── -->
+    <section class="section section-alt" id="ventajas">
+        <div class="section-header">
+            <span class="section-tag">¿Por qué JobConnect?</span>
+            <h2>Ventajas de Nuestra Plataforma</h2>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <span class="material-symbols-rounded">bolt</span>
+                </div>
+                <div>
+                    <h4>Respuestas en Tiempo Real</h4>
+                    <p>Integración continua mediante API REST sincronizada con JSON Server para almacenamiento persistente.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <span class="material-symbols-rounded">devices</span>
+                </div>
+                <div>
+                    <h4>100% Responsivo</h4>
+                    <p>Accede con comodidad desde cualquier dispositivo: computadoras, tablets o teléfonos móviles.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <span class="material-symbols-rounded">shield</span>
+                </div>
+                <div>
+                    <h4>Seguridad y Control</h4>
+                    <p>Gestión basada en sesión de usuario con autenticación para proteger la información confidencial.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <span class="material-symbols-rounded">palette</span>
+                </div>
+                <div>
+                    <h4>Interfaz Moderna SaaS</h4>
+                    <p>Diseño Dark Mode con colores equilibrados, sidebar fijo y tipografía optimizada con Google Fonts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SECCIÓN PREGUNTAS FRECUENTES (ACCORDION) ── -->
+    <section class="section" id="preguntas">
+        <div class="section-header">
+            <span class="section-tag">Resolución de Dudas</span>
+            <h2>Preguntas Frecuentes</h2>
+        </div>
+
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>¿Qué es JobConnect y para quién está pensado?</span>
+                    <span class="material-symbols-rounded faq-arrow">expand_more</span>
+                </button>
+                <div class="faq-answer">
+                    <p>JobConnect es un sistema web integral de empleabilidad y reclutamiento diseñado para que reclutadores, empresas y candidatos coordinen ofertas, evaluaciones y contrataciones de forma eficiente.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>¿Cómo accedo al panel de administración?</span>
+                    <span class="material-symbols-rounded faq-arrow">expand_more</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Puedes hacer clic en el botón <strong>Ingresar al Sistema</strong> en la barra superior o en el botón principal del Hero. Utiliza las credenciales de prueba disponibles en la pantalla de acceso.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>¿Puedo gestionar vacantes y entrevistas sin recargar la página?</span>
+                    <span class="material-symbols-rounded faq-arrow">expand_more</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sí, los módulos se comunican asíncronamente con la API para reflejar altas, bajas, ediciones y cambios de estado de manera instantánea y fluida.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SECCIÓN CONTACTO ── -->
+    <section class="section section-alt" id="contacto">
+        <div class="section-header">
+            <span class="section-tag">Comunícate con Nosotros</span>
+            <h2>Contacto y Asistencia</h2>
+            <p>¿Tienes dudas o deseas implementar JobConnect en tu organización? Estamos listos para ayudarte.</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <span class="material-symbols-rounded contact-icon">mail</span>
+                <h3>Correo Electrónico</h3>
+                <p>soporte@jobconnect.com</p>
+                <a href="mailto:soporte@jobconnect.com" class="contact-btn">Enviar Mensaje</a>
+            </div>
+
+            <div class="contact-card">
+                <span class="material-symbols-rounded contact-icon">call</span>
+                <h3>Teléfono de Soporte</h3>
+                <p>+506 8888-0000</p>
+                <a href="tel:+50688880000" class="contact-btn">Llamar Ahora</a>
+            </div>
+
+            <div class="contact-card">
+                <span class="material-symbols-rounded contact-icon">location_on</span>
+                <h3>Oficinas Centrales</h3>
+                <p>San José, Costa Rica</p>
+                <a href="#servicios" class="contact-btn">Ver Módulos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── PIE DE PÁGINA ── -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="navbar-logo-box">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <span>JobConnect</span>
+            </div>
+            <p>&copy; 2026 JobConnect — Plataforma de Gestión de Empleabilidad. Todos los derechos reservados.</p>
+            <div class="footer-links">
+                <a href="/login.html">Dashboard</a>
+                <a href="/vacantes/vacantes.html">Vacantes</a>
+                <a href="/empresas/empresas.html">Empresas</a>
+                <a href="/postulaciones/postulaciones.html">Postulaciones</a>
+                <a href="/entrevistas/entrevistas.html">Entrevistas</a>
+                <a href="/tareas-e-interfaz/tareas.html">Tareas</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script de interactividad -->
+    <script type="module" src="/paginaPrincipal/paginaPrincipal.js"></script>
 </body>
+
 </html>
