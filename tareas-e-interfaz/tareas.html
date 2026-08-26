@@ -1,35 +1,74 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="JobConnect — Gestión de tareas del reclutador. Crea, edita y controla tus tareas de reclutamiento." />
   <title>JobConnect — Gestión de Tareas</title>
 
-  <!-- Tailwind CSS v4 CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          },
-        },
-      },
-    };
-  </script>
-
   <style>
-    /* ── Animaciones personalizadas ── */
+    /* ═══════════════════════════════════════════════
+       JobConnect Tareas — Standalone Dark SaaS
+       Uses same palette as src/style.css
+       ═══════════════════════════════════════════════ */
+
+    :root {
+      --bg-base:      #080A12;
+      --bg-raised:    #0F1117;
+      --bg-card:      #13151F;
+      --bg-input:     #1A1C28;
+      --bg-hover:     #1E2030;
+      --accent:       #565DFF;
+      --accent-hover: #6B72FF;
+      --accent-soft:  rgba(86, 93, 255, 0.15);
+      --accent-glow:  rgba(86, 93, 255, 0.25);
+      --text-primary:   #F0F0F0;
+      --text-secondary: #A0A0A0;
+      --text-muted:     #606474;
+      --text-dimmed:    #3A3E50;
+      --border:       #1E2030;
+      --border-light: #2A2D3E;
+      --border-accent: rgba(86, 93, 255, 0.3);
+      --danger:       #EF4444;
+      --danger-soft:  rgba(239, 68, 68, 0.12);
+      --success:      #10B981;
+      --success-soft: rgba(16, 185, 129, 0.12);
+      --warning:      #F59E0B;
+      --warning-soft: rgba(245, 158, 11, 0.12);
+      --radius: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --shadow-accent: 0 4px 20px rgba(86, 93, 255, 0.2);
+      --transition: all 0.2s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { min-height: 100%; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; border: none; background: none; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Animations ── */
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes shimmer {
@@ -38,382 +77,916 @@
     }
     @keyframes pulse-dot {
       0%, 100% { opacity: 1; }
-      50%      { opacity: 0.4; }
+      50%      { opacity: 0.3; }
     }
 
-    .animate-fade-in-up {
-      animation: fadeInUp 0.5s ease-out both;
-    }
-    .animate-shimmer {
-      background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.08) 50%, transparent 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-    }
+    .animate-fade-in-up { animation: fadeInUp 0.45s ease-out both; }
 
-    /* ── Skeleton para carga ── */
     .skeleton {
-      background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+      background: linear-gradient(90deg, var(--bg-hover) 25%, var(--border-light) 50%, var(--bg-hover) 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
-      border-radius: 0.5rem;
+      border-radius: 8px;
     }
 
-    /* ── Scroll suave en tabla ── */
-    .tabla-scroll::-webkit-scrollbar { height: 6px; }
-    .tabla-scroll::-webkit-scrollbar-track { background: #0f172a; }
-    .tabla-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-    .tabla-scroll::-webkit-scrollbar-thumb:hover { background: #475569; }
+    /* ── Navbar ── */
+    .jc-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(8, 10, 18, 0.85);
+      backdrop-filter: blur(20px) saturate(1.8);
+      border-bottom: 1px solid var(--border);
+    }
 
-    /* ── Tabla responsiva → Cards en mobile ── */
+    .jc-navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .jc-navbar-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), #7C5CFC);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-accent);
+      flex-shrink: 0;
+    }
+
+    .jc-navbar-logo svg {
+      width: 20px;
+      height: 20px;
+      color: white;
+      fill: none;
+      stroke: currentColor;
+    }
+
+    .jc-navbar-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .jc-navbar-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .jc-nav-link {
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    .jc-nav-link:hover {
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
+
+    .jc-nav-link.active {
+      color: white;
+      background: var(--accent);
+      font-weight: 600;
+    }
+
+    .jc-navbar-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #7C5CFC);
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ── Main Content ── */
+    .page-main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    /* ── Section Header ── */
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .section-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.01em;
+    }
+
+    .section-header p {
+      margin-top: 4px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ── Primary Action Button ── */
+    .btn-accent {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      background: var(--accent);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-accent);
+      transition: var(--transition);
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(86, 93, 255, 0.3);
+    }
+
+    .btn-accent:active { transform: scale(0.98); }
+
+    .btn-accent svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── Filters ── */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .filtro-btn {
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      background: transparent;
+      transition: var(--transition);
+    }
+
+    .filtro-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
+
+    .filtro-btn.activo {
+      color: white;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .filter-counter {
+      margin-left: auto;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* ── Table Card ── */
+    .table-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      overflow: hidden;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    .table-scroll::-webkit-scrollbar { height: 5px; }
+    .table-scroll::-webkit-scrollbar-track { background: var(--bg-base); }
+    .table-scroll::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .task-table thead tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .task-table th {
+      padding: 14px 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-align: left;
+      color: var(--text-secondary);
+      background: var(--bg-raised);
+    }
+
+    .task-table th:last-child {
+      text-align: right;
+    }
+
+    .task-table td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .task-table tbody tr {
+      transition: background 0.15s;
+    }
+
+    .task-table tbody tr:hover {
+      background: var(--bg-hover);
+    }
+
+    .task-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .task-title {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .task-title.done {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .task-desc {
+      color: var(--text-secondary);
+      max-width: 280px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .task-date {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    /* ── Status Pills ── */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .pill-pending {
+      color: var(--warning);
+      background: var(--warning-soft);
+    }
+
+    .pill-pending .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--warning);
+      animation: pulse-dot 2s infinite;
+    }
+
+    .pill-done {
+      color: var(--success);
+      background: var(--success-soft);
+    }
+
+    .pill-done svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── Action Icons ── */
+    .actions-cell {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .action-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      transition: var(--transition);
+      background: transparent;
+    }
+
+    .action-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .action-btn.complete {
+      color: rgba(16, 185, 129, 0.6);
+    }
+    .action-btn.complete:hover {
+      color: var(--success);
+      background: var(--success-soft);
+    }
+
+    .action-btn.reopen {
+      color: rgba(245, 158, 11, 0.6);
+    }
+    .action-btn.reopen:hover {
+      color: var(--warning);
+      background: var(--warning-soft);
+    }
+
+    .action-btn.edit {
+      color: rgba(86, 93, 255, 0.6);
+    }
+    .action-btn.edit:hover {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .action-btn.delete {
+      color: rgba(239, 68, 68, 0.5);
+    }
+    .action-btn.delete:hover {
+      color: var(--danger);
+      background: var(--danger-soft);
+    }
+
+    /* ── Empty State ── */
+    .empty-state {
+      padding: 56px 24px;
+      text-align: center;
+    }
+
+    .empty-state-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 16px;
+      border-radius: 16px;
+      background: var(--bg-hover);
+      display: grid;
+      place-items: center;
+    }
+
+    .empty-state-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--text-muted);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .empty-state h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .empty-state p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ── Skeleton ── */
+    .skeleton-container { padding: 20px; }
+    .skeleton-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.hidden {
+      display: none;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 520px;
+      margin: 16px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      background: var(--bg-card);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      color: white;
+      background: var(--bg-hover);
+    }
+
+    .modal-close svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    .modal-body {
+      padding: 24px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .modal-body .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .modal-body .field-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-body label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .char-counter {
+      font-size: 11px;
+      font-family: 'SF Mono', 'Consolas', monospace;
+      color: var(--text-muted);
+    }
+
+    .char-counter.warn { color: var(--warning); }
+    .char-counter.danger { color: var(--danger); font-weight: 600; }
+
+    .modal-body input[type="text"],
+    .modal-body input[type="date"],
+    .modal-body textarea,
+    .modal-body select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .modal-body input::placeholder,
+    .modal-body textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .modal-body input:focus,
+    .modal-body textarea:focus,
+    .modal-body select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .modal-body textarea {
+      resize: none;
+      min-height: 80px;
+    }
+
+    .modal-body select {
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .field-error {
+      font-size: 12px;
+      color: var(--danger);
+    }
+
+    .field-error.hidden { display: none; }
+
+    .input-error {
+      border-color: rgba(239, 68, 68, 0.5) !important;
+    }
+
+    .modal-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 0 24px 24px;
+    }
+
+    .btn-cancel {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      background: transparent;
+      transition: var(--transition);
+    }
+
+    .btn-cancel:hover {
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
+
+    .btn-save {
+      padding: 10px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      color: white;
+      background: var(--accent);
+      box-shadow: var(--shadow-accent);
+      transition: var(--transition);
+    }
+
+    .btn-save:hover {
+      background: var(--accent-hover);
+    }
+
+    /* ── Footer ── */
+    .jc-footer {
+      margin-top: auto;
+      padding: 24px 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .jc-footer span {
+      font-size: 12px;
+      color: var(--text-dimmed);
+    }
+
+    /* ── Responsive: Cards on Mobile ── */
     @media (max-width: 768px) {
+      .jc-navbar-links { display: none; }
+      .section-header { flex-direction: column; align-items: flex-start; }
+
       .tabla-responsive thead { display: none; }
       .tabla-responsive tbody tr {
         display: flex;
         flex-direction: column;
-        border: 1px solid #334155;
-        border-radius: 0.75rem;
-        margin-bottom: 0.75rem;
-        padding: 1rem;
-        background: #1e293b;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 10px;
+        padding: 16px;
+        background: var(--bg-raised);
       }
       .tabla-responsive tbody td {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.4rem 0;
+        padding: 6px 0;
         border: none !important;
       }
       .tabla-responsive tbody td::before {
         content: attr(data-label);
-        font-weight: 600;
-        font-size: 0.75rem;
+        font-weight: 700;
+        font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: #94a3b8;
-        margin-right: 1rem;
+        color: var(--text-muted);
+        margin-right: 12px;
       }
       .tabla-responsive tbody td:last-child {
         justify-content: flex-end;
-        padding-top: 0.75rem;
-        margin-top: 0.5rem;
-        border-top: 1px solid #334155 !important;
+        padding-top: 12px;
+        margin-top: 8px;
+        border-top: 1px solid var(--border) !important;
       }
+
+      .modal-row { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="/src/style.css" />
 </head>
 
-<body class="bg-slate-950 text-slate-200 font-sans antialiased min-h-screen">
+<body>
 
   <!-- ═══════════════════════════════════════════
-       HEADER / NAVBAR
+       NAVBAR
        ═══════════════════════════════════════════ -->
-  <header class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/60">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-      <!-- Logo -->
-      <a href="/index.html" class="flex items-center gap-3 group" id="nav-logo">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600
-                    flex items-center justify-center shadow-lg shadow-indigo-500/25
-                    group-hover:shadow-indigo-500/40 transition-shadow">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-          </svg>
+  <header class="jc-navbar">
+    <div class="jc-navbar-brand">
+      <a href="/index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+        <div class="jc-navbar-logo">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
         </div>
-        <span class="text-xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-          JobConnect
-        </span>
+        <span class="jc-navbar-name">JobConnect</span>
       </a>
+    </div>
 
-      <!-- Nav links -->
-      <div class="hidden sm:flex items-center gap-1">
-        <a href="/index.html" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/50 transition-colors">
-          Dashboard
-        </a>
-        <a href="#" class="px-3 py-2 text-sm font-medium text-white bg-slate-800/70 rounded-lg border border-slate-700/50" aria-current="page">
-          Tareas
-        </a>
-        <a href="#" class="px-3 py-2 text-sm font-medium text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/50 transition-colors">
-          Candidatos
-        </a>
-      </div>
-
-      <!-- Avatar -->
-      <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 ring-2 ring-slate-800
-                  flex items-center justify-center text-xs font-bold text-white cursor-pointer"
-           title="Usuario JobConnect">
-        EJ
-      </div>
+    <nav class="jc-navbar-links" aria-label="Navegación principal">
+      <a href="/index.html" class="jc-nav-link">Dashboard</a>
+      <a href="/pages/vacantes.html" class="jc-nav-link">Vacantes</a>
+      <a href="/pages/empresas.html" class="jc-nav-link">Empresas</a>
+      <a href="/src/pages/postulaciones.html" class="jc-nav-link">Postulaciones</a>
+      <a href="/src/pages/entrevistas.html" class="jc-nav-link">Entrevistas</a>
+      <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link active">Tareas</a>
     </nav>
+
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <div style="text-align: right; display: grid; gap: 1px;">
+        <strong style="font-size: 14px; font-weight: 600; color: #F0F0F0;">Emily Johnson</strong>
+        <span style="font-size: 12px; color: #606474;">Reclutadora</span>
+      </div>
+      <div id="user-avatar" class="jc-navbar-avatar" title="Emily Johnson">EJ</div>
+      <button id="logout-button" class="logout-button" type="button" title="Cerrar sesión" onclick="localStorage.removeItem('jobconnect_session'); window.location.href='/index.html';">Salir</button>
+    </div>
   </header>
 
-  <!-- ═══════════════════════════════════════════
-       CONTENIDO PRINCIPAL
-       ═══════════════════════════════════════════ -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
-    <!-- ── Encabezado de sección ── -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 animate-fade-in-up">
+  <!-- ── LAYOUT CON SIDEBAR FIJO ── -->
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="sidebar">
       <div>
-        <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-          Gestión de Tareas
-        </h1>
-        <p class="mt-1 text-sm text-slate-400">
-          Administra las tareas de reclutamiento de tu equipo
-        </p>
+        <div class="sidebar-section-title">Módulos del Sistema</div>
+        <nav aria-label="Módulos de JobConnect">
+          <a href="/index.html" class="module-button">
+            <div class="module-button-content">
+              <span class="material-symbols-rounded module-button-icon">dashboard</span>
+              <span>Inicio</span>
+            </div>
+          </a>
+
+          <a href="/pages/vacantes.html" class="module-button">
+            <div class="module-button-content">
+              <span class="material-symbols-rounded module-button-icon">work</span>
+              <span>Vacantes</span>
+            </div>
+            <span class="module-badge-count">6</span>
+          </a>
+
+          <a href="/pages/empresas.html" class="module-button">
+            <div class="module-button-content">
+              <span class="material-symbols-rounded module-button-icon">domain</span>
+              <span>Empresas</span>
+            </div>
+            <span class="module-badge-count">4</span>
+          </a>
+
+          <a href="/src/pages/postulaciones.html" class="module-button">
+            <div class="module-button-content">
+              <span class="material-symbols-rounded module-button-icon">description</span>
+              <span>Postulaciones</span>
+            </div>
+            <span class="module-badge-count">6</span>
+          </a>
+
+          <a href="/src/pages/entrevistas.html" class="module-button">
+            <div class="module-button-content">
+              <span class="material-symbols-rounded module-button-icon">calendar_month</span>
+              <span>Entrevistas</span>
+            </div>
+            <span class="module-badge-count">3</span>
+          </a>
+
+          <a href="/tareas-e-interfaz/tareas.html" class="module-button active">
+            <div class="module-button-content">
+              <span class="material-symbols-rounded module-button-icon">task_alt</span>
+              <span>Tareas</span>
+            </div>
+            <span class="module-badge-count">5</span>
+          </a>
+        </nav>
       </div>
 
-      <!-- Botón Nueva Tarea -->
-      <button id="btn-nueva-tarea"
-              class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl
-                     bg-gradient-to-r from-indigo-600 to-indigo-500 text-white
-                     shadow-lg shadow-indigo-600/25
-                     hover:from-indigo-500 hover:to-indigo-400 hover:shadow-indigo-500/40
-                     active:scale-[0.98] transition-all duration-200
-                     focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-950">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-        </svg>
+      <div class="sidebar-bottom-info">
+        <div class="sidebar-status-pill">
+          <span class="status-dot-online"></span>
+          <span>Servidor y API Activos</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════
+         MAIN CONTENT
+         ═══════════════════════════════════════════ -->
+    <main class="page-main">
+
+    <!-- Section Header -->
+    <div class="section-header animate-fade-in-up">
+      <div>
+        <h1>Gestión de Tareas</h1>
+        <p>Administra las tareas de reclutamiento de tu equipo</p>
+      </div>
+
+      <button id="btn-nueva-tarea" class="btn-accent">
+        <svg viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
         Nueva Tarea
       </button>
     </div>
 
-    <!-- ── Filtros rápidos ── -->
-    <div class="flex flex-wrap items-center gap-2 mb-6 animate-fade-in-up" style="animation-delay: 0.1s"
+    <!-- Filters -->
+    <div class="filters animate-fade-in-up" style="animation-delay: 0.08s"
          id="filtros-container" role="group" aria-label="Filtros de estado">
-      <button data-filtro="todas"
-              class="filtro-btn activo px-4 py-2 text-sm font-medium rounded-xl
-                     bg-indigo-600/20 text-indigo-300 border border-indigo-500/30
-                     hover:bg-indigo-600/30 transition-all duration-200
-                     focus:outline-none focus:ring-2 focus:ring-indigo-400">
-        Todas
-      </button>
-      <button data-filtro="pendiente"
-              class="filtro-btn px-4 py-2 text-sm font-medium rounded-xl
-                     bg-slate-800/50 text-slate-400 border border-slate-700/50
-                     hover:bg-slate-700/50 hover:text-slate-300 transition-all duration-200
-                     focus:outline-none focus:ring-2 focus:ring-slate-500">
-        Pendientes
-      </button>
-      <button data-filtro="completada"
-              class="filtro-btn px-4 py-2 text-sm font-medium rounded-xl
-                     bg-slate-800/50 text-slate-400 border border-slate-700/50
-                     hover:bg-slate-700/50 hover:text-slate-300 transition-all duration-200
-                     focus:outline-none focus:ring-2 focus:ring-slate-500">
-        Completadas
-      </button>
-
-      <!-- Contador de resultados -->
-      <span id="contador-tareas" class="ml-auto text-xs text-slate-500 font-medium">
-        <!-- Se llena dinámicamente -->
-      </span>
+      <button data-filtro="todas" class="filtro-btn activo">Todas</button>
+      <button data-filtro="pendiente" class="filtro-btn">Pendientes</button>
+      <button data-filtro="completada" class="filtro-btn">Completadas</button>
+      <span id="contador-tareas" class="filter-counter"></span>
     </div>
 
-    <!-- ── Tabla de Tareas ── -->
-    <div class="bg-slate-900/50 border border-slate-800/60 rounded-2xl overflow-hidden
-                shadow-xl shadow-black/10 animate-fade-in-up" style="animation-delay: 0.2s">
-      <div class="overflow-x-auto tabla-scroll">
-        <table class="w-full tabla-responsive" id="tabla-tareas">
+    <!-- Table -->
+    <div class="table-card animate-fade-in-up" style="animation-delay: 0.16s">
+      <div class="table-scroll">
+        <table class="task-table tabla-responsive" id="tabla-tareas">
           <thead>
-            <tr class="border-b border-slate-800/80">
-              <th class="text-left px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Título
-              </th>
-              <th class="text-left px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider hidden md:table-cell">
-                Descripción
-              </th>
-              <th class="text-left px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Estado
-              </th>
-              <th class="text-left px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider hidden sm:table-cell">
-                Fecha
-              </th>
-              <th class="text-right px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Acciones
-              </th>
+            <tr>
+              <th>Título</th>
+              <th class="hide-mobile">Descripción</th>
+              <th>Estado</th>
+              <th class="hide-mobile">Fecha</th>
+              <th style="text-align: right">Acciones</th>
             </tr>
           </thead>
-          <tbody id="cuerpo-tabla" class="divide-y divide-slate-800/50">
-            <!-- Las filas se renderizan dinámicamente desde tareas.js -->
-          </tbody>
+          <tbody id="cuerpo-tabla"></tbody>
         </table>
       </div>
 
-      <!-- Estado vacío -->
-      <div id="estado-vacio" class="hidden py-16 text-center">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-800/50 flex items-center justify-center">
-          <svg class="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+      <!-- Empty State -->
+      <div id="estado-vacio" class="empty-state hidden">
+        <div class="empty-state-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
           </svg>
         </div>
-        <h3 class="text-lg font-semibold text-slate-400 mb-1">No hay tareas</h3>
-        <p class="text-sm text-slate-500">Haz clic en "Nueva Tarea" para crear la primera.</p>
+        <h3>No hay tareas</h3>
+        <p>Haz clic en "Nueva Tarea" para crear la primera.</p>
       </div>
 
-      <!-- Skeleton de carga -->
-      <div id="skeleton-carga" class="p-6 space-y-4">
-        <div class="flex gap-4 items-center">
-          <div class="skeleton h-5 w-1/4"></div>
-          <div class="skeleton h-5 w-1/3 hidden md:block"></div>
-          <div class="skeleton h-6 w-20"></div>
-          <div class="skeleton h-5 w-24 hidden sm:block"></div>
-          <div class="skeleton h-8 w-28 ml-auto"></div>
-        </div>
-        <div class="flex gap-4 items-center">
-          <div class="skeleton h-5 w-1/3"></div>
-          <div class="skeleton h-5 w-1/4 hidden md:block"></div>
-          <div class="skeleton h-6 w-24"></div>
-          <div class="skeleton h-5 w-20 hidden sm:block"></div>
-          <div class="skeleton h-8 w-28 ml-auto"></div>
-        </div>
-        <div class="flex gap-4 items-center">
-          <div class="skeleton h-5 w-1/5"></div>
-          <div class="skeleton h-5 w-2/5 hidden md:block"></div>
-          <div class="skeleton h-6 w-20"></div>
-          <div class="skeleton h-5 w-24 hidden sm:block"></div>
-          <div class="skeleton h-8 w-28 ml-auto"></div>
-        </div>
-      </div>
+      <!-- Skeleton -->
+      <div id="skeleton-carga" class="skeleton-container">
+        <div class="skeleton-row"><div class="skeleton" style="height:18px;width:25%"></div><div class="skeleton" style="height:18px;width:35%"></div><div class="skeleton" style="height:22px;width:80px"></div><div class="skeleton" style="height:18px;width:90px"></div><div class="skeleton" style="height:30px;width:100px;margin-left:auto"></div></div>
+        <div class="skeleton-row"><div class="skeleton" style="height:18px;width:30%"></div><div class="skeleton" style="height:18px;width:28%"></div><div class="skeleton" style="height:22px;width:90px"></div><div class="skeleton" style="height:18px;width:80px"></div><div class="skeleton" style="height:30px;width:100px;margin-left:auto"></div></div>
+        <div class="skeleton-row"><div class="skeleton" style="height:18px;width:20%"></div><div class="skeleton" style="height:18px;width:40%"></div><div class="skeleton" style="height:22px;width:80px"></div><div class="skeleton" style="height:18px;width:90px"></div><div class="skeleton" style="height:30px;width:100px;margin-left:auto"></div></div>
     </div>
   </main>
+  </div>
 
   <!-- ═══════════════════════════════════════════
-       MODAL CREAR / EDITAR TAREA
+       MODAL
        ═══════════════════════════════════════════ -->
-  <div id="modal-tarea"
-       class="hidden fixed inset-0 z-[9000] flex items-center justify-center
-              bg-black/60 backdrop-blur-sm transition-opacity duration-300"
-       role="dialog"
-       aria-modal="true"
-       aria-hidden="true"
-       aria-labelledby="modal-titulo">
+  <div id="modal-tarea" class="modal-overlay hidden"
+       role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-titulo">
 
-    <div class="bg-slate-800 border border-slate-700/50 rounded-2xl w-full max-w-lg mx-4
-                shadow-2xl shadow-black/40 transform transition-all duration-300">
-
-      <!-- Header del modal -->
-      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700/50">
-        <h2 id="modal-titulo" class="text-lg font-semibold text-white">
-          Nueva Tarea
-        </h2>
-        <button id="btn-cerrar-modal"
-                class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-700/50
-                       transition-colors focus:outline-none focus:ring-2 focus:ring-slate-500"
-                aria-label="Cerrar modal">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="modal-titulo">Nueva Tarea</h2>
+        <button id="btn-cerrar-modal" class="modal-close" aria-label="Cerrar modal">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
 
-      <!-- Formulario -->
-      <form id="form-tarea" class="px-6 py-5 space-y-5" novalidate>
-        <!-- Campo oculto para ID (edición) -->
+      <form id="form-tarea" class="modal-body" novalidate>
         <input type="hidden" id="tarea-id" />
 
         <!-- Título -->
-        <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <label for="tarea-titulo" class="block text-sm font-medium text-slate-300">
-              Título <span class="text-rose-400" aria-hidden="true">*</span>
-            </label>
-            <span id="contador-titulo" class="text-xs text-slate-500 font-mono">0/300</span>
+        <div class="field">
+          <div class="field-header">
+            <label for="tarea-titulo">Título <span style="color:var(--danger)">*</span></label>
+            <span id="contador-titulo" class="char-counter">0/300</span>
           </div>
-          <input type="text" id="tarea-titulo" name="titulo" required
-                 maxlength="300"
-                 placeholder="Ej: Revisar CVs"
-                 class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60
-                        text-white placeholder-slate-500 text-sm
-                        focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
-                        transition-all duration-200" />
-          <p id="error-titulo" class="mt-1 text-xs text-rose-400 hidden" role="alert"></p>
+          <input type="text" id="tarea-titulo" name="titulo" required maxlength="300"
+                 placeholder="Ej: Revisar CVs" />
+          <p id="error-titulo" class="field-error hidden" role="alert"></p>
         </div>
 
         <!-- Descripción -->
-        <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <label for="tarea-descripcion" class="block text-sm font-medium text-slate-300">
-              Descripción
-            </label>
-            <span id="contador-descripcion" class="text-xs text-slate-500 font-mono">0/1500</span>
+        <div class="field">
+          <div class="field-header">
+            <label for="tarea-descripcion">Descripción</label>
+            <span id="contador-descripcion" class="char-counter">0/1500</span>
           </div>
-          <textarea id="tarea-descripcion" name="descripcion" rows="3"
-                    maxlength="1500"
-                    placeholder="Describe brevemente la tarea..."
-                    class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60
-                           text-white placeholder-slate-500 text-sm resize-none
-                           focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
-                           transition-all duration-200"></textarea>
-          <p id="error-descripcion" class="mt-1 text-xs text-rose-400 hidden" role="alert"></p>
+          <textarea id="tarea-descripcion" name="descripcion" rows="3" maxlength="1500"
+                    placeholder="Describe brevemente la tarea..."></textarea>
+          <p id="error-descripcion" class="field-error hidden" role="alert"></p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="modal-row">
           <!-- Estado -->
-          <div>
-            <label for="tarea-estado" class="block text-sm font-medium text-slate-300 mb-1.5">
-              Estado
-            </label>
-            <select id="tarea-estado" name="estado"
-                    class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60
-                           text-white text-sm appearance-none cursor-pointer
-                           focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
-                           transition-all duration-200">
+          <div class="field">
+            <label for="tarea-estado">Estado</label>
+            <select id="tarea-estado" name="estado">
               <option value="pendiente">Pendiente</option>
               <option value="completada">Completada</option>
             </select>
           </div>
 
           <!-- Fecha -->
-          <div>
-            <label for="tarea-fecha" class="block text-sm font-medium text-slate-300 mb-1.5">
-              Fecha <span class="text-rose-400" aria-hidden="true">*</span>
-            </label>
-            <input type="date" id="tarea-fecha" name="fecha" required
-                   class="w-full px-4 py-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60
-                          text-white text-sm
-                          focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent
-                          transition-all duration-200" />
+          <div class="field">
+            <label for="tarea-fecha">Fecha <span style="color:var(--danger)">*</span></label>
+            <input type="date" id="tarea-fecha" name="fecha" required />
           </div>
         </div>
-
-        <!-- Botones de acción -->
-        <div class="flex justify-end gap-3 pt-2">
-          <button type="button" id="btn-cancelar-modal"
-                  class="px-5 py-2.5 text-sm font-medium rounded-xl
-                         bg-slate-700 text-slate-300 border border-slate-600/50
-                         hover:bg-slate-600 transition-colors duration-200
-                         focus:outline-none focus:ring-2 focus:ring-slate-500">
-            Cancelar
-          </button>
-          <button type="submit" id="btn-guardar-tarea"
-                  class="px-5 py-2.5 text-sm font-semibold rounded-xl
-                         bg-gradient-to-r from-indigo-600 to-indigo-500 text-white
-                         shadow-lg shadow-indigo-600/20
-                         hover:from-indigo-500 hover:to-indigo-400
-                         active:scale-[0.98] transition-all duration-200
-                         focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-800">
-            Guardar Tarea
-          </button>
-        </div>
       </form>
+
+      <div class="modal-footer">
+        <button type="button" id="btn-cancelar-modal" class="btn-cancel">Cancelar</button>
+        <button type="submit" id="btn-guardar-tarea" form="form-tarea" class="btn-save">Guardar Tarea</button>
+      </div>
     </div>
   </div>
 
   <!-- ═══════════════════════════════════════════
        FOOTER
        ═══════════════════════════════════════════ -->
-  <footer class="border-t border-slate-800/60 mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <p class="text-xs text-slate-500">
-        &copy; 2026 JobConnect — Sistema de Empleabilidad
-      </p>
-      <p class="text-xs text-slate-600">
-        feature/tareas-ui · Equipo Frontend
-      </p>
-    </div>
+  <footer class="jc-footer">
+    <span>&copy; 2026 JobConnect — Sistema de Empleabilidad</span>
+    <span>feature/tareas-ui · Equipo Frontend</span>
   </footer>
 
-  <!-- Scripts (módulos ES) -->
   <script type="module" src="./tareas.js"></script>
 
 </body>
