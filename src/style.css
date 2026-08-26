@@ -10,6 +10,7 @@
 
   --primary: #12355b;
   --primary-light: #1f5d91;
+  --primary-hover: #0f67ad;
   --secondary: #1479c9;
   --secondary-hover: #0f67ad;
 
@@ -18,11 +19,21 @@
   --surface-soft: #f8fafc;
 
   --text: #1e293b;
+  --text-main: #0f172a;
   --text-soft: #64748b;
+  --text-muted: #64748b;
 
   --border: #dbe3ed;
   --danger: #b42318;
+  --danger-hover: #991b1b;
   --danger-background: #fef3f2;
+
+  --success-bg: #f0fdf4;
+  --success-text: #166534;
+  --success-border: #bbf7d0;
+  --error-bg: #fef2f2;
+  --error-text: #991b1b;
+  --error-border: #fecaca;
 
   --shadow:
     0 20px 45px rgba(18, 53, 91, 0.12);
@@ -45,7 +56,9 @@ body {
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
 }
 
@@ -177,7 +190,9 @@ button:disabled {
   font-weight: 700;
 }
 
-.form-group input {
+.form-group input,
+.form-group select,
+.form-group textarea {
   width: 100%;
   min-height: 48px;
   padding: 12px 14px;
@@ -194,7 +209,9 @@ button:disabled {
     background 0.2s;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
   border-color: var(--secondary);
   background: white;
   box-shadow: 0 0 0 4px rgba(20, 121, 201, 0.12);
@@ -291,7 +308,7 @@ button:disabled {
 }
 
 /* =========================================
-   DASHBOARD
+   DASHBOARD & NAVEGACIÓN
 ========================================= */
 
 .dashboard {
@@ -484,6 +501,194 @@ button:disabled {
   color: var(--text-soft);
   font-size: 14px;
   line-height: 1.55;
+}
+
+/* =========================================
+   ESTILOS COMPARTIDOS PARA PÁGINAS / MÓDULOS
+========================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: var(--secondary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-hover);
+}
+
+.btn-secondary {
+  background-color: var(--primary-light);
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.btn-edit {
+  background-color: #3b82f6;
+  color: #ffffff;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-edit:hover {
+  background-color: #2563eb;
+}
+
+.btn-delete {
+  background-color: var(--danger);
+  color: #ffffff;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: none;
+}
+
+.btn-delete:hover {
+  background-color: var(--danger-hover);
+}
+
+/* Tablas */
+.vacantes-table,
+.empresas-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+}
+
+.vacantes-table th,
+.empresas-table th {
+  background-color: #f8fafc;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.875rem 1rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.vacantes-table td,
+.empresas-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.vacantes-table tbody tr:hover,
+.empresas-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.table-actions {
+  white-space: nowrap;
+}
+
+/* Badges de estado */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-abierta {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.status-cerrada {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.status-pausada {
+  background-color: #fef9c3;
+  color: #a16207;
+}
+
+/* Formularios */
+.form-vacante,
+.form-empresa {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+/* Mensajes y estados */
+.vacantes-messages,
+.empresas-messages,
+.form-messages {
+  margin-bottom: 1rem;
+}
+
+.message {
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.message.success {
+  background-color: var(--success-bg);
+  color: var(--success-text);
+  border: 1px solid var(--success-border);
+}
+
+.message.error {
+  background-color: var(--error-bg);
+  color: var(--error-text);
+  border: 1px solid var(--error-border);
+}
+
+.loading-message,
+.empty-message {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
 }
 
 /* =========================================

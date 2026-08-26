@@ -1,82 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JobConnect - Panel de Control</title>
-    <link rel="stylesheet" href="./src/style.css" />
-  </head>
-  <body>
-    <div id="app">
-      <header class="home-hero">
-        <div class="brand-badge">JobConnect v1.0</div>
-        <h1 class="home-title">Portal de Gestión de Empleo</h1>
-        <p class="home-subtitle">
-          Sistema modular en JavaScript Vanilla para la administración de ofertas laborales y empresas aliadas.
-        </p>
-      </header>
-
-      <main class="modules-grid">
-        <!-- Tarjeta de Vacantes -->
-        <article class="module-card">
-          <div class="card-header">
-            <div class="card-icon">💼</div>
-            <h2 class="card-title">Gestión de Vacantes</h2>
-          </div>
-          <p class="card-description">
-            Administra el catálogo de puestos laborales, requisitos, salarios y estados de contratación en tiempo real.
-          </p>
-          <ul class="feature-list">
-            <li>✓ Listado reactivo de puestos de trabajo</li>
-            <li>✓ Creación y edición con validación de campos</li>
-            <li>✓ Control de estados (abierta, cerrada, pausada)</li>
-            <li>✓ Eliminación segura con confirmación</li>
-          </ul>
-          <div class="card-footer">
-            <a href="./pages/vacantes.html" class="btn btn-primary btn-full">
-              Ir a Vacantes &rarr;
-            </a>
-          </div>
-        </article>
-
-        <!-- Tarjeta de Empresas -->
-        <article class="module-card">
-          <div class="card-header">
-            <div class="card-icon">🏢</div>
-            <h2 class="card-title">Gestión de Empresas</h2>
-          </div>
-          <p class="card-description">
-            Gestiona el directorio de empresas contratantes, industria, representantes y datos de contacto directo.
-          </p>
-          <ul class="feature-list">
-            <li>✓ Directorio completo de empleadores</li>
-            <li>✓ Registro de información de contacto y sector</li>
-            <li>✓ Actualización y persistencia vía API REST</li>
-            <li>✓ Operaciones asíncronas con feedback visual</li>
-          </ul>
-          <div class="card-footer">
-            <a href="./pages/empresas.html" class="btn btn-primary btn-full">
-              Ir a Empresas &rarr;
-            </a>
-          </div>
-        </article>
-      </main>
-
-      <section class="api-info-section">
-        <div class="info-card">
-          <div class="info-header">
-            <span class="info-icon">⚡</span>
-            <h3>Servidor de Desarrollo y API Local</h3>
-          </div>
-          <p>
-            Para que las peticiones HTTP funcionen correctamente con persistencia de datos, asegúrate de tener el servidor mock activo:
-          </p>
-          <div class="command-box">
-            <code>npm run server</code>
-            <span class="command-desc">(Inicia JSON Server en http://localhost:3000 con db.json)</span>
-          </div>
-        </div>
-      </section>
-    </div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JobConnect — Portal de Gestión de Empleabilidad</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
 </html>
