@@ -1,11 +1,25 @@
 {
   "usuarios": [
     {
-      "id": "1",
+      "id": 1,
+      "username": "admin",
+      "password": "admin1234",
+      "nombre": "Administrador JobConnect",
+      "rol": "Administrador"
+    },
+    {
+      "id": 2,
       "username": "emilys",
       "password": "emilyspass",
       "nombre": "Emily Johnson",
       "rol": "Reclutadora"
+    },
+    {
+      "nombre": "Saul Lopez",
+      "username": "cthulhu",
+      "password": "cthulhu",
+      "rol": "Reclutador",
+      "id": 3
     }
   ],
   "candidatos": [
