@@ -3,7 +3,7 @@ import {
   crearVacante,
   actualizarVacante,
   eliminarVacantePorId,
-} from '../src/services/vacantesService.js';
+} from './vacantesService.js';
 
 const ESTADOS_VACANTE = ['abierta', 'cerrada', 'pausada'];
 const MENSAJE_CONFIRMAR_ELIMINAR = '¿Estás seguro de eliminar esta vacante?';
@@ -22,25 +22,12 @@ const MAX_CARACTERES_REQUISITOS = 500;
 let appContainer = null;
 let vacantesCache = [];
 
-/**
- * Muestra un mensaje de alerta o notificación en el contenedor provisto.
- *
- * @param {HTMLElement} messageContainer - Contenedor en el DOM para mensajes.
- * @param {string} message - Texto del mensaje a desplegar.
- * @param {boolean} [isError=false] - Indica si el mensaje es de tipo error.
- */
 function mostrarMensaje(messageContainer, message, isError = false) {
   if (!messageContainer) return;
   const tipoClase = isError ? 'message error' : 'message success';
   messageContainer.innerHTML = `<div class="${tipoClase}">${message}</div>`;
 }
 
-/**
- * Genera el template HTML de una fila individual para la tabla de vacantes.
- *
- * @param {object} vacante - Objeto con los datos de la vacante.
- * @returns {string} Fila <tr> en formato HTML.
- */
 function construirFilaVacante(vacante) {
   const id = vacante.id ?? '';
   const titulo = vacante.titulo || vacante.title || 'Sin título';
@@ -68,12 +55,6 @@ function construirFilaVacante(vacante) {
   `;
 }
 
-/**
- * Genera el template HTML de la tabla con la lista de vacantes.
- *
- * @param {Array<object>} vacantes - Lista de vacantes a renderizar.
- * @returns {string} Tabla HTML o mensaje de lista vacía.
- */
 function construirTablaVacantes(vacantes) {
   if (!Array.isArray(vacantes) || vacantes.length === 0) {
     return '<p class="empty-message">No hay vacantes disponibles en este momento.</p>';
@@ -100,12 +81,6 @@ function construirTablaVacantes(vacantes) {
   `;
 }
 
-/**
- * Consulta la API y recarga el contenido de la tabla de vacantes.
- *
- * @param {HTMLElement} contentContainer - Contenedor donde se inserta la tabla.
- * @param {HTMLElement} messagesContainer - Contenedor para mostrar mensajes de error.
- */
 async function recargarListaVacantes(contentContainer, messagesContainer) {
   try {
     const vacantes = await obtenerVacantes();
@@ -122,13 +97,6 @@ async function recargarListaVacantes(contentContainer, messagesContainer) {
   }
 }
 
-/**
- * Gestiona el proceso de confirmación y eliminación de una vacante por ID.
- *
- * @param {string|number} id - Identificador único de la vacante a eliminar.
- * @param {HTMLElement} messagesContainer - Contenedor para notificar el resultado.
- * @param {HTMLElement} contentContainer - Contenedor de la tabla a actualizar.
- */
 async function eliminarVacante(id, messagesContainer, contentContainer) {
   if (!id) return;
 
@@ -148,12 +116,6 @@ async function eliminarVacante(id, messagesContainer, contentContainer) {
   }
 }
 
-/**
- * Genera el template HTML del formulario de creación o edición de vacantes con restricciones de caracteres.
- *
- * @param {object|null} [vacante=null] - Datos de la vacante a precargar si se está editando.
- * @returns {string} Formulario HTML.
- */
 function construirFormularioVacante(vacante = null) {
   const esEdicion = Boolean(vacante && vacante.id);
   const tituloVista = esEdicion ? 'Editar Vacante' : 'Nueva Vacante';
@@ -266,12 +228,6 @@ function construirFormularioVacante(vacante = null) {
   `;
 }
 
-/**
- * Valida los campos y restricciones de caracteres del formulario de vacante.
- *
- * @param {object} datos - Datos extraídos del formulario.
- * @returns {{esValido: boolean, mensaje: string}} Objeto con el resultado y mensaje explicativo.
- */
 function validarCamposVacante(datos) {
   if (!datos.titulo || datos.titulo.length < MIN_CARACTERES_TITULO) {
     return {
@@ -355,10 +311,17 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
 
         <nav class="jc-navbar-links" aria-label="Navegación principal">
           <a href="/index.html" class="jc-nav-link ${moduloActivo === 'inicio' ? 'active' : ''}">Dashboard</a>
+<<<<<<< HEAD:pages/vacantes.js
           <a href="/pages/vacantes.html" class="jc-nav-link ${moduloActivo === 'vacantes' ? 'active' : ''}">Vacantes</a>
           <a href="/pages/empresas.html" class="jc-nav-link ${moduloActivo === 'empresas' ? 'active' : ''}">Empresas</a>
           <a href="/src/pages/postulaciones.html" class="jc-nav-link ${moduloActivo === 'postulaciones' ? 'active' : ''}">Postulaciones</a>
           <a href="/src/pages/entrevistas.html" class="jc-nav-link ${moduloActivo === 'entrevistas' ? 'active' : ''}">Entrevistas</a>
+=======
+          <a href="/vacantes/vacantes.html" class="jc-nav-link ${moduloActivo === 'vacantes' ? 'active' : ''}">Vacantes</a>
+          <a href="/empresas/empresas.html" class="jc-nav-link ${moduloActivo === 'empresas' ? 'active' : ''}">Empresas</a>
+          <a href="/postulaciones/postulaciones.html" class="jc-nav-link ${moduloActivo === 'postulaciones' ? 'active' : ''}">Postulaciones</a>
+          <a href="/entrevistas/entrevistas.html" class="jc-nav-link ${moduloActivo === 'entrevistas' ? 'active' : ''}">Entrevistas</a>
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:vacantes/vacantes.js
           <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link ${moduloActivo === 'tareas' ? 'active' : ''}">Tareas</a>
         </nav>
 
@@ -386,7 +349,11 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 </div>
               </a>
 
+<<<<<<< HEAD:pages/vacantes.js
               <a href="/pages/vacantes.html" class="module-button ${moduloActivo === 'vacantes' ? 'active' : ''}">
+=======
+              <a href="/vacantes/vacantes.html" class="module-button ${moduloActivo === 'vacantes' ? 'active' : ''}">
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:vacantes/vacantes.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">work</span>
                   <span>Vacantes</span>
@@ -394,7 +361,11 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 <span class="module-badge-count">${totalVac}</span>
               </a>
 
+<<<<<<< HEAD:pages/vacantes.js
               <a href="/pages/empresas.html" class="module-button ${moduloActivo === 'empresas' ? 'active' : ''}">
+=======
+              <a href="/empresas/empresas.html" class="module-button ${moduloActivo === 'empresas' ? 'active' : ''}">
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:vacantes/vacantes.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">domain</span>
                   <span>Empresas</span>
@@ -402,7 +373,11 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 <span class="module-badge-count">4</span>
               </a>
 
+<<<<<<< HEAD:pages/vacantes.js
               <a href="/src/pages/postulaciones.html" class="module-button ${moduloActivo === 'postulaciones' ? 'active' : ''}">
+=======
+              <a href="/postulaciones/postulaciones.html" class="module-button ${moduloActivo === 'postulaciones' ? 'active' : ''}">
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:vacantes/vacantes.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">description</span>
                   <span>Postulaciones</span>
@@ -410,7 +385,11 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 <span class="module-badge-count">6</span>
               </a>
 
+<<<<<<< HEAD:pages/vacantes.js
               <a href="/src/pages/entrevistas.html" class="module-button ${moduloActivo === 'entrevistas' ? 'active' : ''}">
+=======
+              <a href="/entrevistas/entrevistas.html" class="module-button ${moduloActivo === 'entrevistas' ? 'active' : ''}">
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:vacantes/vacantes.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">calendar_month</span>
                   <span>Entrevistas</span>
@@ -445,11 +424,14 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
   `;
 }
 
+<<<<<<< HEAD:pages/vacantes.js
 /**
  * Renderiza la vista de listado de vacantes y configura los manejadores de eventos.
  *
  * @param {HTMLElement} container - Contenedor principal donde se muestra la vista.
  */
+=======
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:vacantes/vacantes.js
 async function cargarYMostrarListado(container) {
   if (!container) return;
 
@@ -507,11 +489,6 @@ async function cargarYMostrarListado(container) {
   await recargarListaVacantes(contentContainer, messagesContainer);
 }
 
-/**
- * Renderiza y gestiona el formulario de creación o edición de vacantes.
- *
- * @param {object|null} [vacante=null] - Datos de la vacante a editar o null para crear una nueva.
- */
 export function mostrarFormularioVacante(vacante = null) {
   if (!appContainer) {
     console.error('El contenedor principal no ha sido inicializado.');
@@ -576,11 +553,6 @@ export function mostrarFormularioVacante(vacante = null) {
   }
 }
 
-/**
- * Inicializa y renderiza la vista de vacantes en el contenedor provisto.
- *
- * @param {HTMLElement} container - Contenedor del DOM donde se montará la vista.
- */
 export async function initVacantes(container) {
   if (!container) {
     console.error('El contenedor proporcionado para initVacantes no es válido.');
@@ -591,7 +563,6 @@ export async function initVacantes(container) {
   await cargarYMostrarListado(appContainer);
 }
 
-// Inicialización automática al cargar el módulo si existe el elemento #app
 const contenedorApp = document.querySelector('#app');
 if (contenedorApp) {
   initVacantes(contenedorApp);

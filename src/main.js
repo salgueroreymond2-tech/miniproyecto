@@ -5,6 +5,7 @@ const SESSION_KEY = "jobconnect_session";
 
 const app = document.querySelector("#app");
 
+<<<<<<< HEAD
 /* =========================================================
    UTILIDADES
 ========================================================= */
@@ -52,6 +53,15 @@ function obtenerSesion() {
     localStorage.removeItem(SESSION_KEY);
     return null;
   }
+=======
+/* ── Helpers de sesión ── */
+
+function obtenerSesion() {
+  const session = localStorage.getItem(SESSION_KEY);
+  if (!session) return null;
+  try { return JSON.parse(session); }
+  catch { localStorage.removeItem(SESSION_KEY); return null; }
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
 }
 
 function guardarSesion(usuario) {
@@ -62,11 +72,15 @@ function guardarSesion(usuario) {
     rol: usuario.rol || "Reclutador",
     token: crypto.randomUUID(),
   };
+<<<<<<< HEAD
 
   localStorage.setItem(
     SESSION_KEY,
     JSON.stringify(session)
   );
+=======
+  localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
 }
 
 function cerrarSesion() {
@@ -74,46 +88,63 @@ function cerrarSesion() {
   mostrarLogin();
 }
 
+<<<<<<< HEAD
 /* =========================================================
    LOGIN Y REGISTRO
 ========================================================= */
+=======
+function getIniciales(nombre) {
+  return nombre.trim().split(/\s+/).map(p => p[0]).join("").toUpperCase().slice(0, 2) || "JC";
+}
+
+/* ═══════════════════════════════════════════════
+   LOGIN
+   ═══════════════════════════════════════════════ */
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
 
 function mostrarLogin() {
   app.innerHTML = `
     <main class="login-page">
       <section class="login-card">
+        <a href="/paginaPrincipal/paginaInicial.html" style="display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); text-decoration: none; font-size: 13px; margin-bottom: 18px; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">
+          <span class="material-symbols-rounded" style="font-size: 16px;">arrow_back</span>
+          <span>Volver al portal público</span>
+        </a>
+
         <div class="brand">
           <div class="brand-icon">JC</div>
-
           <div>
             <h1>JobConnect</h1>
+<<<<<<< HEAD
             <p>Administraci├│n de empleabilidad</p>
+=======
+            <p>Sistema de empleabilidad</p>
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
           </div>
         </div>
 
         <div class="login-heading">
+<<<<<<< HEAD
           <h2>Iniciar sesi├│n</h2>
 
           <p>
             Ingresa tus credenciales para acceder al sistema.
           </p>
+=======
+          <h2>Iniciar sesión</h2>
+          <p>Ingresa tus credenciales para acceder al panel.</p>
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
         </div>
 
         <form id="login-form" novalidate>
           <div class="form-group">
             <label for="username">Usuario</label>
-
-            <input
-              id="username"
-              name="username"
-              type="text"
-              autocomplete="username"
-              placeholder="Escribe tu usuario"
-              required
-            >
+            <input id="username" name="username" type="text"
+                   autocomplete="username" placeholder="Escribe tu usuario" required>
           </div>
 
           <div class="form-group">
+<<<<<<< HEAD
             <label for="password">Contrase├▒a</label>
 
             <div class="password-container">
@@ -134,6 +165,14 @@ function mostrarLogin() {
               >
                 Mostrar
               </button>
+=======
+            <label for="password">Contraseña</label>
+            <div class="password-container">
+              <input id="password" name="password" type="password"
+                     autocomplete="current-password" placeholder="Escribe tu contraseña" required>
+              <button id="toggle-password" class="password-button" type="button"
+                      aria-label="Mostrar contraseña">Mostrar</button>
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
             </div>
           </div>
 
@@ -272,6 +311,7 @@ function configurarLogin() {
     document.querySelector("#toggle-password");
 
   togglePassword.addEventListener("click", () => {
+<<<<<<< HEAD
     const estaOculta =
       passwordInput.type === "password";
 
@@ -280,13 +320,23 @@ function configurarLogin() {
 
     togglePassword.textContent =
       estaOculta ? "Ocultar" : "Mostrar";
+=======
+    const oculta = passwordInput.type === "password";
+    passwordInput.type = oculta ? "text" : "password";
+    togglePassword.textContent = oculta ? "Ocultar" : "Mostrar";
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
   });
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
+<<<<<<< HEAD
 
     const username =
       form.elements.username.value.trim().toLowerCase();
+=======
+    const username = form.username.value.trim();
+    const password = form.password.value;
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
 
     const password =
       form.elements.password.value;
@@ -306,6 +356,7 @@ function configurarLogin() {
     loginButton.textContent = "Verificando...";
 
     try {
+<<<<<<< HEAD
       const usernameSeguro =
         encodeURIComponent(username);
 
@@ -333,6 +384,16 @@ function configurarLogin() {
           "error"
         );
 
+=======
+      const params = new URLSearchParams({ username, password });
+      const response = await fetch(`${API_URL}/usuarios?${params.toString()}`);
+      if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
+
+      const usuarios = await response.json();
+      if (usuarios.length === 0) {
+        message.textContent = "Usuario o contraseña incorrectos.";
+        message.classList.add("error");
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
         return;
       }
 
@@ -344,10 +405,22 @@ function configurarLogin() {
         error
       );
 
+<<<<<<< HEAD
       mostrarMensajeLogin(
         "No fue posible conectar con la API. Comprueba que JSON Server est├® funcionando.",
         "error"
       );
+=======
+      // Fallback local
+      if (username === "emilys" && password === "emilyspass") {
+        guardarSesion({ id: "1", username: "emilys", nombre: "Emily Johnson", rol: "Reclutadora" });
+        mostrarDashboard();
+        return;
+      }
+
+      message.textContent = "No fue posible conectar con la API. Comprueba que JSON Server esté funcionando.";
+      message.classList.add("error");
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
     } finally {
       loginButton.disabled = false;
       loginButton.textContent = "Iniciar sesi├│n";
@@ -355,13 +428,55 @@ function configurarLogin() {
   });
 }
 
+<<<<<<< HEAD
 function mostrarMensajeLogin(texto, tipo) {
   const message =
     document.querySelector("#login-message");
 
   if (!message) {
     return;
+=======
+/* ═══════════════════════════════════════════════
+   DASHBOARD
+   ═══════════════════════════════════════════════ */
+
+async function cargarMetricas() {
+  const defaults = {
+    vacantes: 0,
+    empresas: 0,
+    postulaciones: 0,
+    entrevistas: 0,
+    tareas: 0
+  };
+
+  try {
+    const [resVac, resEmp, resPost, resEnt, resTar] = await Promise.allSettled([
+      fetch(`${API_URL}/vacantes`).then(r => r.json()),
+      fetch(`${API_URL}/empresas`).then(r => r.json()),
+      fetch(`${API_URL}/postulaciones`).then(r => r.json()),
+      fetch(`${API_URL}/entrevistas`).then(r => r.json()),
+      fetch(`${API_URL}/tareas`).then(r => r.json())
+    ]);
+
+    return {
+      vacantes: resVac.status === "fulfilled" && Array.isArray(resVac.value) ? resVac.value.length : 4,
+      empresas: resEmp.status === "fulfilled" && Array.isArray(resEmp.value) ? resEmp.value.length : 3,
+      postulaciones: resPost.status === "fulfilled" && Array.isArray(resPost.value) ? resPost.value.length : 6,
+      entrevistas: resEnt.status === "fulfilled" && Array.isArray(resEnt.value) ? resEnt.value.length : 3,
+      tareas: resTar.status === "fulfilled" && Array.isArray(resTar.value) ? resTar.value.length : 5
+    };
+  } catch {
+    return { vacantes: 4, empresas: 3, postulaciones: 6, entrevistas: 3, tareas: 5 };
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
   }
+}
+
+async function mostrarDashboard() {
+  const session = obtenerSesion();
+  if (!session) { mostrarLogin(); return; }
+
+  const iniciales = getIniciales(session.nombre);
+  const metricas = await cargarMetricas();
 
   message.textContent = texto;
   message.className = "login-message";
@@ -639,7 +754,11 @@ async function mostrarDashboard() {
   app.innerHTML = `
     <div class="dashboard">
 
+<<<<<<< HEAD
       <!-- ÔöÇÔöÇ NAVBAR ÔöÇÔöÇ -->
+=======
+      <!-- ── NAVBAR ── -->
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
       <header class="jc-navbar">
         <div class="jc-navbar-brand">
           <div class="jc-navbar-logo">
@@ -649,12 +768,21 @@ async function mostrarDashboard() {
           <span class="jc-navbar-name">JobConnect</span>
         </div>
 
+<<<<<<< HEAD
         <nav class="jc-navbar-links" aria-label="Navegaci├│n principal">
           <a href="/index.html" class="jc-nav-link active">Dashboard</a>
           <a href="/pages/vacantes.html" class="jc-nav-link">Vacantes</a>
           <a href="/pages/empresas.html" class="jc-nav-link">Empresas</a>
           <a href="/src/pages/postulaciones.html" class="jc-nav-link">Postulaciones</a>
           <a href="/src/pages/entrevistas.html" class="jc-nav-link">Entrevistas</a>
+=======
+        <nav class="jc-navbar-links" aria-label="Navegación principal">
+          <a href="/index.html" class="jc-nav-link active">Dashboard</a>
+          <a href="/vacantes/vacantes.html" class="jc-nav-link">Vacantes</a>
+          <a href="/empresas/empresas.html" class="jc-nav-link">Empresas</a>
+          <a href="/postulaciones/postulaciones.html" class="jc-nav-link">Postulaciones</a>
+          <a href="/entrevistas/entrevistas.html" class="jc-nav-link">Entrevistas</a>
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
           <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link">Tareas</a>
         </nav>
 
@@ -664,6 +792,7 @@ async function mostrarDashboard() {
             <span style="font-size: 12px; color: #606474;">${session.rol}</span>
           </div>
           <div class="jc-navbar-avatar" title="${session.nombre} (${session.rol})">${iniciales}</div>
+<<<<<<< HEAD
           <button id="logout-button" class="logout-button" type="button" title="Cerrar sesi├│n">Salir</button>
         </div>
       </header>
@@ -675,6 +804,19 @@ async function mostrarDashboard() {
           <div>
             <div class="sidebar-section-title">M├│dulos del Sistema</div>
             <nav aria-label="M├│dulos de JobConnect">
+=======
+          <button id="logout-button" class="logout-button" type="button" title="Cerrar sesión">Salir</button>
+        </div>
+      </header>
+
+      <!-- ── LAYOUT ── -->
+      <div class="dashboard-layout">
+        <!-- ── SIDEBAR FIJO ── -->
+        <aside class="sidebar">
+          <div>
+            <div class="sidebar-section-title">Módulos del Sistema</div>
+            <nav aria-label="Módulos de JobConnect">
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
               <a href="/index.html" class="module-button active" data-module="inicio">
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">dashboard</span>
@@ -682,7 +824,11 @@ async function mostrarDashboard() {
                 </div>
               </a>
 
+<<<<<<< HEAD
               <a href="/pages/vacantes.html" class="module-button" data-module="vacantes">
+=======
+              <a href="/vacantes/vacantes.html" class="module-button" data-module="vacantes">
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">work</span>
                   <span>Vacantes</span>
@@ -690,7 +836,11 @@ async function mostrarDashboard() {
                 <span class="module-badge-count">${metricas.vacantes}</span>
               </a>
 
+<<<<<<< HEAD
               <a href="/pages/empresas.html" class="module-button" data-module="empresas">
+=======
+              <a href="/empresas/empresas.html" class="module-button" data-module="empresas">
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">domain</span>
                   <span>Empresas</span>
@@ -698,7 +848,11 @@ async function mostrarDashboard() {
                 <span class="module-badge-count">${metricas.empresas}</span>
               </a>
 
+<<<<<<< HEAD
               <a href="/src/pages/postulaciones.html" class="module-button" data-module="postulaciones">
+=======
+              <a href="/postulaciones/postulaciones.html" class="module-button" data-module="postulaciones">
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">description</span>
                   <span>Postulaciones</span>
@@ -706,7 +860,11 @@ async function mostrarDashboard() {
                 <span class="module-badge-count">${metricas.postulaciones}</span>
               </a>
 
+<<<<<<< HEAD
               <a href="/src/pages/entrevistas.html" class="module-button" data-module="entrevistas">
+=======
+              <a href="/entrevistas/entrevistas.html" class="module-button" data-module="entrevistas">
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">calendar_month</span>
                   <span>Entrevistas</span>
@@ -732,6 +890,7 @@ async function mostrarDashboard() {
           </div>
         </aside>
 
+<<<<<<< HEAD
         <!-- ÔöÇÔöÇ CONTENIDO PRINCIPAL ÔöÇÔöÇ -->
         <main id="dashboard-content" class="dashboard-content">
           <section class="welcome-card">
@@ -741,6 +900,17 @@ async function mostrarDashboard() {
           </section>
 
           <!-- ÔöÇÔöÇ OVERVIEW STATS ÔöÇÔöÇ -->
+=======
+        <!-- ── CONTENIDO PRINCIPAL ── -->
+        <main id="dashboard-content" class="dashboard-content">
+          <section class="welcome-card">
+            <p class="eyebrow">Panel de Control General</p>
+            <h1>Bienvenido/a, ${session.nombre} 👋</h1>
+            <p>Monitorea y administra en tiempo real todas las vacantes, postulaciones, empresas clientes, entrevistas y tareas asignadas.</p>
+          </section>
+
+          <!-- ── OVERVIEW STATS ── -->
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
           <section class="stats-overview">
             <div class="stat-card">
               <div class="stat-icon-wrapper" style="color: #565DFF; background: rgba(86, 93, 255, 0.15);">
@@ -795,6 +965,7 @@ async function mostrarDashboard() {
 
           <div class="section-title-row">
             <div>
+<<<<<<< HEAD
               <h2>M├│dulos del Sistema</h2>
               <p>Accede directamente a cada ├írea de gesti├│n</p>
             </div>
@@ -806,15 +977,35 @@ async function mostrarDashboard() {
             ${crearTarjeta("domain", "Empresas", "Administra las empresas clientes, contactos y ubicaciones.", "/pages/empresas.html", "empresas", `${metricas.empresas} registradas`)}
             ${crearTarjeta("description", "Postulaciones", "Supervisa las postulaciones de candidatos y su avance.", "/src/pages/postulaciones.html", "postulaciones", `${metricas.postulaciones} activas`)}
             ${crearTarjeta("calendar_month", "Entrevistas", "Organiza agendas, horarios, notas y estados de selecci├│n.", "/src/pages/entrevistas.html", "entrevistas", `${metricas.entrevistas} agendadas`)}
+=======
+              <h2>Módulos del Sistema</h2>
+              <p>Accede directamente a cada área de gestión</p>
+            </div>
+          </div>
+
+          <!-- ── MODULE CARDS ── -->
+          <section class="module-grid">
+            ${crearTarjeta("work", "Vacantes", "Crea, edita y gestiona las ofertas laborales y requisitos.", "/vacantes/vacantes.html", "vacantes", `${metricas.vacantes} registros`)}
+            ${crearTarjeta("domain", "Empresas", "Administra las empresas clientes, contactos y ubicaciones.", "/empresas/empresas.html", "empresas", `${metricas.empresas} registradas`)}
+            ${crearTarjeta("description", "Postulaciones", "Supervisa las postulaciones de candidatos y su avance.", "/postulaciones/postulaciones.html", "postulaciones", `${metricas.postulaciones} activas`)}
+            ${crearTarjeta("calendar_month", "Entrevistas", "Organiza agendas, horarios, notas y estados de selección.", "/entrevistas/entrevistas.html", "entrevistas", `${metricas.entrevistas} agendadas`)}
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
             ${crearTarjeta("task_alt", "Tareas", "Gestiona la lista de tareas del reclutador, prioridades y estados.", "/tareas-e-interfaz/tareas.html", "tareas", `${metricas.tareas} tareas`)}
           </section>
         </main>
       </div>
 
+<<<<<<< HEAD
       <!-- ÔöÇÔöÇ FOOTER ÔöÇÔöÇ -->
       <footer class="jc-footer">
         <span>&copy; 2026 JobConnect ÔÇö Sistema de Gesti├│n de Empleabilidad</span>
         <span>M├│dulos integrados ┬À Equipo Frontend</span>
+=======
+      <!-- ── FOOTER ── -->
+      <footer class="jc-footer">
+        <span>&copy; 2026 JobConnect — Sistema de Gestión de Empleabilidad</span>
+        <span>Módulos integrados · Equipo Frontend</span>
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
       </footer>
     </div>
   `;
@@ -838,8 +1029,13 @@ function crearTarjeta(iconName, nombre, descripcion, url, modulo, badgeText = "A
       <div style="margin-top: auto;">
         <a href="${url}" class="primary-button"
            style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-size: 14px; text-align: center; border-radius: 8px; text-decoration: none;">
+<<<<<<< HEAD
           <span>Abrir m├│dulo</span>
           <span>ÔåÆ</span>
+=======
+          <span>Abrir módulo</span>
+          <span>→</span>
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
         </a>
       </div>
     </article>
@@ -863,7 +1059,11 @@ function configurarDashboard() {
   });
 }
 
+<<<<<<< HEAD
 /* ÔöÇÔöÇ Arranque ÔöÇÔöÇ */
+=======
+/* ── Arranque ── */
+>>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9
 function iniciarAplicacion() {
   obtenerSesion() ? mostrarDashboard() : mostrarLogin();
 }

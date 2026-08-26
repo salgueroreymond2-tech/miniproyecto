@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postulaciones - JobConnect</title>
+    <!-- Core Global Design System -->
+    <link rel="stylesheet" href="/src/style.css">
+    <!-- Module Specific Style -->
+    <link rel="stylesheet" href="./postulaciones.css">
+</head>
+<body>
+
+    <!-- ── NAVBAR ── -->
+    <header class="jc-navbar">
+        <div class="jc-navbar-brand">
+            <a href="/index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                <div class="jc-navbar-logo">
+                    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <span class="jc-navbar-name">JobConnect</span>
+            </a>
+        </div>
+
+        <nav class="jc-navbar-links" aria-label="Navegación principal">
+            <a href="/index.html" class="jc-nav-link">Dashboard</a>
+            <a href="/vacantes/vacantes.html" class="jc-nav-link">Vacantes</a>
+            <a href="/empresas/empresas.html" class="jc-nav-link">Empresas</a>
+            <a href="/postulaciones/postulaciones.html" class="jc-nav-link active">Postulaciones</a>
+            <a href="/entrevistas/entrevistas.html" class="jc-nav-link">Entrevistas</a>
+            <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link">Tareas</a>
+        </nav>
+
+        <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="text-align: right; display: grid; gap: 1px;">
+                <strong style="font-size: 14px; font-weight: 600; color: #F0F0F0;">Emily Johnson</strong>
+                <span style="font-size: 12px; color: #606474;">Reclutadora</span>
+            </div>
+            <div class="jc-navbar-avatar" title="Emily Johnson">EJ</div>
+            <button id="logout-button" class="logout-button" type="button" title="Cerrar sesión" onclick="localStorage.removeItem('jobconnect_session'); window.location.href='/index.html';">Salir</button>
+        </div>
+    </header>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar" id="sidebar">
+            <div>
+                <div class="sidebar-section-title">Módulos del Sistema</div>
+                <nav aria-label="Módulos de JobConnect">
+                    <a href="/index.html" class="module-button">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">dashboard</span>
+                            <span>Inicio</span>
+                        </div>
+                    </a>
+
+                    <a href="/vacantes/vacantes.html" class="module-button">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">work</span>
+                            <span>Vacantes</span>
+                        </div>
+                        <span class="module-badge-count">6</span>
+                    </a>
+
+                    <a href="/empresas/empresas.html" class="module-button">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">domain</span>
+                            <span>Empresas</span>
+                        </div>
+                        <span class="module-badge-count">4</span>
+                    </a>
+
+                    <a href="/postulaciones/postulaciones.html" class="module-button active">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">description</span>
+                            <span>Postulaciones</span>
+                        </div>
+                        <span class="module-badge-count">6</span>
+                    </a>
+
+                    <a href="/entrevistas/entrevistas.html" class="module-button">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">calendar_month</span>
+                            <span>Entrevistas</span>
+                        </div>
+                        <span class="module-badge-count">3</span>
+                    </a>
+
+                    <a href="/tareas-e-interfaz/tareas.html" class="module-button">
+                        <div class="module-button-content">
+                            <span class="material-symbols-rounded module-button-icon">task_alt</span>
+                            <span>Tareas</span>
+                        </div>
+                        <span class="module-badge-count">5</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="sidebar-bottom-info">
+                <div class="sidebar-status-pill">
+                    <span class="status-dot-online"></span>
+                    <span>Servidor y API Activos</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ── CONTENIDO PRINCIPAL ── -->
+        <main class="dashboard-content" style="padding: 32px 36px;">
+
+            <div class="welcome-card" style="margin-bottom: 24px;">
+                <p class="eyebrow">Gestión de Talento</p>
+                <h1>Postulaciones de Candidatos</h1>
+                <p>Registra y supervisa el progreso de los candidatos en los procesos de selección activos.</p>
+            </div>
+
+            <!-- FORMULARIO -->
+            <section class="formulario">
+                <h3>Nueva Postulación</h3>
+
+                <form id="formPostulacion">
+                    <div class="campo">
+                        <label for="candidato">Candidato *</label>
+                        <select id="candidato" required>
+                            <option value="">Cargando candidatos...</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="vacante">Vacante *</label>
+                        <select id="vacante" required>
+                            <option value="">Cargando vacantes...</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="fecha">Fecha de Postulación *</label>
+                        <input type="date" id="fecha" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="estado">Estado Inicial *</label>
+                        <select id="estado" required>
+                            <option value="En revisión">En revisión</option>
+                            <option value="Entrevista">Entrevista</option>
+                            <option value="Seleccionado">Seleccionado</option>
+                            <option value="Rechazado">Rechazado</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="grid-column: span 2; margin-top: 8px; justify-content: center;">
+                        + Registrar Postulación
+                    </button>
+                </form>
+            </section>
+
+            <!-- TABLA -->
+            <section class="tabla-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div>
+                        <h3>Historial de Postulaciones</h3>
+                        <p style="color: var(--text-secondary); font-size: 13px;">Gestiona el estado de cada postulación registrada.</p>
+                    </div>
+                </div>
+
+                <table class="vacantes-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Candidato</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Vacante</th>
+                            <th>Empresa</th>
+                            <th>Ubicación</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaPostulaciones">
+                        <!-- Se llena dinámicamente -->
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Scripts del módulo -->
+    <script type="module" src="./postulaciones.js"></script>
+
+</body>
+</html>
