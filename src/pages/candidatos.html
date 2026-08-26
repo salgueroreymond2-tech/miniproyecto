@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Candidatos</title>
+  <link rel="stylesheet" href="candidatos.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Gestión de Candidatos</h1>
+      <button id="btnAbrirCrear" class="btn btn-primary">+ Nuevo Candidato</button>
+    </header>
+
+    <div class="search-bar">
+      <input type="text" id="inputBuscar" placeholder="Buscar por nombre o puesto...">
+    </div>
+
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Contacto</th>
+            <th>Puesto Deseado</th>
+            <th>Estado (PATCH)</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaCandidatos">
+          <!-- Se renderiza dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal Crear (POST) -->
+  <div id="modalCrear" class="modal">
+    <div class="modal-content">
+      <h2>Registrar Candidato (POST)</h2>
+      <form id="formCrear">
+        <div class="form-group">
+          <label>Nombre completo</label>
+          <input type="text" id="crearNombre" required>
+        </div>
+        <div class="form-group">
+          <label>Correo Electrónico</label>
+          <input type="email" id="crearEmail" required>
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" id="crearTelefono" required>
+        </div>
+        <div class="form-group">
+          <label>Puesto Deseado</label>
+          <input type="text" id="crearPuesto" required>
+        </div>
+        <div class="form-group">
+          <label>Estado Inicial</label>
+          <select id="crearEstado">
+            <option value="Nuevo">Nuevo</option>
+            <option value="En Proceso">En Proceso</option>
+            <option value="Entrevistado">Entrevistado</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="cerrarModal('modalCrear')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Editar (PUT) -->
+  <div id="modalEditar" class="modal">
+    <div class="modal-content">
+      <h2>Editar Candidato Completo (PUT)</h2>
+      <form id="formEditar">
+        <input type="hidden" id="editarId">
+        <div class="form-group">
+          <label>Nombre completo</label>
+          <input type="text" id="editarNombre" required>
+        </div>
+        <div class="form-group">
+          <label>Correo Electrónico</label>
+          <input type="email" id="editarEmail" required>
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" id="editarTelefono" required>
+        </div>
+        <div class="form-group">
+          <label>Puesto Deseado</label>
+          <input type="text" id="editarPuesto" required>
+        </div>
+        <div class="form-group">
+          <label>Estado</label>
+          <select id="editarEstado">
+            <option value="Nuevo">Nuevo</option>
+            <option value="En Proceso">En Proceso</option>
+            <option value="Entrevistado">Entrevistado</option>
+            <option value="Contratado">Contratado</option>
+            <option value="Rechazado">Rechazado</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="cerrarModal('modalEditar')">Cancelar</button>
+          <button type="submit" class="btn btn-success">Actualizar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="candidatos.js"></script>
+</body>
+</html>
