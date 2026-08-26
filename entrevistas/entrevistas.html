@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>JobConnect - Postulaciones</title>
-
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../postulaciones.css">
+    <title>Entrevistas - JobConnect</title>
+    <!-- Core Global Design System -->
+    <link rel="stylesheet" href="/src/style.css">
+    <!-- Module Specific Style -->
+    <link rel="stylesheet" href="./entrevistas.css">
 </head>
-
 <body>
 
     <!-- ── NAVBAR ── -->
@@ -27,10 +25,10 @@
 
         <nav class="jc-navbar-links" aria-label="Navegación principal">
             <a href="/index.html" class="jc-nav-link">Dashboard</a>
-            <a href="/pages/vacantes.html" class="jc-nav-link">Vacantes</a>
-            <a href="/pages/empresas.html" class="jc-nav-link">Empresas</a>
-            <a href="/src/pages/postulaciones.html" class="jc-nav-link active">Postulaciones</a>
-            <a href="/src/pages/entrevistas.html" class="jc-nav-link">Entrevistas</a>
+            <a href="/vacantes/vacantes.html" class="jc-nav-link">Vacantes</a>
+            <a href="/empresas/empresas.html" class="jc-nav-link">Empresas</a>
+            <a href="/postulaciones/postulaciones.html" class="jc-nav-link">Postulaciones</a>
+            <a href="/entrevistas/entrevistas.html" class="jc-nav-link active">Entrevistas</a>
             <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link">Tareas</a>
         </nav>
 
@@ -57,7 +55,7 @@
                         </div>
                     </a>
 
-                    <a href="/pages/vacantes.html" class="module-button">
+                    <a href="/vacantes/vacantes.html" class="module-button">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">work</span>
                             <span>Vacantes</span>
@@ -65,7 +63,7 @@
                         <span class="module-badge-count">6</span>
                     </a>
 
-                    <a href="/pages/empresas.html" class="module-button">
+                    <a href="/empresas/empresas.html" class="module-button">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">domain</span>
                             <span>Empresas</span>
@@ -73,7 +71,7 @@
                         <span class="module-badge-count">4</span>
                     </a>
 
-                    <a href="/src/pages/postulaciones.html" class="module-button active">
+                    <a href="/postulaciones/postulaciones.html" class="module-button">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">description</span>
                             <span>Postulaciones</span>
@@ -81,7 +79,7 @@
                         <span class="module-badge-count">6</span>
                     </a>
 
-                    <a href="/src/pages/entrevistas.html" class="module-button">
+                    <a href="/entrevistas/entrevistas.html" class="module-button active">
                         <div class="module-button-content">
                             <span class="material-symbols-rounded module-button-icon">calendar_month</span>
                             <span>Entrevistas</span>
@@ -107,95 +105,93 @@
             </div>
         </aside>
 
-        <main class="main-content">
+        <!-- ── CONTENIDO PRINCIPAL ── -->
+        <main class="dashboard-content" style="padding: 32px 36px;">
 
-            <section class="titulo">
-                <h2>Gestión de Postulaciones</h2>
-                <p>Administra las postulaciones de los candidatos a las vacantes.</p>
-            </section>
+            <div class="welcome-card" style="margin-bottom: 24px;">
+                <p class="eyebrow">Agenda y Selección</p>
+                <h1>Gestión de Entrevistas</h1>
+                <p>Programa reuniones de selección, evalúa a los candidatos y añade observaciones de desempeño.</p>
+            </div>
 
+            <!-- FORMULARIO -->
             <section class="formulario">
+                <h3>Agendar Nueva Entrevista</h3>
 
-                <h3>Nueva postulación</h3>
-
-                <form id="formPostulacion">
-
-                    <div class="campo">
-                        <label for="candidato">Candidato</label>
-                        <select id="candidato" required>
-                            <option value="">Seleccione un candidato</option>
+                <form id="formEntrevista">
+                    <div class="campo" style="grid-column: 1 / 3;">
+                        <label for="postulacion">Postulación Asociada *</label>
+                        <select id="postulacion" required>
+                            <option value="">Cargando postulaciones...</option>
                         </select>
                     </div>
 
                     <div class="campo">
-                        <label for="vacante">Vacante</label>
-                        <select id="vacante" required>
-                            <option value="">Seleccione una vacante</option>
-                        </select>
-                    </div>
-
-                    <div class="campo">
-                        <label for="fecha">Fecha</label>
+                        <label for="fecha">Fecha *</label>
                         <input type="date" id="fecha" required>
                     </div>
 
                     <div class="campo">
-                        <label for="estado">Estado</label>
-                        <select id="estado" required>
-                            <option value="En revisión">En revisión</option>
-                            <option value="Entrevista">Entrevista</option>
-                            <option value="Seleccionado">Seleccionado</option>
+                        <label for="hora">Hora *</label>
+                        <input type="time" id="hora" required>
+                    </div>
+
+                    <div class="campo" style="grid-column: 1 / 3;">
+                        <label for="resultado">Resultado Inicial *</label>
+                        <select id="resultado" required>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Aprobado">Aprobado</option>
                             <option value="Rechazado">Rechazado</option>
                         </select>
                     </div>
 
-                    <button type="submit" class="btn-primary">
-                        Crear postulación
+                    <div class="campo campo-notas">
+                        <label for="notas">Notas de la Entrevista</label>
+                        <textarea id="notas" rows="3" placeholder="Observaciones técnicas, impresiones o acuerdos..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="grid-column: 1 / 3; justify-content: center;">
+                        + Programar Entrevista
                     </button>
-
                 </form>
-
             </section>
 
+            <!-- TABLA -->
             <section class="tabla-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div>
+                        <h3>Entrevistas Programadas</h3>
+                        <p style="color: var(--text-secondary); font-size: 13px;">Supervisa los horarios y el resultado final de cada sesión.</p>
+                    </div>
+                </div>
 
-                <h3>Postulaciones registradas</h3>
-
-                <table>
-
+                <table class="vacantes-table">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Candidato</th>
                             <th>Email</th>
-                            <th>Teléfono</th>
                             <th>Vacante</th>
                             <th>Empresa</th>
                             <th>Ubicación</th>
                             <th>Fecha</th>
-                            <th>Estado</th>
+                            <th>Hora</th>
+                            <th>Resultado</th>
+                            <th>Notas</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-
-                    <tbody id="tablaPostulaciones"></tbody>
-
+                    <tbody id="tablaEntrevistas">
+                        <!-- Se llena dinámicamente -->
+                    </tbody>
                 </table>
-
             </section>
 
         </main>
-
     </div>
 
-    <script src="../JS/api.js"></script>
-    <script src="../JS/postulaciones.js"></script>
-    <script>
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
-    </script>
+    <!-- Scripts del módulo -->
+    <script type="module" src="./entrevistas.js"></script>
 
 </body>
-
 </html>

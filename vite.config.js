@@ -7,10 +7,10 @@ export default defineConfig({
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
         tareas: resolve(import.meta.dirname, 'tareas-e-interfaz/tareas.html'),
-        vacantes: resolve(import.meta.dirname, 'pages/vacantes.html'),
-        empresas: resolve(import.meta.dirname, 'pages/empresas.html'),
-        postulaciones: resolve(import.meta.dirname, 'src/pages/postulaciones.html'),
-        entrevistas: resolve(import.meta.dirname, 'src/pages/entrevistas.html'),
+        vacantes: resolve(import.meta.dirname, 'vacantes/vacantes.html'),
+        empresas: resolve(import.meta.dirname, 'empresas/empresas.html'),
+        postulaciones: resolve(import.meta.dirname, 'postulaciones/postulaciones.html'),
+        entrevistas: resolve(import.meta.dirname, 'entrevistas/entrevistas.html'),
       }
     }
   },
