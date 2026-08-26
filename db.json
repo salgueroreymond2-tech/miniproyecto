@@ -1,4 +1,98 @@
 {
+<<<<<<< HEAD
+=======
+  "usuarios": [
+    {
+      "id": "1",
+      "username": "emilys",
+      "password": "emilyspass",
+      "nombre": "Emily Johnson",
+      "rol": "Reclutadora"
+    },
+    {
+      "id": "2",
+      "username": "admin",
+      "password": "admin123",
+      "nombre": "Administrador Principal",
+      "rol": "Admin"
+    },
+    {
+      "id": "y6J_k9cOeKw",
+      "username": "victorgonzalez2679@gmail.com",
+      "password": "123456",
+      "nombre": "Victor",
+      "email": "victorgonzalez2679@gmail.com",
+      "telefono": "e858340543'5",
+      "profesion": "desarrollador",
+      "rol": "Postulante"
+    }
+  ],
+  "candidatos": [
+    {
+      "id": "1",
+      "nombre": "Bryan Gomez",
+      "email": "bryan@gmail.com",
+      "telefono": "8888-8888",
+      "profesion": "Desarrollador Web"
+    },
+    {
+      "id": "2",
+      "nombre": "María Rodríguez",
+      "email": "maria@gmail.com",
+      "telefono": "8777-7777",
+      "profesion": "Diseñadora UX/UI"
+    },
+    {
+      "id": "3",
+      "nombre": "Carlos Pérez",
+      "email": "carlos@gmail.com",
+      "telefono": "8666-6666",
+      "profesion": "Analista de Datos"
+    },
+    {
+      "id": "4",
+      "nombre": "Laura Fernández",
+      "email": "laura@gmail.com",
+      "telefono": "8555-5555",
+      "profesion": "Desarrolladora Full Stack"
+    },
+    {
+      "id": "5",
+      "nombre": "Andrés Castillo",
+      "email": "andres@gmail.com",
+      "telefono": "8444-4444",
+      "profesion": "Ingeniero de Software"
+    },
+    {
+      "id": "6",
+      "nombre": "Sofía Mora",
+      "email": "sofia@gmail.com",
+      "telefono": "8333-3333",
+      "profesion": "Project Manager"
+    },
+    {
+      "id": "7",
+      "nombre": "Daniel Rojas",
+      "email": "daniel@gmail.com",
+      "telefono": "8222-2222",
+      "profesion": "Desarrollador Backend"
+    },
+    {
+      "id": "8",
+      "nombre": "Valentina Campos",
+      "email": "valentina@gmail.com",
+      "telefono": "8111-1111",
+      "profesion": "Ingeniera de QA"
+    },
+    {
+      "id": "Tv_j_ohea0M",
+      "nombre": "Victor",
+      "email": "victorgonzalez2679@gmail.com",
+      "telefono": "e858340543'5",
+      "profesion": "desarrollador"
+    }
+  ],
+>>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
   "vacantes": [
     {
       "id": 1,
@@ -35,6 +129,131 @@
       "contacto": "Carlos Ruiz",
       "telefono": "+506 8888-2222",
       "email": "carlos@creativestudio.com"
+<<<<<<< HEAD
+=======
+    },
+    {
+      "id": "3",
+      "nombre": "Tech Solutions",
+      "industria": "Desarrollo de Software",
+      "contacto": "Ana Morales",
+      "telefono": "+506 8888-3333",
+      "email": "ana@techsolutions.com"
+    },
+    {
+      "id": "4",
+      "nombre": "Data CR",
+      "industria": "Analítica y Big Data",
+      "contacto": "Roberto Solís",
+      "telefono": "+506 8888-4444",
+      "email": "roberto@datacr.com"
+    }
+  ],
+  "postulaciones": [
+    {
+      "id": "1",
+      "candidatoId": "1",
+      "vacanteId": "1",
+      "fecha": "2026-08-15",
+      "estado": "Seleccionado"
+    },
+    {
+      "id": "2",
+      "candidatoId": "2",
+      "vacanteId": "2",
+      "fecha": "2026-08-16",
+      "estado": "Entrevista"
+    },
+    {
+      "id": "3",
+      "candidatoId": "3",
+      "vacanteId": "3",
+      "fecha": "2026-08-17",
+      "estado": "En revisión"
+    },
+    {
+      "id": "4",
+      "candidatoId": "4",
+      "vacanteId": "4",
+      "fecha": "2026-08-18",
+      "estado": "Entrevista"
+    },
+    {
+      "id": "5",
+      "candidatoId": "5",
+      "vacanteId": "1",
+      "fecha": "2026-08-19",
+      "estado": "Rechazado"
+    },
+    {
+      "id": "6",
+      "candidatoId": "6",
+      "vacanteId": "4",
+      "fecha": "2026-08-20",
+      "estado": "En revisión"
+    },
+    {
+      "id": "AdacUoCvorM",
+      "candidatoId": "y6J_k9cOeKw",
+      "vacanteId": "1",
+      "fecha": "2026-08-26",
+      "estado": "En revisión"
+    }
+  ],
+  "entrevistas": [
+    {
+      "id": "1",
+      "postulacionId": "2",
+      "candidatoId": "2",
+      "vacanteId": "2",
+      "fecha": "2026-08-28",
+      "hora": "09:00",
+      "resultado": "Pendiente",
+      "notas": "Primera entrevista con recursos humanos. Revisar portafolio de diseño."
+    },
+    {
+      "id": "2",
+      "postulacionId": "4",
+      "candidatoId": "4",
+      "vacanteId": "4",
+      "fecha": "2026-08-29",
+      "hora": "14:00",
+      "resultado": "Aprobado",
+      "notas": "Excelente experiencia en React y Node.js. Candidato fuerte para el equipo."
+    },
+    {
+      "id": "3",
+      "postulacionId": "1",
+      "candidatoId": "1",
+      "vacanteId": "1",
+      "fecha": "2026-08-25",
+      "hora": "11:00",
+      "resultado": "Aprobado",
+      "notas": "Buen manejo de CSS y JavaScript. Contratado para el equipo de frontend."
+    }
+  ],
+  "tareas": [
+    {
+      "id": "1",
+      "titulo": "Revisar CVs recibidos",
+      "descripcion": "Filtrar candidatos para puesto de Desarrollador Frontend",
+      "estado": "pendiente",
+      "fecha": "2026-08-25"
+    },
+    {
+      "id": "2",
+      "titulo": "Agendar entrevistas",
+      "descripcion": "Coordinar horarios con los candidatos preseleccionados",
+      "estado": "pendiente",
+      "fecha": "2026-08-26"
+    },
+    {
+      "id": "3",
+      "titulo": "Publicar vacante en portal",
+      "descripcion": "Redactar y publicar la oferta de empleo en el portal JobConnect",
+      "estado": "completada",
+      "fecha": "2026-08-20"
+>>>>>>> 68cc89b9d1643661783f720fd40068f9445ec683
     }
   ]
 }

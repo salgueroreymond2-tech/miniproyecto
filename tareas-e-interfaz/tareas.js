@@ -18,6 +18,16 @@
 
 import { mostrarAlerta, cerrarAlerta, abrirModal, cerrarModal, confirmar } from './ui.js';
 
+// Control de acceso por rol
+try {
+  const session = JSON.parse(localStorage.getItem('jobconnect_session') || '{}');
+  if (session.rol === 'Postulante') {
+    window.location.href = '/index.html';
+  }
+} catch (e) {
+  console.warn('Error al verificar sesión:', e);
+}
+
 // ─────────────────────────────────────────────
 // 1. CONSTANTES
 // ─────────────────────────────────────────────
