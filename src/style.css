@@ -418,25 +418,64 @@ a {
   background: var(--danger-soft);
 }
 
-.test-credentials {
-  display: grid;
-  gap: 4px;
-  margin-top: 24px;
-  padding: 14px;
-  border: 1px solid var(--border-light);
+.login-message.success {
+  display: block;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6EE7B7;
+  background: var(--success-soft);
+}
+
+.auth-tabs {
+  display: flex;
+  background: var(--bg-input);
   border-radius: var(--radius);
-  background: var(--bg-raised);
+  padding: 4px;
+  margin-bottom: 24px;
+  gap: 4px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 8px 14px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-radius: 6px;
+  transition: var(--transition);
+}
+
+.auth-tab.active {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 2px 8px rgba(86, 93, 255, 0.3);
+}
+
+.auth-tab:hover:not(.active) {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.auth-switch-text {
+  margin-top: 20px;
+  text-align: center;
   font-size: 13px;
   color: var(--text-secondary);
 }
 
-.test-credentials strong {
-  margin-bottom: 4px;
+.auth-switch-link {
   color: var(--accent);
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-weight: 600;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  margin-left: 4px;
+}
+
+.auth-switch-link:hover {
+  color: var(--accent-hover);
 }
 
 /* ═══════════════════════════════════════════════
@@ -1289,6 +1328,340 @@ table tbody tr:hover {
   .dashboard-content {
     padding: 20px;
   }
+}
+
+/* ═══════════════════════════════════════════════
+   PORTAL DEL POSTULANTE / CANDIDATO
+   ═══════════════════════════════════════════════ */
+
+.candidate-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.candidate-search-bar {
+  display: flex;
+  gap: 12px;
+  background: var(--bg-card);
+  padding: 12px 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  align-items: center;
+}
+
+.candidate-search-bar input {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+}
+
+.candidate-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.candidate-job-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  transition: var(--transition);
+}
+
+.candidate-job-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow);
+}
+
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.job-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.job-company {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.job-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.job-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.job-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.job-requirements-box {
+  background: var(--bg-raised);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.job-requirements-box strong {
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.applied-badge {
+  background: var(--success-soft);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.applications-list {
+  display: grid;
+  gap: 16px;
+}
+
+.application-item-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: var(--transition);
+}
+
+.application-item-card:hover {
+  border-color: var(--border-light);
+}
+
+.application-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.interview-banner {
+  background: rgba(236, 72, 153, 0.1);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #F472B6;
+}
+
+.cv-upload-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cv-dropzone {
+  border: 2px dashed var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 32px 20px;
+  text-align: center;
+  background: var(--bg-raised);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cv-dropzone:hover {
+  border-color: var(--accent);
+  background: rgba(86, 93, 255, 0.05);
+}
+
+.cv-current-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-input);
+  border: 1px solid var(--border-light);
+  padding: 14px 18px;
+  border-radius: var(--radius);
+}
+
+/* ═══════════════════════════════════════════════
+   SISTEMA DE NOTIFICACIONES TOAST Y MODAL
+   ═══════════════════════════════════════════════ */
+
+#jc-toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.jc-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 300px;
+  max-width: 440px;
+  padding: 14px 18px;
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  font-weight: 500;
+  color: #FFFFFF;
+  background: rgba(19, 21, 31, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  animation: jcToastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: all 0.25s ease;
+}
+
+.jc-toast.fade-out {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.jc-toast.success {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.jc-toast.success .jc-toast-icon {
+  color: #10B981;
+}
+
+.jc-toast.error {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.jc-toast.error .jc-toast-icon {
+  color: #EF4444;
+}
+
+.jc-toast.info {
+  border-color: rgba(86, 93, 255, 0.4);
+}
+
+.jc-toast.info .jc-toast-icon {
+  color: #565DFF;
+}
+
+@keyframes jcToastIn {
+  from {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modal de Confirmación Moderno */
+.jc-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  background: rgba(4, 6, 12, 0.75);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  animation: jcFadeIn 0.2s ease forwards;
+}
+
+.jc-modal-box {
+  width: min(100%, 420px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  animation: jcModalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.jc-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.jc-modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+}
+
+.jc-modal-body {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.jc-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@keyframes jcFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes jcModalIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @media (max-width: 540px) {

@@ -1,7 +1,19 @@
 // ===============================
 // API SERVICE (self-contained)
 // ===============================
+import { mostrarToast, confirmarAccion } from "../src/services/api.js";
+
 const API_URL = "http://localhost:3000";
+
+// Control de acceso por rol
+try {
+  const session = JSON.parse(localStorage.getItem('jobconnect_session') || '{}');
+  if (session.rol === 'Postulante') {
+    window.location.href = '/index.html';
+  }
+} catch (e) {
+  console.warn('Error al verificar sesión:', e);
+}
 
 async function obtenerDatos(recurso) {
   const respuesta = await fetch(`${API_URL}/${recurso}`);
@@ -144,7 +156,7 @@ async function crearEntrevista(event) {
 
   const postulacion = postulaciones.find(p => String(p.id) === String(postulacionId));
   if (!postulacion) {
-    alert("No se encontró la postulación seleccionada.");
+    mostrarToast("No se encontró la postulación seleccionada.", "error");
     return;
   }
 
@@ -163,7 +175,7 @@ async function crearEntrevista(event) {
       entrevistas.length > 0 ? Math.max(...entrevistas.map(e => Number(e.id))) + 1 : 1
     );
     entrevistas.push(nuevaEntrevista);
-    alert("Entrevista registrada correctamente.");
+    mostrarToast("Entrevista registrada correctamente.", "success");
     document.getElementById("formEntrevista").reset();
     mostrarEntrevistas();
     return;
@@ -172,12 +184,12 @@ async function crearEntrevista(event) {
   try {
     await crearDato("entrevistas", nuevaEntrevista);
     await actualizarDato("postulaciones", postulacion.id, { estado: "Entrevista" });
-    alert("Entrevista registrada correctamente.");
+    mostrarToast("Entrevista registrada correctamente.", "success");
     document.getElementById("formEntrevista").reset();
     cargarDatos();
   } catch (error) {
     console.error(error);
-    alert("No se pudo registrar la entrevista.");
+    mostrarToast("No se pudo registrar la entrevista.", "error");
   }
 }
 
@@ -185,24 +197,24 @@ window.cambiarResultado = async function(id, nuevoResultado) {
   if (usarFallback) {
     const entrevista = entrevistas.find(e => Number(e.id) === Number(id));
     if (entrevista) entrevista.resultado = nuevoResultado;
-    alert("Resultado actualizado correctamente.");
+    mostrarToast("Resultado actualizado correctamente.", "success");
     return;
   }
 
   try {
     await actualizarDato("entrevistas", id, { resultado: nuevoResultado });
-    alert("Resultado actualizado correctamente.");
+    mostrarToast("Resultado actualizado correctamente.", "success");
     cargarDatos();
   } catch (error) {
     console.error(error);
-    alert("No se pudo actualizar el resultado.");
+    mostrarToast("No se pudo actualizar el resultado.", "error");
   }
 };
 
 window.editarNotas = async function(id) {
   const entrevista = entrevistas.find(e => String(e.id) === String(id));
   if (!entrevista) {
-    alert("No se encontró la entrevista.");
+    mostrarToast("No se encontró la entrevista.", "error");
     return;
   }
 
@@ -211,38 +223,37 @@ window.editarNotas = async function(id) {
 
   if (usarFallback) {
     entrevista.notas = nuevasNotas;
-    alert("Notas actualizadas correctamente.");
+    mostrarToast("Notas actualizadas correctamente.", "success");
     mostrarEntrevistas();
     return;
   }
 
   try {
     await actualizarDato("entrevistas", id, { notas: nuevasNotas });
-    alert("Notas actualizadas correctamente.");
+    mostrarToast("Notas actualizadas correctamente.", "success");
     cargarDatos();
   } catch (error) {
     console.error(error);
-    alert("No se pudieron actualizar las notas.");
+    mostrarToast("No se pudieron actualizar las notas.", "error");
   }
 };
 
-window.eliminarEntrevista = async function(id) {
-  const confirmar = confirm("¿Está seguro de eliminar esta entrevista?");
-  if (!confirmar) return;
+window.eliminarEntrevista = function(id) {
+  confirmarAccion("Eliminar Entrevista", "¿Está seguro de eliminar esta entrevista?", async () => {
+    if (usarFallback) {
+      entrevistas = entrevistas.filter(e => Number(e.id) !== Number(id));
+      mostrarToast("Entrevista eliminada correctamente.", "success");
+      mostrarEntrevistas();
+      return;
+    }
 
-  if (usarFallback) {
-    entrevistas = entrevistas.filter(e => Number(e.id) !== Number(id));
-    alert("Entrevista eliminada correctamente.");
-    mostrarEntrevistas();
-    return;
-  }
-
-  try {
-    await eliminarDato("entrevistas", id);
-    alert("Entrevista eliminada correctamente.");
-    cargarDatos();
-  } catch (error) {
-    console.error(error);
-    alert("No se pudo eliminar la entrevista.");
-  }
+    try {
+      await eliminarDato("entrevistas", id);
+      mostrarToast("Entrevista eliminada correctamente.", "success");
+      cargarDatos();
+    } catch (error) {
+      console.error(error);
+      mostrarToast("No se pudo eliminar la entrevista.", "error");
+    }
+  });
 };

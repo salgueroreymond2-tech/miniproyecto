@@ -4,6 +4,7 @@ import {
   actualizarEmpresa,
   eliminarEmpresaPorId,
 } from './empresasService.js';
+import { mostrarToast, confirmarAccion } from '../src/services/api.js';
 
 const MENSAJE_CONFIRMAR_ELIMINAR = '¿Estás seguro de eliminar esta empresa?';
 const MENSAJE_EXITO_CREAR = 'Empresa creada exitosamente';
@@ -17,6 +18,16 @@ const MAX_CARACTERES_CONTACTO = 100;
 const MAX_CARACTERES_TELEFONO = 25;
 const MAX_CARACTERES_EMAIL = 100;
 const PATRON_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Control de acceso por rol
+try {
+  const session = JSON.parse(localStorage.getItem('jobconnect_session') || '{}');
+  if (session.rol === 'Postulante') {
+    window.location.href = '/index.html';
+  }
+} catch (e) {
+  console.warn('Error al verificar sesión:', e);
+}
 
 let appContainer = null;
 let empresasCache = [];
@@ -99,20 +110,21 @@ async function recargarListaEmpresas(contentContainer, messagesContainer) {
 async function eliminarEmpresa(id, messagesContainer, contentContainer) {
   if (!id) return;
 
-  const confirmacionUsuario = window.confirm(MENSAJE_CONFIRMAR_ELIMINAR);
-  if (!confirmacionUsuario) return;
-
-  try {
-    await eliminarEmpresaPorId(id);
-    await recargarListaEmpresas(contentContainer, messagesContainer);
-    mostrarMensaje(messagesContainer, MENSAJE_EXITO_ELIMINAR);
-  } catch (error) {
-    mostrarMensaje(
-      messagesContainer,
-      `Error al eliminar la empresa: ${error.message}`,
-      true
-    );
-  }
+  confirmarAccion('Eliminar Empresa', MENSAJE_CONFIRMAR_ELIMINAR, async () => {
+    try {
+      await eliminarEmpresaPorId(id);
+      await recargarListaEmpresas(contentContainer, messagesContainer);
+      mostrarMensaje(messagesContainer, MENSAJE_EXITO_ELIMINAR);
+      mostrarToast(MENSAJE_EXITO_ELIMINAR, 'success');
+    } catch (error) {
+      mostrarMensaje(
+        messagesContainer,
+        `Error al eliminar la empresa: ${error.message}`,
+        true
+      );
+      mostrarToast(`Error al eliminar: ${error.message}`, 'error');
+    }
+  });
 }
 
 function construirFormularioEmpresa(empresa = null) {
@@ -303,22 +315,6 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
           </a>
         </div>
 
-        <nav class="jc-navbar-links" aria-label="Navegación principal">
-          <a href="/index.html" class="jc-nav-link ${moduloActivo === 'inicio' ? 'active' : ''}">Dashboard</a>
-<<<<<<< HEAD:pages/empresas.js
-          <a href="/pages/vacantes.html" class="jc-nav-link ${moduloActivo === 'vacantes' ? 'active' : ''}">Vacantes</a>
-          <a href="/pages/empresas.html" class="jc-nav-link ${moduloActivo === 'empresas' ? 'active' : ''}">Empresas</a>
-          <a href="/src/pages/postulaciones.html" class="jc-nav-link ${moduloActivo === 'postulaciones' ? 'active' : ''}">Postulaciones</a>
-          <a href="/src/pages/entrevistas.html" class="jc-nav-link ${moduloActivo === 'entrevistas' ? 'active' : ''}">Entrevistas</a>
-=======
-          <a href="/vacantes/vacantes.html" class="jc-nav-link ${moduloActivo === 'vacantes' ? 'active' : ''}">Vacantes</a>
-          <a href="/empresas/empresas.html" class="jc-nav-link ${moduloActivo === 'empresas' ? 'active' : ''}">Empresas</a>
-          <a href="/postulaciones/postulaciones.html" class="jc-nav-link ${moduloActivo === 'postulaciones' ? 'active' : ''}">Postulaciones</a>
-          <a href="/entrevistas/entrevistas.html" class="jc-nav-link ${moduloActivo === 'entrevistas' ? 'active' : ''}">Entrevistas</a>
->>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:empresas/empresas.js
-          <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link ${moduloActivo === 'tareas' ? 'active' : ''}">Tareas</a>
-        </nav>
-
         <div style="display: flex; align-items: center; gap: 14px;">
           <div style="text-align: right; display: grid; gap: 1px;">
             <strong style="font-size: 14px; font-weight: 600; color: #F0F0F0;">${sesion.nombre}</strong>
@@ -343,11 +339,7 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 </div>
               </a>
 
-<<<<<<< HEAD:pages/empresas.js
-              <a href="/pages/vacantes.html" class="module-button ${moduloActivo === 'vacantes' ? 'active' : ''}">
-=======
               <a href="/vacantes/vacantes.html" class="module-button ${moduloActivo === 'vacantes' ? 'active' : ''}">
->>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:empresas/empresas.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">work</span>
                   <span>Vacantes</span>
@@ -355,11 +347,7 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 <span class="module-badge-count">6</span>
               </a>
 
-<<<<<<< HEAD:pages/empresas.js
-              <a href="/pages/empresas.html" class="module-button ${moduloActivo === 'empresas' ? 'active' : ''}">
-=======
               <a href="/empresas/empresas.html" class="module-button ${moduloActivo === 'empresas' ? 'active' : ''}">
->>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:empresas/empresas.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">domain</span>
                   <span>Empresas</span>
@@ -367,11 +355,7 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 <span class="module-badge-count">${totalEmp}</span>
               </a>
 
-<<<<<<< HEAD:pages/empresas.js
-              <a href="/src/pages/postulaciones.html" class="module-button ${moduloActivo === 'postulaciones' ? 'active' : ''}">
-=======
               <a href="/postulaciones/postulaciones.html" class="module-button ${moduloActivo === 'postulaciones' ? 'active' : ''}">
->>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:empresas/empresas.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">description</span>
                   <span>Postulaciones</span>
@@ -379,11 +363,7 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
                 <span class="module-badge-count">6</span>
               </a>
 
-<<<<<<< HEAD:pages/empresas.js
-              <a href="/src/pages/entrevistas.html" class="module-button ${moduloActivo === 'entrevistas' ? 'active' : ''}">
-=======
               <a href="/entrevistas/entrevistas.html" class="module-button ${moduloActivo === 'entrevistas' ? 'active' : ''}">
->>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:empresas/empresas.js
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">calendar_month</span>
                   <span>Entrevistas</span>
@@ -418,14 +398,6 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
   `;
 }
 
-<<<<<<< HEAD:pages/empresas.js
-/**
- * Renderiza la vista de listado de empresas y configura los manejadores de eventos.
- *
- * @param {HTMLElement} container - Contenedor principal donde se muestra la vista.
- */
-=======
->>>>>>> 31e2313851acd9a046cd4f43133562e3626325e9:empresas/empresas.js
 async function cargarYMostrarListado(container) {
   if (!container) return;
 

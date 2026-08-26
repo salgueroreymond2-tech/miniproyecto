@@ -1,7 +1,19 @@
 // ===============================
 // API SERVICE (self-contained)
 // ===============================
+import { mostrarToast, confirmarAccion } from "../src/services/api.js";
+
 const API_URL = "http://localhost:3000";
+
+// Control de acceso por rol
+try {
+  const session = JSON.parse(localStorage.getItem('jobconnect_session') || '{}');
+  if (session.rol === 'Postulante') {
+    window.location.href = '/index.html';
+  }
+} catch (e) {
+  console.warn('Error al verificar sesión:', e);
+}
 
 async function obtenerDatos(recurso) {
   const respuesta = await fetch(`${API_URL}/${recurso}`);
@@ -189,7 +201,7 @@ async function crearPostulacion(event) {
         : 1
     );
     postulaciones.push(nuevaPostulacion);
-    alert("Postulación creada correctamente.");
+    mostrarToast("Postulación creada correctamente.", "success");
     document.getElementById("formPostulacion").reset();
     mostrarPostulaciones();
     return;
@@ -197,12 +209,12 @@ async function crearPostulacion(event) {
 
   try {
     await crearDato("postulaciones", nuevaPostulacion);
-    alert("Postulación creada correctamente.");
+    mostrarToast("Postulación creada correctamente.", "success");
     document.getElementById("formPostulacion").reset();
     cargarDatos();
   } catch (error) {
     console.error(error);
-    alert("No se pudo crear la postulación.");
+    mostrarToast("No se pudo crear la postulación.", "error");
   }
 }
 
@@ -212,37 +224,36 @@ window.cambiarEstado = async function(id, nuevoEstado) {
     if (postulacion) {
       postulacion.estado = nuevoEstado;
     }
-    alert("Estado actualizado correctamente.");
+    mostrarToast("Estado actualizado correctamente.", "success");
     return;
   }
 
   try {
     await actualizarDato("postulaciones", id, { estado: nuevoEstado });
-    alert("Estado actualizado correctamente.");
+    mostrarToast("Estado actualizado correctamente.", "success");
     cargarDatos();
   } catch (error) {
     console.error(error);
-    alert("No se pudo actualizar el estado.");
+    mostrarToast("No se pudo actualizar el estado.", "error");
   }
 };
 
-window.eliminarPostulacion = async function(id) {
-  const confirmar = confirm("¿Está seguro de eliminar esta postulación?");
-  if (!confirmar) return;
+window.eliminarPostulacion = function(id) {
+  confirmarAccion("Eliminar Postulación", "¿Está seguro de eliminar esta postulación?", async () => {
+    if (usarFallback) {
+      postulaciones = postulaciones.filter(p => Number(p.id) !== Number(id));
+      mostrarToast("Postulación eliminada.", "success");
+      mostrarPostulaciones();
+      return;
+    }
 
-  if (usarFallback) {
-    postulaciones = postulaciones.filter(p => Number(p.id) !== Number(id));
-    alert("Postulación eliminada.");
-    mostrarPostulaciones();
-    return;
-  }
-
-  try {
-    await eliminarDato("postulaciones", id);
-    alert("Postulación eliminada.");
-    cargarDatos();
-  } catch (error) {
-    console.error(error);
-    alert("No se pudo eliminar la postulación.");
-  }
+    try {
+      await eliminarDato("postulaciones", id);
+      mostrarToast("Postulación eliminada.", "success");
+      cargarDatos();
+    } catch (error) {
+      console.error(error);
+      mostrarToast("No se pudo eliminar la postulación.", "error");
+    }
+  });
 };
