@@ -42,6 +42,11 @@ function mostrarLogin() {
   app.innerHTML = `
     <main class="login-page">
       <section class="login-card">
+        <a href="/paginaPrincipal/paginaInicial.html" style="display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); text-decoration: none; font-size: 13px; margin-bottom: 18px; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">
+          <span class="material-symbols-rounded" style="font-size: 16px;">arrow_back</span>
+          <span>Volver al portal público</span>
+        </a>
+
         <div class="brand">
           <div class="brand-icon">JC</div>
           <div>
@@ -210,10 +215,10 @@ async function mostrarDashboard() {
 
         <nav class="jc-navbar-links" aria-label="Navegación principal">
           <a href="/index.html" class="jc-nav-link active">Dashboard</a>
-          <a href="/pages/vacantes.html" class="jc-nav-link">Vacantes</a>
-          <a href="/pages/empresas.html" class="jc-nav-link">Empresas</a>
-          <a href="/src/pages/postulaciones.html" class="jc-nav-link">Postulaciones</a>
-          <a href="/src/pages/entrevistas.html" class="jc-nav-link">Entrevistas</a>
+          <a href="/vacantes/vacantes.html" class="jc-nav-link">Vacantes</a>
+          <a href="/empresas/empresas.html" class="jc-nav-link">Empresas</a>
+          <a href="/postulaciones/postulaciones.html" class="jc-nav-link">Postulaciones</a>
+          <a href="/entrevistas/entrevistas.html" class="jc-nav-link">Entrevistas</a>
           <a href="/tareas-e-interfaz/tareas.html" class="jc-nav-link">Tareas</a>
         </nav>
 
@@ -241,7 +246,7 @@ async function mostrarDashboard() {
                 </div>
               </a>
 
-              <a href="/pages/vacantes.html" class="module-button" data-module="vacantes">
+              <a href="/vacantes/vacantes.html" class="module-button" data-module="vacantes">
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">work</span>
                   <span>Vacantes</span>
@@ -249,7 +254,7 @@ async function mostrarDashboard() {
                 <span class="module-badge-count">${metricas.vacantes}</span>
               </a>
 
-              <a href="/pages/empresas.html" class="module-button" data-module="empresas">
+              <a href="/empresas/empresas.html" class="module-button" data-module="empresas">
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">domain</span>
                   <span>Empresas</span>
@@ -257,7 +262,7 @@ async function mostrarDashboard() {
                 <span class="module-badge-count">${metricas.empresas}</span>
               </a>
 
-              <a href="/src/pages/postulaciones.html" class="module-button" data-module="postulaciones">
+              <a href="/postulaciones/postulaciones.html" class="module-button" data-module="postulaciones">
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">description</span>
                   <span>Postulaciones</span>
@@ -265,7 +270,7 @@ async function mostrarDashboard() {
                 <span class="module-badge-count">${metricas.postulaciones}</span>
               </a>
 
-              <a href="/src/pages/entrevistas.html" class="module-button" data-module="entrevistas">
+              <a href="/entrevistas/entrevistas.html" class="module-button" data-module="entrevistas">
                 <div class="module-button-content">
                   <span class="material-symbols-rounded module-button-icon">calendar_month</span>
                   <span>Entrevistas</span>
@@ -361,10 +366,10 @@ async function mostrarDashboard() {
 
           <!-- ── MODULE CARDS ── -->
           <section class="module-grid">
-            ${crearTarjeta("work", "Vacantes", "Crea, edita y gestiona las ofertas laborales y requisitos.", "/pages/vacantes.html", "vacantes", `${metricas.vacantes} registros`)}
-            ${crearTarjeta("domain", "Empresas", "Administra las empresas clientes, contactos y ubicaciones.", "/pages/empresas.html", "empresas", `${metricas.empresas} registradas`)}
-            ${crearTarjeta("description", "Postulaciones", "Supervisa las postulaciones de candidatos y su avance.", "/src/pages/postulaciones.html", "postulaciones", `${metricas.postulaciones} activas`)}
-            ${crearTarjeta("calendar_month", "Entrevistas", "Organiza agendas, horarios, notas y estados de selección.", "/src/pages/entrevistas.html", "entrevistas", `${metricas.entrevistas} agendadas`)}
+            ${crearTarjeta("work", "Vacantes", "Crea, edita y gestiona las ofertas laborales y requisitos.", "/vacantes/vacantes.html", "vacantes", `${metricas.vacantes} registros`)}
+            ${crearTarjeta("domain", "Empresas", "Administra las empresas clientes, contactos y ubicaciones.", "/empresas/empresas.html", "empresas", `${metricas.empresas} registradas`)}
+            ${crearTarjeta("description", "Postulaciones", "Supervisa las postulaciones de candidatos y su avance.", "/postulaciones/postulaciones.html", "postulaciones", `${metricas.postulaciones} activas`)}
+            ${crearTarjeta("calendar_month", "Entrevistas", "Organiza agendas, horarios, notas y estados de selección.", "/entrevistas/entrevistas.html", "entrevistas", `${metricas.entrevistas} agendadas`)}
             ${crearTarjeta("task_alt", "Tareas", "Gestiona la lista de tareas del reclutador, prioridades y estados.", "/tareas-e-interfaz/tareas.html", "tareas", `${metricas.tareas} tareas`)}
           </section>
         </main>
