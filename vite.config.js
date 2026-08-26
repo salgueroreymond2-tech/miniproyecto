@@ -6,6 +6,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
+        inicio: resolve(import.meta.dirname, 'src/paginaPrincipal/paginaInicial.html'),
         tareas: resolve(import.meta.dirname, 'tareas-e-interfaz/tareas.html'),
         vacantes: resolve(import.meta.dirname, 'vacantes/vacantes.html'),
         empresas: resolve(import.meta.dirname, 'empresas/empresas.html'),
