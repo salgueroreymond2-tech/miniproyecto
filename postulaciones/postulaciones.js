@@ -2,17 +2,14 @@
 // API SERVICE (self-contained)
 // ===============================
 import { mostrarToast, confirmarAccion } from "../src/services/api.js";
+import { exigirSesion, actualizarNavbarSesion } from "../src/services/session.js";
 
 const API_URL = "http://localhost:3000";
 
 // Control de acceso por rol
-try {
-  const session = JSON.parse(localStorage.getItem('jobconnect_session') || '{}');
-  if (session.rol === 'Postulante') {
-    window.location.href = '/index.html';
-  }
-} catch (e) {
-  console.warn('Error al verificar sesión:', e);
+const sesionActual = exigirSesion();
+if (sesionActual?.rol === 'Postulante') {
+  window.location.replace('/index.html');
 }
 
 async function obtenerDatos(recurso) {
@@ -90,6 +87,7 @@ let usarFallback = false;
 // INICIO
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
+  actualizarNavbarSesion(sesionActual);
   cargarDatos();
   const form = document.getElementById("formPostulacion");
   if (form) {

@@ -14,7 +14,7 @@
     <!-- ── NAVBAR ── -->
     <header class="jc-navbar">
         <div class="jc-navbar-brand">
-            <a href="/index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+            <a href="/paginaPrincipal/paginaInicial.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
                 <div class="jc-navbar-logo">
                     <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -25,11 +25,11 @@
 
         <div style="display: flex; align-items: center; gap: 14px;">
             <div style="text-align: right; display: grid; gap: 1px;">
-                <strong style="font-size: 14px; font-weight: 600; color: #F0F0F0;">Emily Johnson</strong>
-                <span style="font-size: 12px; color: #606474;">Reclutadora</span>
+                <strong data-session-name style="font-size: 14px; font-weight: 600; color: #F0F0F0;"></strong>
+                <span data-session-role style="font-size: 12px; color: #606474;"></span>
             </div>
-            <div class="jc-navbar-avatar" title="Emily Johnson">EJ</div>
-            <button id="logout-button" class="logout-button" type="button" title="Cerrar sesión" onclick="localStorage.removeItem('jobconnect_session'); window.location.href='/index.html';">Salir</button>
+            <div class="jc-navbar-avatar" data-session-avatar></div>
+            <button id="logout-button" data-session-logout class="logout-button" type="button" title="Cerrar sesión">Salir</button>
         </div>
     </header>
 

@@ -5,6 +5,7 @@ import {
   eliminarVacantePorId,
 } from './vacantesService.js';
 import { mostrarToast, confirmarAccion } from '../src/services/api.js';
+import { exigirSesion, actualizarNavbarSesion } from '../src/services/session.js';
 
 const ESTADOS_VACANTE = ['abierta', 'cerrada', 'pausada'];
 const MENSAJE_CONFIRMAR_ELIMINAR = '¿Estás seguro de eliminar esta vacante?';
@@ -21,13 +22,9 @@ const MAX_CARACTERES_SALARIO = 50;
 const MAX_CARACTERES_REQUISITOS = 500;
 
 // Control de acceso por rol
-try {
-  const session = JSON.parse(localStorage.getItem('jobconnect_session') || '{}');
-  if (session.rol === 'Postulante') {
-    window.location.href = '/index.html';
-  }
-} catch (e) {
-  console.warn('Error al verificar sesión:', e);
+const sesionActual = exigirSesion();
+if (sesionActual?.rol === 'Postulante') {
+  window.location.replace('/index.html');
 }
 
 let appContainer = null;
@@ -294,12 +291,7 @@ function validarCamposVacante(datos) {
 }
 
 function obtenerSesion() {
-  try {
-    const s = localStorage.getItem('jobconnect_session');
-    return s ? JSON.parse(s) : { nombre: 'Emily Johnson', rol: 'Reclutadora' };
-  } catch {
-    return { nombre: 'Emily Johnson', rol: 'Reclutadora' };
-  }
+  return sesionActual;
 }
 
 function generarLayout(moduloActivo, contenidoPrincipal) {
@@ -323,11 +315,11 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
 
         <div style="display: flex; align-items: center; gap: 14px;">
           <div style="text-align: right; display: grid; gap: 1px;">
-            <strong style="font-size: 14px; font-weight: 600; color: #F0F0F0;">${sesion.nombre}</strong>
-            <span style="font-size: 12px; color: #606474;">${sesion.rol}</span>
+            <strong data-session-name style="font-size: 14px; font-weight: 600; color: #F0F0F0;"></strong>
+            <span data-session-role style="font-size: 12px; color: #606474;"></span>
           </div>
-          <div class="jc-navbar-avatar" title="${sesion.nombre}">${iniciales}</div>
-          <button id="logout-button" class="logout-button" type="button" title="Cerrar sesión" onclick="localStorage.removeItem('jobconnect_session'); window.location.href='/index.html';">Salir</button>
+          <div class="jc-navbar-avatar" data-session-avatar></div>
+          <button id="logout-button" data-session-logout class="logout-button" type="button" title="Cerrar sesión">Salir</button>
         </div>
       </header>
 
@@ -402,6 +394,8 @@ function generarLayout(moduloActivo, contenidoPrincipal) {
       </div>
     </div>
   `;
+
+  actualizarNavbarSesion(sesion);
 }
 
 async function cargarYMostrarListado(container) {
@@ -536,6 +530,6 @@ export async function initVacantes(container) {
 }
 
 const contenedorApp = document.querySelector('#app');
-if (contenedorApp) {
+if (contenedorApp && sesionActual) {
   initVacantes(contenedorApp);
 }

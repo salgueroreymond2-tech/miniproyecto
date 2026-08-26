@@ -17,15 +17,12 @@
  */
 
 import { mostrarAlerta, cerrarAlerta, abrirModal, cerrarModal, confirmar } from './ui.js';
+import { exigirSesion, actualizarNavbarSesion } from '../src/services/session.js';
 
 // Control de acceso por rol
-try {
-  const session = JSON.parse(localStorage.getItem('jobconnect_session') || '{}');
-  if (session.rol === 'Postulante') {
-    window.location.href = '/index.html';
-  }
-} catch (e) {
-  console.warn('Error al verificar sesión:', e);
+const sesionActual = exigirSesion();
+if (sesionActual?.rol === 'Postulante') {
+  window.location.replace('/index.html');
 }
 
 // ─────────────────────────────────────────────
@@ -631,6 +628,7 @@ function cargarDatosSesion() {
  * Punto de entrada: carga las tareas y la sesión al iniciar la página.
  */
 document.addEventListener('DOMContentLoaded', () => {
+  actualizarNavbarSesion(sesionActual);
   cargarDatosSesion();
   cargarTareas();
 });
